@@ -1,0 +1,22 @@
+{
+  "name": "harni",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Welcome page for harni.uk",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "media": "./scripts/build-media.sh"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.5",
+    "@fontsource-variable/inter": "^5.2.5"
+  }
+}

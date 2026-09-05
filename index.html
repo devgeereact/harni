@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Harni — welcome</title>
+    <meta
+      name="description"
+      content="The welcome page for harni.uk. The full site is being built; there is a small game here in the meantime."
+    />
+    <meta name="theme-color" content="#061a20" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://harni.uk/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="harni.uk" />
+    <meta property="og:title" content="Harni — welcome" />
+    <meta
+      property="og:description"
+      content="The full site is being built. Have a look around, and play Pier Run while you wait."
+    />
+    <meta property="og:url" content="https://harni.uk/" />
+    <meta property="og:image" content="https://harni.uk/media/shore-1280.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="960" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      fetchpriority="high"
+      href="/media/shore-1280.avif"
+      imagesrcset="/media/shore-480.avif 480w, /media/shore-800.avif 800w, /media/shore-1280.avif 1280w, /media/shore-1920.avif 1920w"
+      imagesizes="100vw"
+    />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-head">
+      <a class="wordmark" href="/" aria-label="harni.uk home">
+        <span class="wordmark__mark" aria-hidden="true">H</span>
+        <span class="wordmark__text">harni<span class="wordmark__dot">.</span>uk</span>
+      </a>
+      <nav aria-label="Primary">
+        <a class="nav-link" href="#coming">What's coming</a>
+        <a class="nav-link" href="#play">Play</a>
+        <a class="nav-link nav-link--cta" href="mailto:hello@harni.uk">Say hello</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__media" data-parallax>
+          <picture>
+            <source
+              type="image/avif"
+              srcset="
+                /media/shore-480.avif   480w,
+                /media/shore-800.avif   800w,
+                /media/shore-1280.avif 1280w,
+                /media/shore-1920.avif 1920w
+              "
+              sizes="100vw"
+            />
+            <source
+              type="image/webp"
+              srcset="
+                /media/shore-480.webp   480w,
+                /media/shore-800.webp   800w,
+                /media/shore-1280.webp 1280w,
+                /media/shore-1920.webp 1920w
+              "
+              sizes="100vw"
+            />
+            <img
+              src="/media/shore-1280.jpg"
+              srcset="
+                /media/shore-480.jpg   480w,
+                /media/shore-800.jpg   800w,
+                /media/shore-1280.jpg 1280w,
+                /media/shore-1920.jpg 1920w
+              "
+              sizes="100vw"
+              width="2048"
+              height="1536"
+              alt=""
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
+        </div>
+
+        <div class="hero__inner">
+          <p class="eyebrow" data-reveal>Welcome to harni.uk</p>
+          <h1 class="hero__title" id="hero-title">
+            <span class="line" data-reveal><span>Harni</span></span>
+            <span class="line line--accent" data-reveal><span>is being built.</span></span>
+          </h1>
+          <p class="hero__lede" data-reveal>
+            A personal site, still going up. Nothing much to show yet beyond the view, and a small
+            game to pass the time while the rest gets built.
+          </p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--primary" href="#play">Play Pier Run</a>
+            <a class="btn btn--ghost" href="mailto:hello@harni.uk">Say hello</a>
+          </div>
+        </div>
+
+        <p class="hero__scroll" aria-hidden="true"><span>Scroll</span></p>
+      </section>
+
+      <section class="intro" id="coming" aria-labelledby="coming-title">
+        <div class="intro__portrait" data-reveal>
+          <picture>
+            <source
+              type="image/avif"
+              srcset="/media/portrait-400.avif 400w, /media/portrait-600.avif 600w, /media/portrait-900.avif 900w"
+              sizes="(min-width: 62rem) 30rem, 80vw"
+            />
+            <source
+              type="image/webp"
+              srcset="/media/portrait-400.webp 400w, /media/portrait-600.webp 600w, /media/portrait-900.webp 900w"
+              sizes="(min-width: 62rem) 30rem, 80vw"
+            />
+            <img
+              src="/media/portrait-600.jpg"
+              srcset="/media/portrait-400.jpg 400w, /media/portrait-600.jpg 600w, /media/portrait-900.jpg 900w"
+              sizes="(min-width: 62rem) 30rem, 80vw"
+              width="701"
+              height="900"
+              alt="A figure in a pale coat on the seafront at dusk, photographing the low sun over the ruined West Pier."
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </div>
+
+        <div class="intro__body">
+          <p class="eyebrow" data-reveal>What's coming</p>
+          <h2 class="section-title" id="coming-title" data-reveal>
+            Three things, none of them finished.
+          </h2>
+          <ul class="rooms" role="list">
+            <li class="room" data-reveal>
+              <span class="room__index" aria-hidden="true">01</span>
+              <h3 class="room__title">Work</h3>
+              <p class="room__body">
+                Selected projects, written up properly rather than dropped into a grid.
+              </p>
+              <span class="room__status" data-status="progress">In progress</span>
+            </li>
+            <li class="room" data-reveal>
+              <span class="room__index" aria-hidden="true">02</span>
+              <h3 class="room__title">Writing</h3>
+              <p class="room__body">
+                Notes on the things worth keeping, published when they are actually finished.
+              </p>
+              <span class="room__status" data-status="planned">Planned</span>
+            </li>
+            <li class="room" data-reveal>
+              <span class="room__index" aria-hidden="true">03</span>
+              <h3 class="room__title">Contact</h3>
+              <p class="room__body">
+                Email works today. A proper form arrives with the rest of the site.
+              </p>
+              <span class="room__status" data-status="open">
+                <a href="mailto:hello@harni.uk">hello@harni.uk</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="play" id="play" aria-labelledby="play-title">
+        <div class="play__head">
+          <p class="eyebrow" data-reveal>While you wait</p>
+          <h2 class="section-title" id="play-title" data-reveal>Pier Run</h2>
+          <p class="play__lede" data-reveal>
+            Along the front at last light. Over the benches, under the gulls, and pick up the lamps
+            as you pass. It gets faster than you expect.
+          </p>
+        </div>
+
+        <div class="game" data-game tabindex="0" role="group" aria-label="Pier Run mini game">
+          <canvas
+            class="game__canvas"
+            data-game-canvas
+            width="960"
+            height="360"
+            role="img"
+            aria-label="Pier Run: a side-scrolling running game set on the seafront. Press space to jump and the down arrow to duck."
+          ></canvas>
+
+          <div class="game__hud" data-game-hud aria-hidden="true">
+            <span class="hud__item"><b data-game-score>0</b><i>score</i></span>
+            <span class="hud__item"><b data-game-lights>0</b><i>lights</i></span>
+            <span class="hud__item"><b data-game-best>0</b><i>best</i></span>
+          </div>
+
+          <div class="game__overlay" data-game-overlay>
+            <p class="game__state" data-game-state>Ready when you are.</p>
+            <button class="btn btn--primary" type="button" data-game-action>Start run</button>
+            <p class="game__hint">
+              <span class="game__hint-keys">
+                <kbd>Space</kbd> jump · <kbd>↓</kbd> duck · <kbd>P</kbd> pause
+              </span>
+              <span class="game__hint-touch">Tap to jump · swipe down to duck</span>
+            </p>
+          </div>
+
+          <p class="game__live visually-hidden" role="status" data-game-live></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <p class="site-foot__mark">harni<span>.</span>uk</p>
+      <p class="site-foot__note">
+        Welcome page, <span data-year>2026</span>. The full site is on its way.
+      </p>
+      <p class="site-foot__contact"><a href="mailto:hello@harni.uk">hello@harni.uk</a></p>
+    </footer>
+  </body>
+</html>

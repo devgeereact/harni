@@ -1,0 +1,129 @@
+/* Corridor Run. */
+
+.play {
+  width: var(--shell);
+  margin-inline: auto;
+  padding-bottom: var(--space-2xl);
+}
+
+.play__head {
+  max-width: var(--measure);
+  margin-bottom: var(--space-l);
+}
+
+.play__lede {
+  margin-top: var(--space-s);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.game {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  box-shadow: 0 2rem 5rem -3rem var(--ink);
+  touch-action: manipulation;
+}
+
+.game__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 3;
+  background: transparent;
+}
+
+.game__hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: clamp(0.75rem, 3vw, 2rem);
+  padding: var(--space-s) var(--space-m);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.game.is-playing .game__hud {
+  opacity: 1;
+}
+
+.hud__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.hud__item b {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-variation-settings: 'opsz' 40;
+  line-height: 1;
+}
+
+.hud__item i {
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.game__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  text-align: center;
+  background: color-mix(in oklab, var(--night-900) 58%, transparent);
+  backdrop-filter: blur(2.5px);
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.game.is-playing .game__overlay {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.game__state {
+  max-width: 28ch;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-variation-settings: 'SOFT' 20, 'WONK' 1, 'opsz' 40;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.game__hint {
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}
+
+.game__hint-touch {
+  display: none;
+}
+
+/* Swap the control hint for the input the visitor actually has. */
+@media (hover: none), (max-width: 40rem) {
+  .game__hint-keys {
+    display: none;
+  }
+
+  .game__hint-touch {
+    display: inline;
+  }
+}
+
+@media (max-width: 40rem) {
+  .game__canvas {
+    aspect-ratio: 5 / 4;
+  }
+}

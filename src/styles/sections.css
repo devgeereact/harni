@@ -1,0 +1,346 @@
+/* Page furniture: header, hero, intro, footer. */
+
+.site-head {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) max(1.25rem, calc((100vw - var(--shell)) / 2));
+  background: linear-gradient(to bottom, color-mix(in oklab, var(--ink) 72%, transparent), transparent);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.wordmark__mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-variation-settings: 'WONK' 1;
+  line-height: 1;
+}
+
+.wordmark__text {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.wordmark__dot,
+.site-foot__mark span {
+  color: var(--gold);
+}
+
+.site-head nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+}
+
+.nav-link {
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--fg-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav-link:hover {
+  color: var(--fg);
+}
+
+.nav-link--cta {
+  padding-bottom: 2px;
+  color: var(--fg);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 34rem) {
+  .nav-link:not(.nav-link--cta) {
+    display: none;
+  }
+}
+
+/* --- Hero -------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 100svh;
+  padding: var(--space-2xl) max(1.25rem, calc((100vw - var(--shell)) / 2)) var(--space-xl);
+  isolation: isolate;
+  overflow: clip;
+}
+
+.hero__media {
+  position: absolute;
+  inset: -8% 0 -8% 0;
+  z-index: -2;
+  will-change: transform;
+}
+
+/* The picture box must be given the height explicitly, or the image inside
+   falls back to its intrinsic ratio and leaves the hero half painted. */
+.hero__media picture {
+  display: block;
+  height: 100%;
+}
+
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 44%;
+  /* The photograph is already close to the palette; it only needs holding
+     back a little so the type stays clear of the horizon glare. */
+  filter: saturate(0.9) contrast(1.04) brightness(0.86);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 90% at 20% 90%, color-mix(in oklab, var(--night-900) 92%, transparent), transparent 62%),
+    linear-gradient(to top, var(--night-900) 4%, color-mix(in oklab, var(--night-800) 45%, transparent) 46%, transparent 78%);
+}
+
+/* Narrow screens crop straight through the brightest part of the photograph,
+   so the scrim under the type has to work harder. */
+@media (max-width: 48rem) {
+  .hero::after {
+    background:
+      radial-gradient(140% 60% at 30% 100%, color-mix(in oklab, var(--night-900) 96%, transparent), transparent 70%),
+      linear-gradient(to top, var(--night-900) 22%, color-mix(in oklab, var(--night-900) 72%, transparent) 58%, transparent 88%);
+  }
+}
+
+.hero__inner {
+  max-width: 46rem;
+}
+
+.hero__title {
+  margin: 0 0 var(--space-m);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 144;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+.hero__title .line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__title .line > span {
+  display: block;
+}
+
+.hero__title .line--accent {
+  color: var(--gold);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+}
+
+/* The headline masks upward rather than fading, which reads as deliberate
+   rather than as a stock fade-in. */
+.hero__title .line.is-armed > span {
+  transform: translateY(105%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.hero__title .line.is-revealed > span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title .line.is-armed > span {
+    transform: none;
+  }
+}
+
+.hero__lede {
+  max-width: var(--measure);
+  color: var(--fg-muted);
+  font-size: var(--step-1);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-m);
+}
+
+.hero__scroll {
+  position: absolute;
+  right: max(1.25rem, calc((100vw - var(--shell)) / 2));
+  bottom: var(--space-xl);
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.hero__scroll span {
+  display: block;
+  padding-bottom: 3.5rem;
+  background: linear-gradient(to bottom, var(--gold), transparent) right bottom / 1px 3rem no-repeat;
+}
+
+@media (max-width: 48rem) {
+  .hero__scroll {
+    display: none;
+  }
+}
+
+/* Anchored sections must clear the fixed header. */
+.intro,
+.play {
+  scroll-margin-top: 5.5rem;
+}
+
+/* --- Intro ------------------------------------------------------------- */
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  width: var(--shell);
+  margin-inline: auto;
+  padding-block: var(--space-2xl);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 62rem) {
+  .intro {
+    grid-template-columns: 30rem 1fr;
+    align-items: start;
+    gap: var(--space-2xl);
+  }
+
+  .intro__portrait {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.intro__portrait picture {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2rem 5rem -2rem var(--ink);
+}
+
+.intro__portrait img {
+  width: 100%;
+  height: auto;
+  filter: saturate(0.95) contrast(1.02);
+}
+
+.rooms {
+  display: grid;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.room {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-xs) var(--space-s);
+  align-items: baseline;
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--rule);
+}
+
+.room__index {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  color: var(--gold);
+  font-variation-settings: 'WONK' 1;
+}
+
+.room__title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 500;
+  font-variation-settings: 'SOFT' 20, 'opsz' 40;
+  line-height: 1.1;
+}
+
+.room__body {
+  grid-column: 2;
+  max-width: var(--measure);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.room__status {
+  grid-column: 2;
+  justify-self: start;
+  padding: 0.3em 0.85em;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.room__status[data-status='progress'] {
+  color: var(--gold);
+  border-color: color-mix(in oklab, var(--gold) 55%, transparent);
+}
+
+.room__status[data-status='planned'] {
+  color: var(--fg-muted);
+}
+
+.room__status[data-status='open'] {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* --- Footer ------------------------------------------------------------ */
+
+.site-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-s);
+  width: var(--shell);
+  margin-inline: auto;
+  padding-block: var(--space-l) var(--space-xl);
+  border-top: 1px solid var(--rule);
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+}
+
+.site-foot__mark {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}

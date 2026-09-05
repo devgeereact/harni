@@ -1,0 +1,12 @@
+# Decision Log
+
+| ID | Date | Decision | Context | Alternatives | Consequences | Owner | Evidence |
+|---|---|---|---|---|---|---|---|
+| ADR-001 | 2026-09-05 | Adopt the GEE OS website scaffold | New project, empty repo | Blank Vite app | Full document set exists from the start; most of it stays `UNKNOWN` until there is something to say | Gideon | `~/.agents/gee-os/scripts/create-project.sh` |
+| ADR-002 | 2026-09-05 | Vite + TypeScript, no framework | One static page with one canvas game | React, Astro, plain HTML | 13.5 kB of JavaScript and no framework to keep current; a framework can be added later if the site grows | Gideon | `dist/assets/index-*.js` |
+| ADR-003 | 2026-09-05 | Port 5152, `strictPort` on `server` and `preview` | Registry block 15 was free | Let Vite pick | A clash fails loudly instead of drifting to 5173 | Gideon | `~/.claude/bin/dev-all check` reports `harni 5152 ok` |
+| ADR-004 | 2026-09-05 | Self-host Fraunces and Inter through Fontsource | Wanted an editorial serif with the SOFT and WONK axes | Google Fonts CDN, system fonts | No third-party request and no external dependency at runtime; about 270 kB of latin woff2 for the display face | Gideon | `src/main.ts` imports, build output |
+| ADR-005 | 2026-09-05 | Endless runner as the mini game | Owner chose it over key-hunt, rhythm and memory | Three lighter games | Most code of the four options, and the touch path needs a real device to sign off | Gideon | This conversation |
+| ADR-008 | 2026-09-05 | Re-theme the page and the game when the source photograph was swapped | The hotel-lobby image in `docs/` was replaced with the seafront shot mid-build | Keep the hotel palette and the corridor game against a seaside photograph | Palette retuned to cold slate and pale gold, and the game became Pier Run: benches to jump, gulls to duck, pier lights to collect. Physics untouched | Gideon | `src/styles/tokens.css`, `src/game/render.ts` |
+| ADR-006 | 2026-09-05 | Derive every image from the one supplied photograph with a committed script | Only one source image exists | Hand-export from an editor | The image set is reproducible; when the source was swapped, re-pointing the script and running `npm run media` regenerated all 22 files | Gideon | `scripts/build-media.sh` |
+| ADR-007 | 2026-09-05 | Visible copy is written as an honest holding page | Nothing is known about the owner's work yet | Invent a biography and project list | No fabricated claims ship; the copy is replaceable without touching layout | Gideon | `index.html` |
