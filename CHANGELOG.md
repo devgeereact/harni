@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-09-05, deployed
+
+- First deploy to `harni.uk`, 34 files by rsync into `~/harni.uk/`. No deletions;
+  the origin-lock `.htaccess`, `cgi-bin/` and `.well-known/` were left alone.
+- Verified live: `harni.uk` and `www.harni.uk` return 200 through Cloudflare,
+  direct-to-origin returns 403, fonts load, the game runs, console is clean.
+- Cloudflare's Email Obfuscation was mangling the contact links on the live site.
+  Wrapped them in `email_off` comments and redeployed.
+- Two Cloudflare behaviours worth knowing, neither a fault: it prepends its Content
+  Signals block to `robots.txt` (our rules survive at the end), and it injects a
+  script into the HTML, so bytes on the wire will not match bytes on disk.
+
 ## 2026-09-05, later
 
 - Cut the "what's coming" section. The page is now hero, game, footer, and the hero
