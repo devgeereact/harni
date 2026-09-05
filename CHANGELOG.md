@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-05, later
+
+- Cut the "what's coming" section. The page is now hero, game, footer, and the hero
+  says what the site is for rather than listing what it will hold.
+- Dropped the portrait crop from `scripts/build-media.sh`, since nothing displays it
+  any more. `public/media` went from 22 files to 13.
+- Made the obstacles readable. They were drawn in near-black against a dark scene:
+  benches now have a lit body with a gold rim light, gulls are white with a dark
+  outline, and both they and the runner cast a contact shadow on the deck.
+
 ## 2026-09-05
 
 First build. Nothing has been deployed.

@@ -3,8 +3,8 @@
 ## Product promise
 
 A visitor who has been given the address `harni.uk` before the site exists lands on
-a finished-looking welcome page, understands that the full site is on its way, has a
-way to make contact, and has something to do while they are there.
+a finished-looking welcome page, understands what the site is for, has a way to make
+contact, and has something to do while they are there.
 
 ## First-release proof
 
@@ -17,19 +17,20 @@ way to make contact, and has something to do while they are there.
 
 ## Scope
 
-- Must have: hero, "what's coming" list, Pier Run, mailto contact, responsive
-  layout, `prefers-reduced-motion` support, keyboard operation.
+- Must have: hero, Pier Run, mailto contact, responsive layout,
+  `prefers-reduced-motion` support, keyboard operation.
 - Should have: responsive image set in AVIF/WebP/JPEG, local fonts (no third-party
   requests), Open Graph tags, best score kept in `localStorage`.
-- Later: real biography and project copy, a contact form, a work section.
+- Later: thoughts and views, which is what the site is for. A contact form. Whatever
+  structure those need.
 - Will not build now: CMS, backend, analytics, service worker, install prompt.
 
 ## Functional requirements
 
 | ID | User outcome | Acceptance evidence | Priority | Status |
 |---|---|---|---|---|
-| FR-001 | Visitor sees a hero that names the site and explains its state | Screenshot at 390x844 and 1440x900 | Must | Done |
-| FR-002 | Visitor can reach the owner | `mailto:hello@harni.uk` present in header, list and footer | Must | Done |
+| FR-001 | Visitor sees a hero that names the site and says what it is for | Screenshot at 390x844 and 1440x900 | Must | Done |
+| FR-002 | Visitor can reach the owner | `mailto:hello@harni.uk` present in header, hero and footer | Must | Done |
 | FR-003 | Visitor can start, pause, lose and restart Pier Run | Observed in browser: start, `P` pause, `P` resume, crash, restart | Must | Done |
 | FR-004 | The run keeps a personal best between visits | `localStorage` key `harni.pier-run.best` read back after reload | Should | Done |
 | FR-005 | The game is playable on touch | Tap to jump, swipe down to duck; hint text swaps on `hover: none` | Must | Partial — code path written, not tested on a real device |

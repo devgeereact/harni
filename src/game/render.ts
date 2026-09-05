@@ -157,49 +157,80 @@ const drawShore = (ctx: CanvasRenderingContext2D, world: World, reducedMotion: b
 
 const drawObstacle = (ctx: CanvasRenderingContext2D, obstacle: Obstacle, elapsed: number): void => {
   if (obstacle.kind === 'bench') {
-    ctx.fillStyle = PALETTE.ink;
-    // Seat, back rail and two legs, in silhouette.
-    roundRect(ctx, obstacle.x, obstacle.y + obstacle.h * 0.45, obstacle.w, 5, 2);
-    ctx.fill();
-    roundRect(ctx, obstacle.x + 1, obstacle.y, obstacle.w - 2, 4, 2);
-    ctx.fill();
-    ctx.fillRect(obstacle.x + 3, obstacle.y, 3, obstacle.h);
-    ctx.fillRect(obstacle.x + obstacle.w - 6, obstacle.y, 3, obstacle.h);
+    const { x, y, w, h } = obstacle;
+    const seatY = y + h * 0.45;
 
-    ctx.strokeStyle = PALETTE.haze;
-    ctx.globalAlpha = 0.4;
-    ctx.lineWidth = 1;
+    // Contact shadow: without it the bench floats above the deck.
+    ctx.fillStyle = 'rgba(5, 9, 14, 0.55)';
     ctx.beginPath();
-    ctx.moveTo(obstacle.x, obstacle.y + obstacle.h * 0.45);
-    ctx.lineTo(obstacle.x + obstacle.w, obstacle.y + obstacle.h * 0.45);
+    ctx.ellipse(x + w / 2, GROUND_Y + 2, w * 0.62, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // A lit body rather than a silhouette, or it disappears into the deck.
+    ctx.fillStyle = PALETTE.slat;
+    ctx.strokeStyle = PALETTE.ink;
+    ctx.lineWidth = 1.5;
+    for (const [bx, by, bw, bh, br] of [
+      [x, seatY, w, 6, 2],
+      [x + 1, y, w - 2, 5, 2],
+      [x + 3, y + 2, 4, h - 2, 1],
+      [x + w - 7, y + 2, 4, h - 2, 1],
+    ] as const) {
+      roundRect(ctx, bx, by, bw, bh, br);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // Rim light along the top edges, picked out by the low sun behind.
+    ctx.strokeStyle = PALETTE.goldBright;
+    ctx.globalAlpha = 0.9;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x + 1, y + 0.5);
+    ctx.lineTo(x + w - 1, y + 0.5);
+    ctx.moveTo(x, seatY + 0.5);
+    ctx.lineTo(x + w, seatY + 0.5);
     ctx.stroke();
     ctx.globalAlpha = 1;
     return;
   }
 
-  // Gull: body at the bottom of its column, wings beating around it.
+  // Gull: white bird with a dark outline, so it holds up over the bright sky
+  // glow as well as over the sea.
   const cx = obstacle.x + obstacle.w / 2;
   const cy = obstacle.h - 8;
   const beat = Math.sin(elapsed * 9 + obstacle.x * 0.05);
   const span = obstacle.w / 2;
 
-  ctx.strokeStyle = PALETTE.ink;
-  ctx.lineWidth = 3.5;
+  const wings = (): void => {
+    ctx.beginPath();
+    ctx.moveTo(cx - span, cy - beat * 9);
+    ctx.quadraticCurveTo(cx - span * 0.4, cy - 8, cx, cy);
+    ctx.quadraticCurveTo(cx + span * 0.4, cy - 8, cx + span, cy - beat * 9);
+    ctx.stroke();
+  };
+
   ctx.lineCap = 'round';
+  ctx.strokeStyle = PALETTE.ink;
+  ctx.lineWidth = 7;
+  wings();
+  ctx.strokeStyle = PALETTE.bone;
+  ctx.lineWidth = 3.5;
+  wings();
+
+  ctx.strokeStyle = PALETTE.ink;
+  ctx.lineWidth = 2;
+  ctx.fillStyle = PALETTE.bone;
   ctx.beginPath();
-  ctx.moveTo(cx - span, cy - beat * 9);
-  ctx.quadraticCurveTo(cx - span * 0.4, cy - 8, cx, cy);
-  ctx.quadraticCurveTo(cx + span * 0.4, cy - 8, cx + span, cy - beat * 9);
+  ctx.ellipse(cx, cy + 1, 7.5, 5, 0, 0, Math.PI * 2);
+  ctx.fill();
   ctx.stroke();
 
-  ctx.fillStyle = PALETTE.ink;
-  ctx.beginPath();
-  ctx.ellipse(cx, cy + 1, 7, 4.5, 0, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillStyle = PALETTE.gold;
   ctx.beginPath();
   ctx.moveTo(cx + 6, cy);
-  ctx.lineTo(cx + 12, cy + 1.5);
-  ctx.lineTo(cx + 6, cy + 3);
+  ctx.lineTo(cx + 13, cy + 1.5);
+  ctx.lineTo(cx + 6, cy + 3.5);
   ctx.closePath();
   ctx.fill();
 };
@@ -240,6 +271,13 @@ const drawRunner = (ctx: CanvasRenderingContext2D, world: World): void => {
   const w = RUNNER.width;
   const x = runner.x;
   const top = runner.y - h;
+
+  // Contact shadow, which also reads as height while airborne.
+  const airborne = Math.max(0, GROUND_Y - runner.y);
+  ctx.fillStyle = `rgba(5, 9, 14, ${(0.55 - airborne / 260).toFixed(3)})`;
+  ctx.beginPath();
+  ctx.ellipse(x + w / 2, GROUND_Y + 2, w * 0.5 + airborne * 0.05, 3.5, 0, 0, Math.PI * 2);
+  ctx.fill();
 
   ctx.save();
   ctx.fillStyle = PALETTE.bone;

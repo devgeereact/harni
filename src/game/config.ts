@@ -51,6 +51,8 @@ export const PALETTE = {
   haze: '#7d919e',
   sea: '#16232f',
   deck: '#0a1119',
+  /** Bench bodies: light enough to read against the deck and the railing. */
+  slat: '#4a6072',
   gold: '#d9bd7c',
   goldBright: '#f0dda6',
   bone: '#eef2f3',

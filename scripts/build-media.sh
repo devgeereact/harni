@@ -33,10 +33,6 @@ encode() {
 sips -s format png "$src" --out "$tmp/wide.png" >/dev/null
 encode "$tmp/wide.png" "shore" 1920 1280 800 480
 
-# Portrait crop around the figure (source is 2048x1536).
-sips -c 900 700 --cropOffset 480 800 "$src" --out "$tmp/portrait.png" >/dev/null
-encode "$tmp/portrait.png" "portrait" 900 600 400
-
 # Tiny blurred placeholder, inlined as a data URI at build time.
 sips -Z 16 "$tmp/wide.png" --out "$tmp/lqip.png" >/dev/null
 sips -s format jpeg -s formatOptions 30 "$tmp/lqip.png" --out "$out/shore-lqip.jpg" >/dev/null

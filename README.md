@@ -1,9 +1,9 @@
 # harni
 
-Welcome page for `harni.uk`. One static page: a hero built from the owner's
-photograph of the seafront at dusk, a short "what's coming" list, and Pier Run, a
-small canvas endless runner in the same light. Built with Vite and TypeScript, no
-framework.
+Welcome page for `harni.uk`, a personal space for the owner's thoughts and views.
+One static page: a hero built from their photograph of the seafront at dusk, and
+Pier Run, a small canvas endless runner in the same light. Built with Vite and
+TypeScript, no framework.
 
 ## Current state
 

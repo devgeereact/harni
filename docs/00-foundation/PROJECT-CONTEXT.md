@@ -15,8 +15,9 @@
 
 ## Boundaries
 
-- First release: one page. Hero, a short "what's coming" list, the Pier Run
-  mini game, a mailto contact. No CMS, no backend, no analytics.
+- First release: one page. Hero, the Pier Run mini game, a mailto contact. No CMS,
+  no backend, no analytics. The "what's coming" list was cut on 2026-09-05: the
+  owner wanted a plain welcome, not a roadmap.
 - Explicit exclusions: authentication, forms, database, service worker, PWA install,
   cookie banner. None of them have a use yet.
 - Constraints: the cPanel host has no Node, so the build runs locally and ships a

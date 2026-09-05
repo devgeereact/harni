@@ -11,7 +11,7 @@ except the rows already marked NOT TESTED.
 | Console clean | PASS | `console --errors` after a fresh load | No errors, no warnings |
 | Production build | PASS | `npm run build` | Type check clean, 13.5 kB JS, 16.5 kB CSS |
 | Type check | PASS | `npm run typecheck` | No output |
-| Desktop layout | PASS | Viewport screenshots at 1440x900, hero / intro / play | Screenshots reviewed |
+| Desktop layout | PASS | Viewport screenshots at 1440x900, hero and play | Screenshots reviewed |
 | Mobile layout | PASS | Viewport screenshots at 390x844, hero / play | Screenshots reviewed. Hero image only filled part of the section until `.hero__media picture` was given an explicit height; re-shot after the fix |
 | Text contrast | PASS | Computed colours against the page background, WCAG 2 formula | 8.05:1 body, 10.25:1 eyebrow, re-measured after the palette change. AAA for normal text |
 | Game: start | PASS | Click "Start run" | Panel enters `is-playing`, HUD appears, score climbs |
