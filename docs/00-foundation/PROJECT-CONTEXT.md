@@ -38,3 +38,28 @@
 | `hello@harni.uk` is a live mailbox | ASSUMPTION | Address used in the page; not tested | Send a test message before launch |
 | Visible copy is placeholder voice, not final | FACT | Written for this scaffold | Owner replaces before launch |
 | Port 5152 is allocated to this project | DECISION | `~/.claude/CLAUDE.md` § Dev-server ports, block 15 | — |
+| The owner is Harni Muharami, an NHS nurse and clinical educator in London | FACT | Owner bio, 2026-10-01 | None |
+| The bookstore contact address is `info@harni.uk`; the live page uses `hello@harni.uk` | ASSUMPTION | Owner message, 2026-10-01 | Confirm which mailbox receives mail |
+| Instagram `@lulu_harni` and TikTok `@harni_m` are live and public | ASSUMPTION | Owner messages, 2026-10-01 | Confirm both |
+| Print is made and shipped by Amazon KDP. Each book is sold in one channel, Amazon. All 13 books are live on Amazon.co.uk as Kindle and paperback | FACT | ADR-012, ADR-023; Amazon listings read 2026-10-01 | Re-check at deploy |
+| The launch ten titles of ADR-015 are superseded. The catalogue is the 13 books on the owner's Amazon author page, listed in `docs/01-product/CATALOGUE.md` | FACT | ADR-023; Amazon author page and 13 listings read 2026-10-01 | Re-read Amazon before any deploy |
+| KDP Select blocks selling an enrolled ebook on other sites | ASSUMPTION | Third-party sources only, so PARTIAL | Read KDP's own Select terms. The practical effect is settled for now: all 13 books show Kindle Unlimited, so harni.uk sells no ebook (BR-002) |
+| Legal pages are AI-drafted and the owner reads them before launch | DECISION | Owner message, 2026-10-01 | Professional review advised before direct ebook sales |
+| Amazon author page: https://www.amazon.co.uk/stores/author/B0G27S5PSV | FACT | Owner supplied it, 2026-10-01 | None |
+| All 13 books show Kindle Unlimited, so are enrolled in KDP Select, so no ebook is sold on harni.uk | FACT | Amazon listings read 2026-10-01; ADR-023 | Re-check if the owner leaves KDP Select |
+| The books were published between 11 Dec 2025 and 5 Feb 2026. One Amazon review exists (5.0, The Honest Truth About Nurses). The site shows no reviews | FACT | Amazon listings read 2026-10-01 | Re-read before any deploy |
+| The audience is NHS nurses and healthcare professionals. Eleven of the 13 books are NHS nursing and healthcare titles. Two are life titles | FACT | Amazon listings, ADR-023 | None |
+| The covers are the owner's real covers, saved from Amazon at 400 and 800 px wide and self-hosted in `public/images/books/` | FACT | `public/images/books/`, ADR-023 | Owner to confirm she is happy to use them |
+| The author photo is her Amazon author-page profile image, in `public/images/author/harni-600.jpg`. It is a casual photo in front of a framed portrait drawing. She chose to use it | FACT | Owner choice, 2026-10-01 | Recommend a more formal photo later |
+| The Amazon bio says she "contributes to high-quality, evidence-based patient care". The owner published it, so the phrase is usable | FACT | Amazon author page, 2026-10-01 | None |
+| harni.uk is a shop window: it takes no orders or payments, and every purchase happens on Amazon | DECISION | ADR-023 | None |
+| Dev server: the owner's dev-all tool serves the site at `http://localhost:5202`. `vite.config.ts` says 5152 | FACT | Owner, 2026-10-01 | Reconcile the two when convenient |
+
+## Bookstore release (built on localhost, not deployed)
+
+- Supersedes the first-release boundary above for the bookstore release. See ADR-011 to ADR-016 and ADR-023 (2026-10-01, real catalogue).
+- Scope: Home, Books, 13 book pages (the real catalogue, ADR-023), About, Contact, Join the list, Thank you, Events, Reviews, Pier Run, Privacy, Cookies, Terms, Delivery and refunds.
+- Allowed by ADR-011: a mailing list form, a statistics tool after consent, a cookie consent banner, hosted checkout links, social links. Checkout links are not used: every book is in KDP Select, so the site links to Amazon only (ADR-023). The other items are placeholders in the localhost preview.
+- Still excluded: authentication, database, service worker, PWA install, basket, accounts, prices on the site.
+- Hosting is unchanged: cPanel behind Cloudflare, build locally and ship `dist/` with `cpanel-deploy`. Choosing other hosts and payment companies is not decided.
+- Built on localhost only. Nothing is pushed or deployed. The owner checks the preview first, and deploy is NOT authorised.

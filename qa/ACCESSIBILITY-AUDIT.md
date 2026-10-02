@@ -19,12 +19,28 @@ No assistive technology was run, so this is not a sign-off.
 
 ## Present but unverified
 
-- One `h1`, `h2` per section, `role="list"` on the rooms list.
+- One `h1` per page and `h2` per section.
 - `role="status"` live region announces the end of a run.
 - Canvas carries `role="img"` and a description of the controls.
-- Decorative hero image has an empty `alt`; the portrait has a described `alt`.
+- On `/play/` the hero photograph has a described `alt`: "Figure in a pale coat photographing the
+  low sun over Brighton's ruined West Pier". The portrait crop no longer exists.
+
+## Bookstore release, 2026-10-01 (partial, localhost only)
+
+Measured in a browser and by script. Not a sign-off: no assistive technology was run.
+
+- Contrast: seven text and background pairs, 4.99:1 to 14.27:1, all pass AA.
+- Structure: one `h1` on every page; the Books page has a hidden `h2` so headings do not jump from
+  `h1` to `h3`. Every `<img>` has `alt`. Book tiles and social icons are `aria-hidden` and sit
+  beside the text that names them. "View book" links carry `View book: <title>`.
+- Keyboard: the skip link is the first stop, with a 3px focus ring. The phone menu uses
+  `aria-expanded` and closes with Escape. Form errors move focus to the first bad field.
+- Layout: no horizontal scroll at 375px or 390px on any page.
+- Target size: everything is 24px or taller at 375px, which meets WCAG 2.2 AA. See known issue 15.
+- Motion: bookstore pages animate nothing. `/play/` honours `prefers-reduced-motion`.
+- External links that open a new tab say so in hidden text.
 
 ## Not tested
 
-VoiceOver, NVDA or any other screen reader. Touch target sizes on a real device.
-Zoom to 200%. Windows High Contrast.
+VoiceOver, NVDA or any other screen reader. Touch target sizes and the phone menu on a real device.
+Zoom to 200%. Windows High Contrast. A full keyboard walk of every page. Safari and Firefox.

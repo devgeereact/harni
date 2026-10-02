@@ -1,18 +1,15 @@
-import { RUNNER } from './config';
-import type { Intent } from './types';
+import type { Intent, Status } from './types.ts';
 
-interface InputHandlers {
-  /** True while the simulation should own the arrow and space keys. */
-  isPlaying: () => boolean;
-  /** Space or a tap outside play: start, or restart after a crash. */
-  onPrimary: () => void;
+export interface InputHandlers {
+  status: () => Status;
+  /** Space, up or a tap on the game while it is not running: start or resume. */
+  onStart: () => void;
   onTogglePause: () => void;
 }
 
 export interface InputController {
   intent: Intent;
-  /** Expires an unconsumed jump so a buffered press cannot fire seconds later. */
-  tick: (dt: number) => void;
+  /** Lets go of everything, for example when the game pauses or the tab loses focus. */
   release: () => void;
   destroy: () => void;
 }
@@ -21,46 +18,67 @@ const JUMP_KEYS = new Set(['Space', 'ArrowUp', 'KeyW']);
 const DUCK_KEYS = new Set(['ArrowDown', 'KeyS']);
 const PAUSE_KEYS = new Set(['KeyP', 'Escape']);
 
-/** Vertical travel, in CSS pixels, that turns a touch drag into a duck. */
-const SWIPE_THRESHOLD = 24;
+/** Downward travel in CSS pixels that turns a drag into a duck. */
+const SWIPE = 22;
+/** A touch waits this long so a swipe down is not mistaken for a jump. */
+const TOUCH_DELAY_MS = 55;
 
-export const createInput = (root: HTMLElement, handlers: InputHandlers): InputController => {
+const isField = (el: EventTarget | null): boolean =>
+  el instanceof HTMLElement && el.closest('input, select, textarea') !== null;
+
+export const createInput = (root: HTMLElement, stage: HTMLElement, handlers: InputHandlers): InputController => {
   const intent: Intent = { jumpHeld: false, jumpPressed: false, duck: false };
-  let bufferLeft = 0;
-  let pointerStartY: number | null = null;
+  let pointerId: number | null = null;
+  let startY = 0;
+  let pending: number | null = null;
+  let decided = false;
 
-  const requestJump = (): void => {
-    intent.jumpHeld = true;
+  const press = (): void => {
     intent.jumpPressed = true;
-    bufferLeft = RUNNER.jumpBuffer;
+    intent.jumpHeld = true;
+  };
+
+  const clearPending = (): void => {
+    if (pending !== null) window.clearTimeout(pending);
+    pending = null;
+  };
+
+  const release = (): void => {
+    clearPending();
+    intent.jumpHeld = false;
+    intent.jumpPressed = false;
+    intent.duck = false;
+    pointerId = null;
   };
 
   const onKeyDown = (event: KeyboardEvent): void => {
-    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.metaKey || event.ctrlKey || event.altKey || isField(event.target)) return;
+    const status = handlers.status();
+    const target = event.target instanceof HTMLElement ? event.target : null;
+    const onControl = target !== null && target.closest('button, a, summary') !== null;
 
-    // Pause needs to work in both directions, so it also fires while the run
-    // is held and only the panel has focus.
-    if (PAUSE_KEYS.has(event.code) && (handlers.isPlaying() || root.contains(document.activeElement))) {
-      event.preventDefault();
-      handlers.onTogglePause();
-      return;
-    }
-
-    if (JUMP_KEYS.has(event.code)) {
-      if (!handlers.isPlaying()) {
-        // Space only starts a run when the game panel already has focus,
-        // otherwise it must stay a page scroll.
-        if (!root.contains(document.activeElement)) return;
+    if (PAUSE_KEYS.has(event.code)) {
+      if (status === 'running' || status === 'paused') {
         event.preventDefault();
-        handlers.onPrimary();
-        return;
+        handlers.onTogglePause();
       }
-      event.preventDefault();
-      if (!event.repeat) requestJump();
       return;
     }
-
-    if (DUCK_KEYS.has(event.code) && handlers.isPlaying()) {
+    if (JUMP_KEYS.has(event.code)) {
+      // Space must activate focused buttons and links, not steal their keyboard action.
+      if (onControl) return;
+      if (status === 'running') {
+        event.preventDefault();
+        if (!event.repeat) press();
+        else intent.jumpHeld = true;
+      } else if (event.target === root && !event.repeat) {
+        // Only when the game itself has focus, otherwise space must keep scrolling the page.
+        event.preventDefault();
+        handlers.onStart();
+      }
+      return;
+    }
+    if (DUCK_KEYS.has(event.code) && status === 'running' && !onControl) {
       event.preventDefault();
       intent.duck = true;
     }
@@ -72,66 +90,74 @@ export const createInput = (root: HTMLElement, handlers: InputHandlers): InputCo
   };
 
   const onPointerDown = (event: PointerEvent): void => {
-    // Let real controls (the start button, links) handle their own taps.
-    if ((event.target as HTMLElement).closest('button, a')) return;
-
+    if (event.target instanceof HTMLElement && event.target.closest('button, a')) return;
     root.focus({ preventScroll: true });
-    if (!handlers.isPlaying()) {
-      handlers.onPrimary();
+    const status = handlers.status();
+    if (status === 'ready') {
+      handlers.onStart();
       return;
     }
-    pointerStartY = event.clientY;
-    requestJump();
+    if (status !== 'running' || pointerId !== null) return;
+    pointerId = event.pointerId;
+    startY = event.clientY;
+    decided = false;
+    try { stage.setPointerCapture(event.pointerId); } catch { /* not every browser allows it */ }
+    if (event.pointerType === 'touch') {
+      pending = window.setTimeout(() => {
+        pending = null;
+        if (pointerId !== null && !decided) {
+          decided = true;
+          press();
+        }
+      }, TOUCH_DELAY_MS);
+    } else {
+      decided = true;
+      press();
+    }
   };
 
   const onPointerMove = (event: PointerEvent): void => {
-    if (pointerStartY === null) return;
-    if (event.clientY - pointerStartY > SWIPE_THRESHOLD) {
+    if (event.pointerId !== pointerId) return;
+    if (event.clientY - startY > SWIPE) {
+      clearPending();
+      decided = true;
       intent.duck = true;
       intent.jumpHeld = false;
     }
   };
 
-  const endPointer = (): void => {
-    pointerStartY = null;
-    intent.jumpHeld = false;
-    intent.duck = false;
-  };
-
-  const onBlur = (): void => {
+  const onPointerEnd = (event: PointerEvent): void => {
+    if (event.pointerId !== pointerId) return;
+    if (pending !== null && !decided) {
+      // A quick tap that ended inside the delay still jumps, as a short hop.
+      clearPending();
+      press();
+    }
+    pointerId = null;
     intent.jumpHeld = false;
     intent.duck = false;
   };
 
   document.addEventListener('keydown', onKeyDown);
   document.addEventListener('keyup', onKeyUp);
-  root.addEventListener('pointerdown', onPointerDown);
-  root.addEventListener('pointermove', onPointerMove);
-  root.addEventListener('pointerup', endPointer);
-  root.addEventListener('pointercancel', endPointer);
-  window.addEventListener('blur', onBlur);
+  stage.addEventListener('pointerdown', onPointerDown);
+  stage.addEventListener('pointermove', onPointerMove);
+  stage.addEventListener('pointerup', onPointerEnd);
+  stage.addEventListener('pointercancel', onPointerEnd);
+  window.addEventListener('blur', release);
 
   return {
     intent,
-    tick: (dt) => {
-      if (!intent.jumpPressed) return;
-      bufferLeft -= dt;
-      if (bufferLeft <= 0) intent.jumpPressed = false;
-    },
-    release: () => {
-      intent.jumpHeld = false;
-      intent.jumpPressed = false;
-      intent.duck = false;
-      pointerStartY = null;
-    },
+    release,
     destroy: () => {
+      release();
       document.removeEventListener('keydown', onKeyDown);
       document.removeEventListener('keyup', onKeyUp);
-      root.removeEventListener('pointerdown', onPointerDown);
-      root.removeEventListener('pointermove', onPointerMove);
-      root.removeEventListener('pointerup', endPointer);
-      root.removeEventListener('pointercancel', endPointer);
-      window.removeEventListener('blur', onBlur);
+      stage.removeEventListener('pointerdown', onPointerDown);
+      stage.removeEventListener('pointermove', onPointerMove);
+      stage.removeEventListener('pointerup', onPointerEnd);
+      stage.removeEventListener('pointercancel', onPointerEnd);
+      window.removeEventListener('blur', release);
     },
   };
 };

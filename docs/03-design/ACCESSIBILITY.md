@@ -1,12 +1,17 @@
 # Accessibility Specification
 
-- Target standard and jurisdiction: `UNKNOWN`
-- Keyboard and focus behaviour: `UNKNOWN`
-- Semantic structure and labels: `UNKNOWN`
-- Contrast and non-colour cues: `UNKNOWN`
-- Touch targets and zoom: `UNKNOWN`
-- Screen-reader announcements: `UNKNOWN`
-- Reduced motion: `UNKNOWN`
-- Test devices and assistive technology: `UNKNOWN`
+Status: built on localhost, not deployed. See ADR-011 to ADR-016 ADR-023 and ADR-025 (2026-10-01). Evidence is in `docs/06-quality/EVIDENCE-STATUS.md`.
+
+- Target standard and jurisdiction: ASSUMPTION: WCAG 2.2 AA, United Kingdom. Owner to confirm.
+- Keyboard and focus behaviour: every control is reachable by keyboard. Visible 3px focus ring (ink on white) with a 3px offset. The existing skip link stays. The cookie banner and its reopen link work by keyboard.
+- Semantic structure and labels: one `h1` per page, landmarks for header, main and footer, a visible label on every form field, and a consent checkbox that is unticked by default.
+- Contrast and non-colour cues: every text pair is at 4.5:1 or more. Measured 4.57 to 15.91 by script on 2026-10-01 for the interface (coral text uses #E00B41, never the 3.52:1 brand coral). The ten designed covers are retired (ADR-023), and the real covers are images, so no contrast figure applies to them. Links and states do not rely on colour alone.
+- Touch targets and zoom: buttons are 48px high. Text scales with the browser. No zoom lock.
+- Screen-reader announcements: form results use `role="status"`, as the existing game results do. Cover alt text rule (ADR-023): on cards, where the title link sits beside the image, the cover has an empty `alt` so it is not read twice. On the book page the cover has `alt="Cover of <title> by Harni Muharami"`. The author photo has `alt="Harni Muharami"`. The card "Read more" cue carries the book title as hidden text so the link is descriptive (a Lighthouse finding on Books, fixed).
+- Reduced motion: honour `prefers-reduced-motion` on every animated element. The existing reveal, parallax and game behaviour already does.
+- Pier Run (ADR-025): the canvas has a descriptive `aria-label`, the game group has a label and a controls description, and a visually hidden `role="status"` live region announces "Run started.", "Paused.", "Resumed." and the game-over summary, plus zone, hit and pickup messages. Keyboard: Space, Up or W to jump, Down or S to duck, P or Escape to pause. Pause returns focus to the game and Play again receives focus (checked by script). The game pauses when the tab is hidden. Touch: tap to jump, swipe down to duck, with `touch-action: none` while playing. Sound is off by default and the audio context is created only after the toggle. Score saving is off until the player ticks the labelled box, and the storage status is announced. Reduced motion lowers the pace cap and turns off particles, parallax and idle scroll. The game uses the site contrast tokens (coral text is #E00B41), not re-measured with a tool.
+- Legal pages (ADR-025): each has one `h1`, an "In short" summary, a contents list with jump links and section headings. Data tables have a visually hidden `caption`, `scope="col"` column headers and `scope="row"` row headers, and sit in a scrolling wrapper so they do not overflow at 390px.
+- About, Events and Reviews (ADR-025): About has jump links to its sections. Reviews cover cards use the cover alt rule above. Lighthouse mobile accessibility on About and Play is 100 (automated only).
+- Test devices and assistive technology: NOT TESTED for a real phone, a screen reader, a full keyboard walk of every page, audio, and a reduced-motion before and after comparison of Pier Run. Done so far (Chromium only): layouts at 1440x900, 390x844 and 844x390 for Pier Run, scripted keyboard play, emulated reduced motion (PARTIAL) and Lighthouse. Screen readers and a real phone are not yet covered.
 
 Record manual and automated evidence in `qa/ACCESSIBILITY-AUDIT.md`. Automated checks alone are insufficient.
