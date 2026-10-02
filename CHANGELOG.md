@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-02, deployed to harni.uk
+
+- Commit 4a76e41 (bookstore, real catalogue, emailed copies, legal pages, Pier Run rebuild) deployed with `cpanel-deploy`. Form email sending is disabled on the host until configured. No git remote exists yet, so nothing is pushed.
+
 ## 2026-10-01, email copies, About, Events, Reviews, legal pages and Pier Run rebuild (localhost only)
 
 Recorded as ADR-025 (ADR-024 was taken by an earlier session and is partly superseded).

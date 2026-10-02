@@ -1,6 +1,10 @@
 # Deployment
 
-Status: NO DEPLOY IS AUTHORISED for the bookstore release. The owner checks the localhost preview
+Status: DEPLOYED on 2026-10-02 (commit 4a76e41), after the owner said "commit, push and deploy now". Sending of form email is still DISABLED on the host until HARNI_MAIL_ENABLED and its companions are set (EMAIL.md). Earlier text below describes the pre-deploy gates.
+
+Last deploy: `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin --go`. The script refuses to delete `.well-known` and `cgi-bin` unless they are kept, so always pass those two. It replaced 8 old welcome-page asset files and left `.htaccess` alone. A copy of the live site from before the deploy is in `~/.harni-backups/2026-10-02-pre-deploy/` (outside the repo). Rollback: re-sync that folder to `~/harni.uk/` over the `cpanel` SSH alias, keeping `.htaccess`. Smoke test after deploy: 16 pages and assets returned 200, a missing page returned 404, `www.harni.uk` returned 200, `/api/message.php` ran under PHP 8.4 and returned the JSON "sending not available yet", the console was clean, and the only host contacted was harni.uk with no cookies or local storage.
+
+Status before the deploy: NO DEPLOY IS AUTHORISED for the bookstore release. The owner checks the localhost preview
 first and then says so (ADR-016). Facts below come from `README.md` and `CHANGELOG.md`. The
 deploy script itself was not re-read for this file.
 
