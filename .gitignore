@@ -8,3 +8,6 @@ build/
 coverage/
 playwright-report/
 test-results/
+
+# Route HTML is generated from src/content and src/data.
+.generated/

@@ -295,7 +295,15 @@ if (!defined('HARNI_MAIL_TEST')) {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     $allowedOrigins = ['https://harni.uk', 'https://www.harni.uk'];
     // A localhost origin is accepted only by PHP's local development server.
-    if (PHP_SAPI === 'cli-server') $allowedOrigins = array_merge($allowedOrigins, ['http://localhost:5152', 'http://localhost:5202', 'http://127.0.0.1:5152']);
+    if (PHP_SAPI === 'cli-server') {
+        $allowedOrigins = array_merge($allowedOrigins, ['http://localhost:5152', 'http://localhost:5202', 'http://127.0.0.1:5152']);
+        // The local launcher may use a free custom port. Never extend production origins.
+        $localPort = getenv('HARNI_WEB_PORT');
+        if (is_string($localPort) && preg_match('/^[0-9]+$/D', $localPort) === 1 && (int)$localPort >= 1 && (int)$localPort <= 65535) {
+            $allowedOrigins[] = 'http://127.0.0.1:' . (int)$localPort;
+            $allowedOrigins[] = 'http://localhost:' . (int)$localPort;
+        }
+    }
     if (!in_array($origin, $allowedOrigins, true)) respond(403, ['ok' => false, 'message' => 'Please submit the form from harni.uk.']);
     if (strtolower(explode(';', $_SERVER['CONTENT_TYPE'] ?? '')[0]) !== 'application/json') respond(415, ['ok' => false, 'message' => 'Unsupported form format.']);
     if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 65536) respond(413, ['ok' => false, 'message' => 'Your message is too long.']);

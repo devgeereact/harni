@@ -309,7 +309,7 @@ const iconMail =
 /**
  * The contact section follows the 21st.dev "contact-with-globe" block exactly: two columns, contact
  * links and a globe on the left, a "Send a message" card on the right. Only the page header above it
- * is this site's own band. Plain HTML, CSS and one small script; no React (ADR-022).
+ * is this site's own band. The original static content is rendered and hydrated by React (ADR-026).
  */
 const messageForm = (): string => `
 <div class="contact-card" data-contact data-reveal style="--reveal-delay:150ms">

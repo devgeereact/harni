@@ -21,3 +21,7 @@ Read `.agent/PROJECT.yml` and `.agent/CURRENT-TASK.md`, then the shared GEE OS c
 - Never invent project facts. Use `UNKNOWN` or `ASSUMPTION` with an owner and next check.
 - Never claim readiness without the matching evidence.
 - MCP and skill availability never expands user authority.
+
+
+## TypeScript requirement
+Application code must use TypeScript (.ts/.tsx), with React and Tailwind. Keep HTML limited to required build entries, generated output and archived design references. Preserve approved behaviour when migrating source.

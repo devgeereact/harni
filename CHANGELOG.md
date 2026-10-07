@@ -1,3 +1,11 @@
+## 2026-10-07, project layout cleanup
+
+Moved 27 generated route HTML files into ignored `.generated/pages/` and removed the empty root route folders. Vite, development and production builds use the new layout while retaining existing URLs and public content. Also corrected email fallback HTML to match its client hydration data in development.
+
+## 2026-10-07, local React/Tailwind rebuild candidate
+
+React SSR/hydration on the existing 27 routes; feature controllers; Tailwind without Preflight; Sharp media; Mise runtime and managed private development startup. Original source remains intact. Ubuntu checks pass, actual Mac and owner acceptance remain open. No deployment. Evidence: qa/reports/REACT-REBUILD-2026-10-07.md.
+
 # Changelog
 
 ## 2026-10-02, deployed to harni.uk
@@ -177,3 +185,15 @@ First build. Nothing has been deployed.
   through. The palette, the copy and the game's setting were re-themed to match; the
   game's physics were not touched.
 - Fraunces and Inter self-hosted through Fontsource. No third-party requests.
+
+## 7 October 2026: local server binding
+
+Explicitly bound Vite development and preview to 127.0.0.1, preserving strict port 5152 and PHP proxy 5153. Workspace launcher added. TypeScript PASS; build FAIL due to missing Linux Rollup native dependency. HTTP verification BLOCKED by session socket permissions. Full evidence in workspace LOCAL-SERVERS.md.
+
+## 7 October 2026: Linux restoration verified
+
+Codex: clean npm install from unchanged lockfile PASS; typecheck/build, 44 site tests, 27 PHP tests and captured HTTP mail integration PASS. Workspace-local Ubuntu PHP 8.3 CLI restored without sudo; launcher forces real mail off. Local HTTP and explicit private-IP LAN HTTP/browser/WebSocket checks PASS. Second physical device and real email NOT TESTED. Optional media regeneration still needs macOS sips/cwebp/avifenc and is not required to run the site. Shared startup/restoration instructions: ../LOCAL-SERVERS.md. Earlier sandbox/network blockers are superseded by this verification. Prior work preserved; no deployment or commit.
+
+## 7 October 2026, Codex fix follow-up
+
+Fresh local website checks PASS and release reports populated; Mac, owner and live delivery gates remain open.

@@ -1,7 +1,7 @@
 /** Reveals `[data-reveal]` elements once, in document order, with a short stagger.
  *  Nothing is hidden until we know the observer exists, so a failed script or an
  *  old browser leaves the page fully readable. */
-export const initReveal = (): void => {
+export const initReveal = (): (() => void) | undefined => {
   const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
   if (targets.length === 0) return;
 
@@ -33,4 +33,5 @@ export const initReveal = (): void => {
   );
 
   for (const target of targets) observer.observe(target);
+  return () => observer.disconnect();
 };

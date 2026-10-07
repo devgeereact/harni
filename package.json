@@ -5,22 +5,34 @@
   "type": "module",
   "description": "Author site and bookstore for harni.uk",
   "scripts": {
-    "pages": "node scripts/build-pages.ts",
-    "predev": "npm run pages",
-    "dev": "vite",
+    "pages": "node --import tsx scripts/build-pages.ts",
+    "dev": "node scripts/dev.mjs",
     "prebuild": "npm run pages",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "dev:mail": "php -S 127.0.0.1:5153 -t public",
+    "dev:mail": "node scripts/mail.mjs",
     "test:mail": "php tests/unit/mail.test.php",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/unit/*.test.ts",
-    "media": "./scripts/build-media.sh"
+    "test": "node --import tsx --test tests/unit/*.test.ts",
+    "media": "node scripts/build-media.mjs",
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "test:browser": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/vite": "4.3.3",
     "@types/d3-geo": "^3.1.1",
+    "@types/node": "24.19.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
+    "@vitejs/plugin-react": "5.2.0",
+    "parse5": "8.0.1",
+    "sharp": "0.35.5",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
     "typescript": "^5.9.2",
     "vite": "^7.1.3"
   },
@@ -28,7 +40,12 @@
     "@fontsource-variable/fraunces": "^5.2.5",
     "@fontsource-variable/inter": "^5.2.5",
     "d3-geo": "^3.1.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=24.21.0"
   }
 }

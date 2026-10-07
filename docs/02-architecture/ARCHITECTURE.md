@@ -1,3 +1,7 @@
+> Layout cleanup, 7 October 2026: generated route HTML belongs in ignored `.generated/pages/`, which is Vite's HTML root. Canonical source stays in `src/`, public assets/PHP in `public/`, and deployable output in `dist/`. There are no generated route folders at the project root. All 27 public routes remain unchanged. See README.md for the current layout.
+
+> Current candidate, 7 October 2026 (ADR-026): all 27 routes are rendered and hydrated with React. Tailwind theme/utilities supplement the existing CSS without Preflight. Repository-owned content is parsed at build time into a typed tree, rendered by React, and carried as inert script-safe JSON for matching client hydration. Feature modules own navigation, consent, filters and forms; game/globe/reveal modules have effect cleanup. The PHP contract and public words are retained. Sharp replaces macOS-only media tooling. See README.md and qa/reports/REACT-REBUILD-2026-10-07.md. The earlier architecture below is historical where it specifies no framework or the retired client entry.
+
 # Architecture
 
 Status: built on localhost, not deployed. See ADR-011 to ADR-016 ADR-023 (real catalogue and shop-window model), ADR-024 and ADR-025 (2026-10-01, PHP mail endpoint, data-driven Events and Reviews, Pier Run modules).

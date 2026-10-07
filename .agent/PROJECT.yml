@@ -4,9 +4,9 @@ project:
   lifecycle: build
   risk: medium
 gee_os:
-  workflow: new-project-bootstrap
-  primary_mode: website-build
-  primary_system: website-launch
+  workflow: change-safety
+  primary_mode: build
+  primary_system: existing-application-recovery
   conditional_systems:
     - application-creation
     - book-architect

@@ -231,7 +231,7 @@ export const renderDocument = (path: string, page: PageDef): RenderedPage => {
     <meta property="og:description" content="${description}" />
     <meta name="twitter:card" content="summary" />
     <script>document.documentElement.classList.add('js');</script>
-    <script type="module" src="/src/site.ts"></script>
+    <script type="module" src="/src/app/main.tsx"></script>
   </head>
   <body data-stats="${site.statisticsEnabled ? 'on' : 'off'}">
     <a class="skip-link" href="#main">Skip to content</a>
