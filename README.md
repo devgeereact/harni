@@ -25,7 +25,7 @@ Find the private IPv4 address assigned to your computer, then substitute it belo
 HARNI_HOST=192.168.1.50 mise exec -- npm run dev
 ```
 
-Open `http://192.168.1.50:5152` from your trusted LAN. The address must actually belong to this computer. Wildcard and public addresses are rejected. Mail is blocked in LAN previews, and PHP source cannot be served by Vite. No router forwarding, firewall changes or public tunnel is configured. Cross-device access depends on the existing network/firewall and must be checked from that device.
+Open `http://192.168.1.50:5152` from your trusted LAN. The address must actually belong to this computer. Wildcard and public addresses are rejected. Mail is blocked in LAN previews, and the Vite `server.fs.deny` list blocks PHP source, `.agent/`, `docs/` and environment files. No router forwarding, firewall changes or public tunnel is configured. Cross-device access depends on the existing network/firewall and must be checked from that device.
 
 `HARNI_WEB_PORT` and `HARNI_MAIL_PORT` override 5152/5153 when those ports are occupied. Existing processes are never stopped. Both ports must differ. `npm run preview` serves the build using the same private API proxy/guard and host settings. Production PHP hosting remains a separate decision.
 
@@ -77,4 +77,4 @@ All 27 generated HTML pages live inside `.generated/pages/`. `npm run dev` and `
 
 The build converts repository-owned content to a typed tree, renders it with React on the server, then hydrates that same tree. Static pages remain useful without JavaScript. This is not an API for rendering arbitrary external HTML. Browser forms validate input and POST JSON to the unchanged PHP endpoint, with duplicate-request protection and preserved input after failures.
 
-Release status and evidence: `qa/reports/REACT-REBUILD-2026-10-07.md`. Actual macOS execution, real inbox delivery, hosting and owner/legal checks remain open. Nothing has been committed, pushed or deployed by this rebuild.
+Release status and evidence: `../reports/harni/qa/reports/REACT-REBUILD-2026-10-07.md`. Actual macOS execution, real inbox delivery, hosting and owner/legal checks remain open. The rebuild branch is pushed to origin; this rebuild has not been merged to main or deployed.

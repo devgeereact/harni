@@ -11,3 +11,6 @@ test-results/
 
 # Route HTML is generated from src/content and src/data.
 .generated/
+
+# Local scratch folder; nothing in the project reads it.
+work/

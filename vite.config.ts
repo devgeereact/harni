@@ -55,7 +55,21 @@ export default defineConfig({
   appType: "mpa",
   plugins: [react(), tailwindcss(), privateApi()],
   server: {
-    fs: { allow: [projectRoot] },
+    fs: {
+      allow: [projectRoot],
+      // Setting deny replaces Vite's defaults, so they are repeated first. PHP source, agent
+      // contracts, documentation and IDE files must not be reachable through /@fs/.
+      deny: [
+        ".env",
+        ".env.*",
+        "*.{crt,pem}",
+        "**/.git/**",
+        "**/*.php",
+        "**/.agent/**",
+        "**/.idea/**",
+        "**/docs/**",
+      ],
+    },
     host: config.host,
     port: config.web,
     strictPort: true,

@@ -1,9 +1,0 @@
-# TypeScript application source check, 7 October 2026
-
-PASS: the five rebuilt application candidates use TypeScript (.ts/.tsx) for application code. There are no .js/.jsx or standalone HTML application pages in their source scopes. Volume retains its minimal Vite index.html. Joinery, Priya and Dhemmyn retain root Vite entries and Netlify form blueprints. Harni’s 27 route HTML documents remain ignored generated output. Coverage reports, build output and archived design mock-ups are not application source and have been retained.
-
-Harni’s remaining src/features/game/document.html was converted to the React/TypeScript GameDocument.tsx component. scripts/build-pages.ts now renders that component into generated HTML before the existing React rendering/hydration step. Game controls, words, canvas hooks, metadata and saved-score behaviour were retained. Before editing, the previous document, build script and candidate working patch were backed up in this chat’s work/harni-typescript-baseline. Original active/harni was not changed.
-
-PASS: Harni typecheck and production build, 50 unit tests and 59 browser tests after conversion, including the game start/pause lifecycle and all routes on mobile/desktop. Source count details: TypeScript-source-audit.json. The other projects were inspected for source language; their whole suites were not rerun solely for an AGENTS documentation rule. Dhemmyn’s separate full verification passed in this turn.
-
-The TypeScript requirement is recorded in each candidate’s AGENTS.md and the Rebrand README. Build helpers can remain Node modules and backend services retain their required languages; the user-facing application source is TypeScript. No live deployment or service call was performed. Actual Mac execution and each project’s existing release gates remain open.

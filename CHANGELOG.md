@@ -4,7 +4,7 @@ Moved 27 generated route HTML files into ignored `.generated/pages/` and removed
 
 ## 2026-10-07, local React/Tailwind rebuild candidate
 
-React SSR/hydration on the existing 27 routes; feature controllers; Tailwind without Preflight; Sharp media; Mise runtime and managed private development startup. Original source remains intact. Ubuntu checks pass, actual Mac and owner acceptance remain open. No deployment. Evidence: qa/reports/REACT-REBUILD-2026-10-07.md.
+React SSR/hydration on the existing 27 routes; feature controllers; Tailwind without Preflight; Sharp media; Mise runtime and managed private development startup. Original source remains intact. Ubuntu checks pass, actual Mac and owner acceptance remain open. No deployment. Evidence: ../reports/harni/qa/reports/REACT-REBUILD-2026-10-07.md.
 
 # Changelog
 
@@ -37,7 +37,7 @@ Recorded as ADR-025 (ADR-024 was taken by an earlier session and is partly super
 - Pier Run rebuilt as a bright seaside game (Beach, Pier, Promenade, Fun fair) with a code-drawn nurse-runner,
   hazards, book and heart pickups, three power-ups, three hearts, combo to x5, hold-to-jump, pause, sound off
   by default and an end card. Score saving is opt-in (single key `harni.pier-run.best`) with a delete control.
-  Play JS 16.3 kB gzip, no third-party requests. `qa/PIER-RUN-REFRESH-2026-10-01.md` is marked superseded.
+  Play JS 16.3 kB gzip, no third-party requests. `../reports/harni/qa/PIER-RUN-REFRESH-2026-10-01.md` is marked superseded.
 - Legal pages rewritten (Privacy notice, Cookies and local storage, Website terms, Delivery and refunds):
   Version 2026-10-01, an "In short" box, a contents list, retention periods, recipients, security, rights and
   a fuller terms disclaimer. Two owner facts remain visible [NEEDS] boxes on the Privacy page (postal address,

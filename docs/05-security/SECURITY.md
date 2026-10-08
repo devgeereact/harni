@@ -15,4 +15,4 @@
 - Rate limiting, uploads, CORS, CSRF, cookies, headers and production settings are decided from the actual architecture.
 - Dependencies, errors, monitoring and incident response have owners.
 
-Record test evidence in `qa/SECURITY-AUDIT.md`.
+Record test evidence in `../reports/harni/qa/SECURITY-AUDIT.md`.

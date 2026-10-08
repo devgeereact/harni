@@ -12,11 +12,11 @@ gee_os:
     - book-architect
     - website-launch
     - pwa-engineering
-    - existing-application-recovery
 authority:
   scaffolding: allowed
   implementation: allowed-local-only
   external_mutation: explicit-approval-required
 sources_of_truth:
   product: docs/01-product/PRODUCT-SPEC.md
-  release: docs/09-release/RELEASE-REPORT.md
+  release: ../reports/harni/docs/09-release/RELEASE-REPORT.md
+mcp_profile: ".agent/MCP-PROFILE.yml"

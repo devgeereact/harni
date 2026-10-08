@@ -285,6 +285,8 @@ function respond(int $status, array $body): never
 }
 
 if (!defined('HARNI_MAIL_TEST')) {
+    // Do not advertise the PHP version when the host has expose_php enabled.
+    header_remove('X-Powered-By');
     header('Content-Type: application/json; charset=utf-8');
     header('Cache-Control: no-store');
     header('X-Content-Type-Options: nosniff');
@@ -318,8 +320,12 @@ if (!defined('HARNI_MAIL_TEST')) {
     }
     if (getenv('HARNI_MAIL_ENABLED') !== '1') respond(503, ['ok' => false, 'message' => 'Online sending is not available yet. Please email ' . $message['to'] . ' directly. Nothing was sent.']);
     try {
-        // REMOTE_ADDR must be restored by trusted host configuration behind Cloudflare.
-        // Never trust a client-supplied forwarding header here.
+        // REMOTE_ADDR must be the real client IP. Behind Cloudflare the host must restore it from
+        // CF-Connecting-IP, trusting that header only from Cloudflare's published ranges (for
+        // example Apache mod_remoteip). Otherwise every visitor shares a Cloudflare edge address
+        // and the per-IP limit acts as a second global limit. Never trust a client-supplied
+        // forwarding header here. Rate limiting runs after the cheap validation and before
+        // mail(), the only expensive step, so malformed requests do not use up the limits.
         if (!allowRequest(getenv('HARNI_MAIL_STATE_DIR') ?: '', getenv('HARNI_MAIL_RATE_KEY') ?: '', $_SERVER['REMOTE_ADDR'] ?? 'unknown', $message['email'])) {
             header('Retry-After: 3600');
             respond(429, ['ok' => false, 'message' => 'Too many requests. Please wait an hour or email us directly.']);

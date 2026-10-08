@@ -14,4 +14,4 @@ Status: built on localhost, not deployed. See ADR-011 to ADR-016 ADR-023 and ADR
 - About, Events and Reviews (ADR-025): About has jump links to its sections. Reviews cover cards use the cover alt rule above. Lighthouse mobile accessibility on About and Play is 100 (automated only).
 - Test devices and assistive technology: NOT TESTED for a real phone, a screen reader, a full keyboard walk of every page, audio, and a reduced-motion before and after comparison of Pier Run. Done so far (Chromium only): layouts at 1440x900, 390x844 and 844x390 for Pier Run, scripted keyboard play, emulated reduced motion (PARTIAL) and Lighthouse. Screen readers and a real phone are not yet covered.
 
-Record manual and automated evidence in `qa/ACCESSIBILITY-AUDIT.md`. Automated checks alone are insufficient.
+Record manual and automated evidence in `../reports/harni/qa/ACCESSIBILITY-AUDIT.md`. Automated checks alone are insufficient.
