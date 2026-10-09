@@ -14,7 +14,8 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 const DEGREES_PER_SECOND = 27;
 const DRAG_SENSITIVITY = 0.5;
 
-export const mountGlobe = (host: HTMLElement): void => {
+export const mountGlobe = (host: HTMLElement): (() => void) => {
+  let disposed = false;
   const topology = world as unknown as Topology & { objects: { countries: GeometryCollection } };
   const countries = feature(topology, topology.objects.countries).features;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -73,7 +74,7 @@ export const mountGlobe = (host: HTMLElement): void => {
   };
 
   const sync = (): void => {
-    const shouldTurn = visible && !dragging && !reducedMotion;
+    const shouldTurn = !disposed && visible && !dragging && !reducedMotion;
     if (shouldTurn && frame === 0) {
       previous = 0;
       frame = requestAnimationFrame(tick);
@@ -83,19 +84,22 @@ export const mountGlobe = (host: HTMLElement): void => {
     }
   };
 
-  new ResizeObserver(() => {
+  const resizeObserver = new ResizeObserver(() => {
+    if (disposed) return;
     size = host.offsetWidth;
     draw();
     svg.classList.add('is-ready');
-  }).observe(host);
+  });
+  resizeObserver.observe(host);
 
-  new IntersectionObserver(
+  const intersectionObserver = new IntersectionObserver(
     ([entry]) => {
       visible = entry?.isIntersecting ?? false;
       sync();
     },
     { threshold: 0.1 },
-  ).observe(host);
+  );
+  intersectionObserver.observe(host);
 
   svg.addEventListener('pointerdown', (event) => {
     dragging = true;
@@ -119,4 +123,11 @@ export const mountGlobe = (host: HTMLElement): void => {
   };
   svg.addEventListener('pointerup', release);
   svg.addEventListener('pointercancel', release);
+  return () => {
+    disposed = true;
+    cancelAnimationFrame(frame);
+    resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    svg.remove();
+  };
 };

@@ -1,4 +1,4 @@
-// Writes every generated page from src/data and src/content, then public/sitemap.xml.
+// Writes generated HTML under .generated/pages from src/data and src/content, plus public/sitemap.xml.
 //
 //   npm run pages            (also runs automatically before `npm run dev` and `npm run build`)
 //   npm run pages -- --list  (also lists every placeholder and owner check, page by page)
@@ -22,6 +22,8 @@ import * as legal from '../src/content/legal.ts';
 import * as pages from '../src/content/pages.ts';
 import { routes } from '../src/content/routes.ts';
 import { site } from '../src/content/site.ts';
+import { gameDocument } from '../src/features/game/GameDocument.tsx';
+import { reactDocument } from './lib/react-document.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const errors: string[] = [];
@@ -65,7 +67,7 @@ const pageFor = (path: string): PageDef => {
 };
 
 const write = (file: string, content: string): void => {
-  const target = join(root, file);
+  const target = join(root, file.startsWith('public/') ? file : join('.generated/pages', file));
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(target, content, 'utf8');
 };
@@ -110,7 +112,7 @@ for (const route of routes) {
   if (page.title.length > 70) warnings.push(`${route.path}: title is ${page.title.length} characters and may be cut in search results`);
 
   const { html, notes } = renderDocument(route.path, page);
-  write(route.file, html);
+  write(route.file, reactDocument(html));
   written += 1;
 
   const visible = [...html.matchAll(/\[(NEEDS|CHECK): ([^\]]+)\]/g)].map((m) => `${m[1] ?? ''}: ${m[2] ?? ''}`);
@@ -120,6 +122,8 @@ for (const route of routes) {
     flagTotal += items.length;
   }
 }
+
+write('play/index.html', reactDocument(gameDocument()));
 
 // --- Sitemap --------------------------------------------------------------------------------
 
@@ -141,7 +145,7 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`pages: wrote ${written} pages and public/sitemap.xml (${indexable.length} URLs)`);
+console.log(`pages: wrote ${written + 1} pages into .generated/pages and public/sitemap.xml (${indexable.length} URLs)`);
 console.log(
   `owner items left: ${flagTotal + site.ownerChecks.length} (${flagTotal} [NEEDS] or [CHECK] flags on ${flagged.length} pages, plus ${site.ownerChecks.length} site-wide checks)`,
 );

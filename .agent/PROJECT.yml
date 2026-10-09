@@ -4,19 +4,19 @@ project:
   lifecycle: build
   risk: medium
 gee_os:
-  workflow: new-project-bootstrap
-  primary_mode: website-build
-  primary_system: website-launch
+  workflow: change-safety
+  primary_mode: build
+  primary_system: existing-application-recovery
   conditional_systems:
     - application-creation
     - book-architect
     - website-launch
     - pwa-engineering
-    - existing-application-recovery
 authority:
   scaffolding: allowed
   implementation: allowed-local-only
   external_mutation: explicit-approval-required
 sources_of_truth:
   product: docs/01-product/PRODUCT-SPEC.md
-  release: docs/09-release/RELEASE-REPORT.md
+  release: ../reports/harni/docs/09-release/RELEASE-REPORT.md
+mcp_profile: ".agent/MCP-PROFILE.yml"

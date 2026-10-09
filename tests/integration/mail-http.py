@@ -5,16 +5,23 @@ with tempfile.TemporaryDirectory(prefix='harni-mail-http-') as folder:
     stub=root/'capture.py'
     stub.write_text('#!/usr/bin/env python3\nimport sys, os, pathlib\np=pathlib.Path(os.environ["HARNI_TEST_CAPTURE"])\nwith p.open("ab") as out: out.write(b"\\n---MAIL---\\n"+sys.stdin.buffer.read())\n')
     stub.chmod(0o700)
-    env=dict(os.environ,HARNI_MAIL_ENABLED='1',HARNI_MAIL_STATE_DIR=folder,HARNI_MAIL_RATE_KEY='local-test-key-not-a-production-secret',HARNI_TEST_CAPTURE=str(root/'messages.txt'))
+    env=dict(os.environ,HARNI_WEB_PORT='5172',HARNI_MAIL_ENABLED='1',HARNI_MAIL_STATE_DIR=folder,HARNI_MAIL_RATE_KEY='local-test-key-not-a-production-secret',HARNI_TEST_CAPTURE=str(root/'messages.txt'))
     server=subprocess.Popen(['php','-d','sendmail_path='+str(stub),'-S','127.0.0.1:5154','-t','public'],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     try:
         for _ in range(30):
             try: urllib.request.urlopen('http://127.0.0.1:5154/api/message.php')
             except urllib.error.HTTPError: break
             except urllib.error.URLError: time.sleep(.1)
+        denied=urllib.request.Request('http://127.0.0.1:5154/api/message.php',data=b'{}',headers={'Origin':'http://untrusted.invalid','Content-Type':'application/json'})
+        try:
+            urllib.request.urlopen(denied)
+            raise AssertionError('Untrusted origin accepted')
+        except urllib.error.HTTPError as error:
+            assert error.code == 403
+        print('PASS: untrusted origin rejected; explicit custom loopback origin tested below')
         for kind in ['contact','subscribe']:
             payload={'kind':kind,'name':'Local Test','email':kind+'@example.org','message':'Synthetic test message','consent':True,'acknowledgement':True}
-            req=urllib.request.Request('http://127.0.0.1:5154/api/message.php',data=json.dumps(payload).encode(),headers={'Origin':'http://localhost:5202','Content-Type':'application/json'})
+            req=urllib.request.Request('http://127.0.0.1:5154/api/message.php',data=json.dumps(payload).encode(),headers={'Origin':'http://127.0.0.1:5172','Content-Type':'application/json'})
             response=urllib.request.urlopen(req)
             body=json.loads(response.read())
             assert body['ok'] and body['copyAccepted'] and body['reference'].startswith('HM-'),body

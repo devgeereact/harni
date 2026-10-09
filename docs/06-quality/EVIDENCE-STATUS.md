@@ -1,6 +1,6 @@
 # Evidence Status
 
-Latest evidence (2026-10-01, ADR-025) is in the last section of this file, `qa/EMAIL-CONTENT-2026-10-01.md`, `qa/PIER-RUN-REBUILD-2026-10-01.md` and `qa/ABOUT-REDESIGN-2026-10-01.md` (the last covers an earlier About revision). The Pier Run (Game: ...) rows below describe the OLD game and are superseded by the rebuild. Earlier browser results below are historical and do not verify the new UI or mail backend.
+Latest evidence (2026-10-01, ADR-025) is in the last section of this file, `../reports/harni/qa/EMAIL-CONTENT-2026-10-01.md`, `../reports/harni/qa/PIER-RUN-REBUILD-2026-10-01.md` and `../reports/harni/qa/ABOUT-REDESIGN-2026-10-01.md` (the last covers an earlier About revision). The Pier Run (Game: ...) rows below describe the OLD game and are superseded by the rebuild. Earlier browser results below are historical and do not verify the new UI or mail backend.
 
 Recorded 2026-09-05 against `http://localhost:5152/` (Vite dev server, headless
 Chromium via `gstack browse`), unless stated otherwise. The source photograph was
@@ -100,11 +100,11 @@ All local. Nothing deployed. Statuses use PASS, PARTIAL, NOT TESTED or BLOCKED.
 | SPF, DKIM, DMARC and host PHP support | NOT TESTED | None | Needs the live host and DNS |
 | HTML email rendering in real clients | NOT TESTED | None | Only the captured source was inspected |
 | Unit tests, all | PASS | `npm test` | 41 pass, including 10 new in `tests/unit/content.test.ts` for Events and Reviews data |
-| About page | PASS | Lighthouse mobile | Accessibility 100, Best Practices 100, SEO 100. `qa/ABOUT-REDESIGN-2026-10-01.md` describes the earlier, simpler About revision, not this richer rebuild |
+| About page | PASS | Lighthouse mobile | Accessibility 100, Best Practices 100, SEO 100. `../reports/harni/qa/ABOUT-REDESIGN-2026-10-01.md` describes the earlier, simpler About revision, not this richer rebuild |
 | About page, keyboard walk, screen reader, real phone | NOT TESTED | None | Not run |
 | Events and Reviews pages | PARTIAL | Unit tests and build | Data rules and empty states covered by unit tests. Not browser-reviewed or run through Lighthouse in this pass |
 | Legal pages | PARTIAL | Build, page generator `npm run pages -- --list` | Rewritten as Version 2026-10-01. Owner items 6 (3 flags on 2 pages plus 3 site-wide checks). NOT legal advice. No solicitor review has happened |
-| Pier Run rebuild, build and layout | PASS | typecheck, build, screenshots at 1440x900, 390x844 and 844x390 | No horizontal scroll at 390. Play JS 16.3 kB gzip. See `qa/PIER-RUN-REBUILD-2026-10-01.md` |
+| Pier Run rebuild, build and layout | PASS | typecheck, build, screenshots at 1440x900, 390x844 and 844x390 | No horizontal scroll at 390. Play JS 16.3 kB gzip. See `../reports/harni/qa/PIER-RUN-REBUILD-2026-10-01.md` |
 | Pier Run score saving opt-in | PASS | Inspected localStorage, sessionStorage and cookies | Nothing written unless "Remember my best score on this device" is ticked; one key `harni.pier-run.best`; Delete saved score clears it. No third-party requests |
 | Pier Run Lighthouse mobile | PASS | Lighthouse mobile `/play/` | 100 / 100 / 100 |
 | Pier Run reduced motion | PARTIAL | Emulated reduced motion, unit test of pace cap | Plays with no errors. No before and after visual comparison |
