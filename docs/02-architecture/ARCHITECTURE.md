@@ -9,7 +9,7 @@ Status: built on localhost, not deployed. See ADR-011 to ADR-016 ADR-023 (real c
 ## Context and constraints
 
 - Expected users and traffic: UNKNOWN. ASSUMPTION: low traffic, readers on phones.
-- Environments: localhost for the preview (`vite.config.ts` pins 5152; the owner's `dev-all` tool serves it at 5202, see KNOWN-ISSUES); the existing cPanel host behind Cloudflare for any later deploy.
+- Environments: localhost for the preview (`vite.config.ts` pins 5152, see KNOWN-ISSUES row 29); the existing cPanel host behind Cloudflare for any later deploy.
 - Availability: static files. Recovery is a redeploy from `dist/`.
 - Privacy: enquiries and sign-ups sit in the two mailboxes, and the visitor receives a copy of each. There is no confirmation step. Statistics load only after consent. See `docs/05-security/DATA-PRIVACY.md`.
 - Cost: ASSUMPTION up to 10 pounds a month. There are no per-sale fees on harni.uk because it takes no payments (ADR-023).
