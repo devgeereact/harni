@@ -72,7 +72,6 @@ All 27 generated HTML pages live inside `.generated/pages/`. `npm run dev` and `
 - `src/game/`, `src/lib/`: preserved game engine and lifecycle-managed visual helpers.
 - `src/styles/`: original design tokens/styles plus Tailwind theme and utilities. Preflight is deliberately omitted to preserve the approved design.
 - `scripts/`: page generation, portable media, setup, doctor and managed development startup.
-- `docs/reference/legacy/`: retired client entry points, retained as historical reference only.
 - `.agent/`, `docs/`, `qa/`: GEE OS project state, decisions and evidence.
 
 The build converts repository-owned content to a typed tree, renders it with React on the server, then hydrates that same tree. Static pages remain useful without JavaScript. This is not an API for rendering arbitrary external HTML. Browser forms validate input and POST JSON to the unchanged PHP endpoint, with duplicate-request protection and preserved input after failures.

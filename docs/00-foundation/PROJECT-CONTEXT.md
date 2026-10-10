@@ -53,7 +53,7 @@
 | The author photo is her Amazon author-page profile image, in `public/images/author/harni-600.jpg`. It is a casual photo in front of a framed portrait drawing. She chose to use it | FACT | Owner choice, 2026-10-01 | Recommend a more formal photo later |
 | The Amazon bio says she "contributes to high-quality, evidence-based patient care". The owner published it, so the phrase is usable | FACT | Amazon author page, 2026-10-01 | None |
 | harni.uk is a shop window: it takes no orders or payments, and every purchase happens on Amazon | DECISION | ADR-023 | None |
-| Dev server: the owner's dev-all tool serves the site at `http://localhost:5202`. `vite.config.ts` says 5152 | FACT | Owner, 2026-10-01 | Reconcile the two when convenient |
+| Dev server: `http://127.0.0.1:5152` (`vite.config.ts`). The older `dev-all` port 5202 is retired | FACT | Verified 2026-10-08 | None |
 
 ## Bookstore release (built on localhost, not deployed)
 

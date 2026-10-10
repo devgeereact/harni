@@ -298,7 +298,7 @@ if (!defined('HARNI_MAIL_TEST')) {
     $allowedOrigins = ['https://harni.uk', 'https://www.harni.uk'];
     // A localhost origin is accepted only by PHP's local development server.
     if (PHP_SAPI === 'cli-server') {
-        $allowedOrigins = array_merge($allowedOrigins, ['http://localhost:5152', 'http://localhost:5202', 'http://127.0.0.1:5152']);
+        $allowedOrigins = array_merge($allowedOrigins, ['http://localhost:5152', 'http://127.0.0.1:5152']);
         // The local launcher may use a free custom port. Never extend production origins.
         $localPort = getenv('HARNI_WEB_PORT');
         if (is_string($localPort) && preg_match('/^[0-9]+$/D', $localPort) === 1 && (int)$localPort >= 1 && (int)$localPort <= 65535) {

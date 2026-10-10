@@ -364,7 +364,6 @@ ${band('Say hello', 'Contact', '\n    <p class="lede">Questions, or a note about
         <h2>Get in touch</h2>
         <p>For book questions, speaking enquiries and reader feedback, write to me here. For Amazon orders, please contact Amazon.</p>
       </div>
-      <!-- NEEDS: confirm both accounts are live, and that ${site.email} receives mail -->
       <ul class="rows" role="list">
         <li data-contact-address><!--email_off--><a href="mailto:${site.email}">${iconMail}<span>${site.email}</span></a><!--/email_off--></li>
         ${socialItems()}
