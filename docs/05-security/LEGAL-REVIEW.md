@@ -47,13 +47,13 @@ Decided from the code and the owner's instructions, so the pages and the code ag
 
 ## Facts only the owner can supply
 
-Run `npm run pages -- --list` for the live count. On 1 October 2026 it reported 6 owner items: 3 [NEEDS] or [CHECK] flags on 2 pages, plus 3 site-wide checks.
+Run `npm run pages -- --list` for the live count. On 10 October 2026 it reports 3 owner items, all site-wide checks (1 October: 6).
 
 Owner facts tracked internally (the two public Privacy placeholders were removed at the owner’s request on 2 October 2026):
 1. A postal address for correspondence. UK e-commerce rules ask website operators to give one.
 2. The ICO data protection fee registration number, or the reason the owner is exempt.
 
-Other open items from the same command: a [NEEDS] on `/contact/` (confirm both social accounts are live and `info@harni.uk` receives mail), and three site-wide checks (employer policy on the personal-capacity wording, `info@harni.uk` and `subscribe@harni.uk` receiving and authenticated sending, and Instagram `@lulu_harni` and TikTok `@harni_m` being live).
+Other open items from the same command (the `/contact/` [NEEDS] duplicated the last two and was removed on 10 October 2026): three site-wide checks (employer policy on the personal-capacity wording, `info@harni.uk` and `subscribe@harni.uk` receiving and authenticated sending, and Instagram `@lulu_harni` and TikTok `@harni_m` being live).
 
 ## Release gates
 
