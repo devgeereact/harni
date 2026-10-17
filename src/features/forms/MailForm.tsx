@@ -83,8 +83,8 @@ export function MailForm({
         return;
       }
       const copy = result.copyAccepted
-        ? "A copy has been sent to your email address for your records. Check your inbox and spam folder."
-        : "Your copy could not be sent. Please keep this reference and email me if you need one. Do not submit the same request again.";
+        ? "A confirmation with this reference has been sent to your email address. Check your inbox and spam folder."
+        : "Your confirmation email could not be sent. Please keep this reference and email me if you need one. Do not submit the same request again.";
       setState({
         pending: false,
         status:

@@ -76,7 +76,7 @@ function prepareMessage(array $input): array
             'footer' => ['Automatic message from the harni.uk contact form. Reference ' . $reference . '.'],
         ];
         // The copy goes to whatever address was typed, so it carries no sender-written text
-        // (name, subject or message). Otherwise the form could relay any text to any inbox (ADR-028).
+        // (name, subject or message). Otherwise the form could relay any text to any inbox (ADR-029).
         $copyDoc = [
             'title' => 'Your message to Harni Muharami was received',
             'greeting' => 'Hello,',
