@@ -13,6 +13,8 @@ Done:
 Evidence, 17 October 2026: typecheck PASS; 60 unit PASS; `npm run test:mail` PASS (31 PHP checks plus HTTP capture, no real mail); 171 browser PASS (includes build, 27 axe, 28 phone emulation). NOT TESTED: real phone, screen reader, real inbox delivery, live host.
 Reports (outside the repo, Mac only): `../reports/harni/docs/09-release/RELEASE-REPORT.md` (NO-GO), `../reports/harni/qa/reports/LAUNCH-BUILD-2026-10-17.md`, `../reports/harni/qa/reports/OWNER-QUESTIONS-2026-10-17.md`.
 
+Privacy audit status for other machines: the PL-01 to PL-16 issue register and the owner answers are copied into `docs/05-security/LEGAL-REVIEW.md` (the reports folder is Mac only).
+
 Release decision: NO-GO. The code is complete; these gates are open, in order:
 1. Owner facts for the legal pages: postal address, ICO fee number or exemption, web host and mail provider names and data locations, host log retention, complaints cover person. Then update `src/content/legal.ts` and `docs/05-security/LEGAL-REVIEW.md`. Never invent these.
 2. Owner confirmations: employer policy on the personal-capacity wording, both mailboxes receive mail, Instagram and TikTok live (`src/content/site.ts`).

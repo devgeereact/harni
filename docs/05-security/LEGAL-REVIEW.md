@@ -12,6 +12,31 @@ Full report: `../reports/harni/qa/reports/PRIVACY-LEGAL-READINESS-2026-10-17.md`
 - New operator runbook: `docs/07-operations/DATA-REQUESTS.md`.
 - New gates below: security headers, sign-up confirmation decision, the visitor-copy abuse risk and the consent banner rework before any statistics tool.
 
+The full report and the owner questions sit in `../reports/harni/qa/reports/`, outside the repository and on the Mac only. The register below copies their status into git so another machine or agent can pick up the work.
+
+### Issue register (status at 17 October 2026, after ADR-029)
+
+| ID | P | Issue | Status | Next action and owner |
+|---|---|---|---|---|
+| PL-01 | P1 | No data protection complaints process (DPA 2018 s164A, in force 19 June 2026) | Fixed in repo: Privacy `#complaints` and `docs/07-operations/DATA-REQUESTS.md`. Not deployed | Owner: postal route once an address exists; name a backup person for the 30-day acknowledgement |
+| PL-02 | P2 | Cloudflare Network Error Logging not disclosed | Disclosed in repo. Decided: switch NEL off (ADR-029) | Owner approves the Cloudflare change, then remove the disclosure and bump the notice version |
+| PL-03 | P2 | Postal address and ICO fee status missing | Open | Owner (Harni Muharami) |
+| PL-04 | P2 | No HSTS, CSP, Referrer-Policy or Permissions-Policy on the live site | Decided: set on Cloudflare, values in `docs/07-operations/SECURITY-HEADERS.md`, CSP Report-Only first | Owner approves the Cloudflare change |
+| PL-05 | P2 | Single-step sign-up allows sign-up of someone else's address | Decided: keep single step (ADR-029) | Solicitor confirms |
+| PL-06 | P2 | Contact copy carried sender-written text to any typed address | Fixed: short receipt without name, subject or message (ADR-029) | None |
+| PL-07 | P2 | Retention enforced by hand; provider backups unknown | Runbook written | Owner runs the first monthly sweep; reads provider retention |
+| PL-08 | P2 | Host, mail provider, locations, processor terms and transfer safeguards unknown | Open | Owner reads them from cPanel and mail settings |
+| PL-09 | P2 | Mail never sent live; mailboxes and SPF/DKIM/DMARC unverified | Open | Owner approves host setup and one test send |
+| PL-10 | P2 | No written legitimate interests assessment | Open | Owner writes it; solicitor reviews |
+| PL-11 | P3 | `/play/` footer lacked a Cookies link | Fixed, guarded by `tests/e2e/privacy.spec.ts` | None |
+| PL-12 | P3 | Form-counter retention wording imprecise | Fixed | None |
+| PL-13 | P3 | Stale sign-up comment in `src/content/site.ts` | Fixed | None |
+| PL-14 | P3 | Dormant consent banner records no version or time and gates nothing | Open, latent while `statisticsEnabled` is false | Rebuild before any statistics tool |
+| PL-15 | P3 | Expired counter hashes stay until the next form use | Open, disclosed accurately | Optional daily clean-up on the host |
+| PL-16 | P3 | Sending a message requires agreeing to the Terms | Open | Solicitor reviews |
+
+Owner answers so far (ADR-029): UK audience only; rate-limit state folder kept out of backups; request log kept in the owner's own cloud account, not in the repo or on the host. Still UNKNOWN: postal address, ICO fee, provider names and locations, host and Cloudflare log retention, complaints backup person, employer policy, mailboxes and social accounts live. Deploy is NOT approved.
+
 The four legal pages (Privacy notice, Cookies and local storage, Website terms, Delivery and refunds) are now written as finished text. Each shows "Version 2026-10-01, last updated 1 October 2026" and is no longer labelled Draft. Each has an "In short" summary and a contents list. They are carefully drafted from what the code does, but they are NOT legal advice. A UK solicitor should read them before launch. Wording cannot guarantee protection from every claim, and a low placeholder count is not legal approval.
 
 ## Decisions recorded in the pages
@@ -80,10 +105,10 @@ All must be recorded with evidence before any deploy. Deploy is NOT authorised.
 - [ ] Employer policy on the personal-capacity wording is checked.
 - [ ] Documented balancing assessment exists for the legitimate-interests grounds.
 - [ ] Complaints process in place (DPA 2018 s164A): someone covers the 30-day acknowledgement during absence, and a postal route exists once the address is supplied.
-- [ ] Cloudflare Network Error Logging: keep and accept the disclosure after legal review, or switch it off and remove the disclosure.
-- [ ] Security headers decided on Cloudflare or the host: HSTS, Content-Security-Policy, Referrer-Policy and Permissions-Policy are absent on the live site (17 October 2026).
-- [ ] Owner decides whether sign-up stays single step. Anyone can sign up someone else's address; the copy email is the only safeguard. A confirmation link gives stronger consent evidence.
-- [ ] Owner accepts or limits the visitor-copy risk: the contact copy goes to any typed address with the sender's message text, limited to 3 per address and 5 per network address an hour.
+- [ ] Cloudflare Network Error Logging switched off (decided in ADR-029; needs approval for the Cloudflare change), then the disclosure removed.
+- [ ] Security headers set on Cloudflare per `docs/07-operations/SECURITY-HEADERS.md` (decided in ADR-029; needs approval). Absent on the live site on 17 October 2026.
+- [x] Sign-up stays single step (ADR-029). Solicitor to confirm it gives enough consent evidence.
+- [x] Visitor-copy risk limited: the contact email to the typed address is now a short receipt without sender-written text (ADR-029).
 - [ ] Before any statistics tool is switched on, the consent banner is reworked: it currently loads nothing, records no version or time, and has no category or expiry handling.
 - [ ] The 2026-10-17 legal pages are deployed only with the owner's approval, and the mail handler on the host records the same version.
 
