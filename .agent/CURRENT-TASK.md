@@ -1,3 +1,10 @@
+## Latest task: GEE OS 1.4.5 rebrand and cPanel restructure, 17 October 2026
+
+Mode: BUILD, local only. Branch `rebrand/gee-os-cpanel-20261017`. No push, deploy, live mail or Cloudflare change.
+Done: mail code moved from the web root to `backend/src`; only `api/message.php` (same URL) and a deny-list `api/.htaccess` are published; GEE OS guard hook, pre-commit guard, verify script, project memory and `cpanel` stack profile added (ADR-028). "Rebrand" here means the GEE OS rebuild, as in earlier rounds: name, visual brand and copy are unchanged.
+Evidence: typecheck, 56 unit, PHP unit and HTTP capture, 89 browser, build, `scripts/verify.py` all PASS; PHP server-layout simulation and local Apache `.htaccess` proof PASS. Live host: NOT TESTED. Server steps before the next deploy: `docs/07-operations/DEPLOYMENT.md`.
+Note: another session was editing `src/content/*`, `MailForm.tsx` and `scripts/build-pages.ts` at the same time; those changes are left uncommitted.
+
 ## Latest task: privacy and legal readiness audit, 17 October 2026
 
 Mode: BUILD, local only. Authority: local changes and checks; no commit, push, deploy, live mail or Cloudflare change.
