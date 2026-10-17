@@ -53,7 +53,8 @@ The project root contains source and GEE OS support folders. Page URLs are no lo
 ```text
 harni/
 ├── src/          React app, features, content, data and styles
-├── public/       Images, media and PHP endpoint
+├── public/       Images and media
+├── backend/      PHP mail endpoint: public entry in backend/public/api/, private code in backend/src/ (deployed outside the web root)
 ├── scripts/      Setup, development and page generation
 ├── tests/        Unit, browser and integration checks
 ├── docs/         GEE OS design, architecture and operations

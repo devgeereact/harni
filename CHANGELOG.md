@@ -62,7 +62,7 @@ Recorded as ADR-025 (ADR-024 was taken by an earlier session and is partly super
 - Docs updated: DECISIONS (ADR-025), EMAIL, LEGAL-REVIEW, DATA-PRIVACY, BUSINESS-RULES (BR-013 to BR-017),
   USER-JOURNEYS (J-007 to J-009), ARCHITECTURE, INTEGRATIONS, UX-SPEC, DESIGN-SYSTEM, ACCESSIBILITY,
   EVIDENCE-STATUS, LAUNCH-CHECKLIST, KNOWN-ISSUES (rows 30 to 38).
-- Checks: `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` 4 captured
+- Checks (paths as they were then; both files moved to `backend/tests/` on 2026-10-17): `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` 4 captured
   messages, no real email sent; 41 unit tests PASS; Lighthouse mobile About and Play 100/100/100. NOT TESTED:
   real inbox delivery, spam placement, SPF/DKIM/DMARC, host PHP, a real phone, audio, a screen reader.
 - Nothing is deployed or pushed.

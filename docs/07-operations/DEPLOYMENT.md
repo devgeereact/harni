@@ -19,9 +19,13 @@ step needs owner approval in that session. Full layout: `backend/README.md`.
    excludes every `.htaccess`, so it never uploads this one, and `--with-htaccess` replaces only the
    root `.htaccess`, which must stay untouched. Then dry run
    `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` and read it.
-5. Deploy with `--go`, then smoke test: `GET /api/message.php` returns 405 JSON, a valid POST
-   returns the 503 "not available yet" JSON while sending is off, `/api/.htaccess` and
-   any other `/api/*.php` return 403.
+5. Deploy with `--go` only after the owner approves it explicitly in that session, then smoke
+   test: `curl -s -i https://harni.uk/api/message.php` (a GET) returns 405 with a JSON body and
+   `Allow: POST`, a valid POST returns the 503 "not available yet" JSON while sending is off, and
+   `/api/.htaccess` and any other `/api/*.php` return 403.
+
+Security headers are set on Cloudflare, not in this repo (ADR-029). Steps, verification and
+rollback: `SECURITY-HEADERS.md`. They are an external change and need the same owner approval.
 
 Rollback: restore the backed-up `~/harni.uk/api/` folder. The release folders can stay; nothing
 reads them once the old single-file `message.php` is back.
