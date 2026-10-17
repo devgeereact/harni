@@ -1,5 +1,10 @@
 # Handoff
 
+## 17 October 2026: GEE OS cPanel restructure and launch build pass
+
+Branch `rebrand/gee-os-cpanel-20261017`, pushed to origin. Start with `git pull --ff-only`, then read `.agent/CURRENT-TASK.md`: the launch build pass (release gates in order) and the cPanel restructure (backend layout, review fixes, evidence). Backend and host steps: `backend/README.md` and `docs/07-operations/DEPLOYMENT.md`. Release decision: NO-GO until the owner, legal, Cloudflare, host and deploy gates in CURRENT-TASK are closed. Deploys, Cloudflare and host changes each need explicit owner approval in that session. Not merged to `main`.
+
+
 ## 7 October 2026, Codex fix follow-up
 
 Fresh local website checks PASS and release reports populated; Mac, owner and live delivery gates remain open.

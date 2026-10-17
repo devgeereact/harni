@@ -24,12 +24,22 @@ Release decision: NO-GO. The code is complete; these gates are open, in order:
 6. Deploy approval for Version 2026-10-17, then the smoke test in `DEPLOYMENT.md`.
 Approval to commit and push does not cover steps 4 to 6.
 
-## Latest task: GEE OS 1.4.5 rebrand and cPanel restructure, 17 October 2026
+## GEE OS 1.4.5 rebrand and cPanel restructure, 17 October 2026
 
-Mode: BUILD, local only. Branch `rebrand/gee-os-cpanel-20261017`. No push, deploy, live mail or Cloudflare change.
-Done: mail code moved from the web root to `backend/src`; only `api/message.php` (same URL) and a deny-list `api/.htaccess` are published; GEE OS guard hook, pre-commit guard, verify script, project memory and `cpanel` stack profile added (ADR-028). "Rebrand" here means the GEE OS rebuild, as in earlier rounds: name, visual brand and copy are unchanged.
-Evidence: typecheck, 56 unit, PHP unit and HTTP capture, 89 browser, build, `scripts/verify.py` all PASS; PHP server-layout simulation and local Apache `.htaccess` proof PASS. Live host: NOT TESTED. Server steps before the next deploy: `docs/07-operations/DEPLOYMENT.md`.
-Note: another session was editing `src/content/*`, `MailForm.tsx` and `scripts/build-pages.ts` at the same time; those changes are left uncommitted.
+Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017`, pushed. No deploy, live mail or Cloudflare change.
+"Rebrand" means the GEE OS rebuild: name, "Rausch on white" look and copy unchanged. The owner confirmed this on 17 October 2026.
+
+Done (commits f53ba64, e012f07, 3dab172; ADR-028):
+- Mail code moved out of the web root into `backend/src/` (render, message, delivery, rate-limit, endpoint). `backend/public/api/message.php` is the only public PHP file; URL `/api/message.php` unchanged. A deny-list `api/.htaccess` sits beside it. `npm run build` copies only those two files into `dist/api/`. Layout and host steps: `backend/README.md`.
+- On the host the entry finds `~/apps/harni/current/src/` from its own place (`~/harni.uk/api/` is two levels below home). No pointer file: `cpanel-deploy` runs rsync with `--delete` and would remove one. Only `php -S` uses the repository layout. Missing folder: fail-closed 503.
+- GEE OS contract: `.claude/settings.json` guard hook, `.githooks/pre-commit` (enable per clone: `git config core.hooksPath .githooks`), `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `stack_profile: cpanel` in `.agent/PROJECT.yml`.
+- PHP tests moved to `backend/tests/`; `npm run test:mail` runs the unit checks and the HTTP capture run.
+
+Review (security and finish reviewers, read-only): no Critical or High. Fixed in 3dab172: pointer file deleted by deploy, production fallback could load `~/src/bootstrap.php`, rate-limit root check could be skipped, LiteSpeed PHP deny, `api/.htaccess` never uploaded by `cpanel-deploy` (hand-copy step now required). The privacy-notice mismatch the security review found was closed by 43660d3. Accepted risk: subscribe receipts to typed addresses can use up the global hourly limit; revisit if abused.
+
+Evidence: typecheck, 60 unit, `npm run test:mail`, 171 browser, `scripts/verify.py` all PASS at e05e313. `php-cgi` proof: 405 with a release folder present; 503 with it missing, planted `~/src/bootstrap.php` not run. Local Apache 2.4.67: 200 `message.php`, 403 for `.htaccess`, other PHP, JSON and the folder. NOT TESTED: live host, LiteSpeed, real client IP behind Cloudflare (mod_remoteip).
+Mac-only report: `../reports/harni/qa/reports/GEE-OS-CPANEL-RESTRUCTURE-2026-10-17.md`.
+Guard note: the project guard blocks commands that name `config.php` or `backend-path.php`. Do not reintroduce a pointer file under either name.
 
 ## Latest task: privacy and legal readiness audit, 17 October 2026
 
