@@ -24,14 +24,14 @@ Short index of the confirmed facts for harni. Agents treat this file as project 
 
 | ID | Assumption | Owner | Next check |
 |---|---|---|---|
-| A-01 | `cpanel-deploy` uploads `dist/api/.htaccess` while leaving the root `.htaccess` alone | owner: Gideon | read the next dry run |
+| A-01 | Closed as false, 17 October 2026: `cpanel-deploy` never uploads any `.htaccess`, so `api/.htaccess` is copied by hand | owner: Gideon | none |
 
 ## Open questions
 
 | ID | Question | Owner | Needed by | Blocks |
 |---|---|---|---|---|
 | Q-01 | Postal address, ICO fee, mail provider facts and NEL decision for the legal pages | owner: Harni Muharami | before launch | legal readiness (`docs/05-security/LEGAL-REVIEW.md`) |
-| Q-02 | When to set up `~/apps/harni` and `api/backend-path.php` on the host | owner: Gideon | next deploy | the new backend layout going live |
+| Q-02 | When to set up `~/apps/harni/current` and hand-copy `api/.htaccess` on the host | owner: Gideon | next deploy | the new backend layout going live |
 
 ## Risks
 

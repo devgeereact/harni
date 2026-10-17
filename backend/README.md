@@ -27,20 +27,20 @@ backend/
 ```
 ~/harni.uk/api/message.php          from dist/
 ~/harni.uk/api/.htaccess            from dist/
-~/harni.uk/api/backend-path.php     written once on the server, never committed
 ~/apps/harni/releases/<id>/src/     a copy of backend/src for each release
 ~/apps/harni/current                symlink to the live release
 ~/apps/harni/shared/mail-state/     HARNI_MAIL_STATE_DIR, mode 700
 ```
 
-`backend-path.php` holds one line, the absolute path of the private folder:
+`message.php` finds the private folder from its own place: two levels above `~/harni.uk/api/`
+is the home folder, then `apps/harni/current`. There is no pointer file on the server, so
+`cpanel-deploy --delete` has nothing to remove. This relies on the document root being
+`~/harni.uk`, directly under the home folder. `cpanel-deploy` never uploads any `.htaccess`, so
+copy `dist/api/.htaccess` to `~/harni.uk/api/` by hand.
 
-```php
-<?php return '/home/<cpanel-user>/apps/harni/current';
-```
-
-If the file or the folder is missing, `message.php` answers 503 with the usual
-"temporarily unavailable" message and logs `backend not installed`. Nothing leaks.
+If the release folder is missing, `message.php` answers 503 with the usual
+"temporarily unavailable" message and logs `backend not installed`. Nothing leaks. Only PHP's
+development server (`php -S`) uses the repository layout instead.
 
 Configuration stays in server environment variables, unchanged by the restructure:
 `HARNI_MAIL_ENABLED`, `HARNI_MAIL_STATE_DIR`, `HARNI_MAIL_RATE_KEY` (see

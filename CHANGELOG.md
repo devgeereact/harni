@@ -9,11 +9,14 @@
   `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `cpanel`
   stack profile in `.agent/PROJECT.yml`.
 - Server steps for the next deploy are in `docs/07-operations/DEPLOYMENT.md`.
+- Review fixes: no server pointer file (a deploy with `--delete` would remove it); the entry
+  derives `~/apps/harni/current` from its own place and uses the repository layout only under
+  `php -S`; rate-limit storage must resolve and sit outside both the web root and the code folder;
+  the `.htaccess` rewrite block repeats the PHP deny for LiteSpeed; `api/.htaccess` is uploaded by hand.
 
 ## 2026-10-07, project layout cleanup
 
 Moved 27 generated route HTML files into ignored `.generated/pages/` and removed the empty root route folders. Vite, development and production builds use the new layout while retaining existing URLs and public content. Also corrected email fallback HTML to match its client hydration data in development.
-
 
 ## 2026-10-07, local React/Tailwind rebuild candidate
 

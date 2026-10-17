@@ -1,5 +1,7 @@
 # Deployment
 
+Live site: the 2026-10-02 deploy of commit 4a76e41 (details further down). The ADR-028 backend layout below is local only and not deployed.
+
 ## Backend layout from 17 October 2026 (ADR-028), NOT YET DEPLOYED
 
 The mail code moved out of the web root. `dist/api/message.php` is now a small entry file that loads
@@ -11,20 +13,24 @@ step needs owner approval in that session. Full layout: `backend/README.md`.
 1. Back up the live `~/harni.uk/api/` folder.
 2. Copy `backend/src/` to `~/apps/harni/releases/<YYYYMMDD-HHMM>/src/` and point
    `~/apps/harni/current` at that release.
-3. Write `~/harni.uk/api/backend-path.php` returning the absolute path of `~/apps/harni/current`.
-4. Dry run `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin`. Read whether it
-   uploads `api/.htaccess` (the root `.htaccess` must stay untouched). UNKNOWN until the dry run is
-   read. If it skips the file, upload `dist/api/.htaccess` to `~/harni.uk/api/` by hand.
+3. No pointer file is written. `api/message.php` finds `~/apps/harni/current` from its own
+   place, which needs the document root to stay `~/harni.uk`, directly under the home folder.
+4. Upload `dist/api/.htaccess` to `~/harni.uk/api/.htaccess` by hand (required). `cpanel-deploy`
+   excludes every `.htaccess`, so it never uploads this one, and `--with-htaccess` replaces only the
+   root `.htaccess`, which must stay untouched. Then dry run
+   `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` and read it.
 5. Deploy with `--go`, then smoke test: `GET /api/message.php` returns 405 JSON, a valid POST
-   returns the 503 "not available yet" JSON while sending is off, `/api/backend-path.php` and
-   `/api/.htaccess` return 403.
+   returns the 503 "not available yet" JSON while sending is off, `/api/.htaccess` and
+   any other `/api/*.php` return 403.
 
 Rollback: restore the backed-up `~/harni.uk/api/` folder. The release folders can stay; nothing
 reads them once the old single-file `message.php` is back.
 
 Local proof, 17 October 2026: the built `dist/` served by PHP with a pointer to a copied release
 gave 405, 503 and the fail-closed 503; local Apache 2.4.67 with `dist/api/.htaccess` gave 200 for
-`message.php` and 403 for `backend-path.php`, `.htaccess`, other PHP files, JSON and the folder.
+`message.php` and 403 for `.htaccess`, other PHP files, JSON and the folder. Re-proved after the
+review fixes: with no release folder, `php-cgi` answered the fail-closed 503 and did not run a
+planted `~/src/bootstrap.php`.
 
 Status: DEPLOYED on 2026-10-02 (commit 4a76e41), after the owner said "commit, push and deploy now". Sending of form email is still DISABLED on the host until HARNI_MAIL_ENABLED and its companions are set (EMAIL.md). Earlier text below describes the pre-deploy gates.
 

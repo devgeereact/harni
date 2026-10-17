@@ -55,10 +55,7 @@ const backendEntry = () => ({
   name: "harni-backend-entry",
   apply: "build" as const,
   closeBundle() {
-    cpSync(backendPublic, outDir, {
-      recursive: true,
-      filter: (source: string) => !source.endsWith("backend-path.php"),
-    });
+    cpSync(backendPublic, outDir, { recursive: true });
   },
 });
 export default defineConfig({

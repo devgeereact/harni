@@ -2,7 +2,7 @@
 Options -Indexes -MultiViews
 DirectoryIndex disabled
 
-# Deny private and build files outright, including backend-path.php and any other PHP file.
+# Deny private and build files outright, and every PHP file except message.php.
 <FilesMatch "(^\.|\.(map|sql|bak|env|log|ini|phar|lock|zip|json)$)">
   Require all denied
 </FilesMatch>
@@ -18,7 +18,8 @@ DirectoryIndex disabled
   # LiteSpeed and some Apache builds rewrite before FilesMatch is checked, so repeat the deny list.
   RewriteRule (^|/)\. - [F,L]
   RewriteRule \.(map|sql|bak|env|log|ini|phar|lock|zip|json)$ - [F,L,NC]
-  RewriteRule (^|/)backend-path\.php$ - [F,L,NC]
+  RewriteCond %{REQUEST_URI} !/message\.php$ [NC]
+  RewriteRule \.php$ - [F,L,NC]
 </IfModule>
 
 <IfModule mod_headers.c>

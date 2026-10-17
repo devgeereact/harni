@@ -98,9 +98,8 @@ Deploy is still NOT authorised. Every step below that touches the host or Cloudf
 
 - [ ] Back up the live `~/harni.uk/api/` folder.
 - [ ] Private folder installed outside the web root: copy `backend/src/` to `~/apps/harni/releases/<YYYYMMDD-HHMM>/src/` and point the `~/apps/harni/current` symlink at that release.
-- [ ] `~/harni.uk/api/backend-path.php` written on the host (one line returning the absolute path of `~/apps/harni/current`). Never committed.
-- [ ] Dry run of `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` read, including whether `api/.htaccess` is uploaded; root `.htaccess` untouched.
-- [ ] After `--go`: `curl -s -i https://harni.uk/api/message.php` returns 405 with a JSON body and `Allow: POST`; `/api/backend-path.php` and `/api/.htaccess` return 403.
+- [ ] Dry run of `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` read, after copying `dist/api/.htaccess` to `~/harni.uk/api/` by hand (the script never uploads it); root `.htaccess` untouched.
+- [ ] After `--go`: `curl -s -i https://harni.uk/api/message.php` returns 405 with a JSON body and `Allow: POST`; `/api/.htaccess` and any other `/api/*.php` return 403.
 - [ ] Security headers added on Cloudflare as Report-Only first, browser consoles checked on Home, Contact, Join and `/play/`, then enforced.
 - [ ] NEL switched off on Cloudflare and `NEL` / `Report-To` gone from `curl -sI https://harni.uk/`; Privacy and Cookies pages updated to match.
 

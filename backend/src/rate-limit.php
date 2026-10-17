@@ -10,9 +10,16 @@ function allowRequest(string $directory, string $secret, string $ip, string $ema
     }
     $resolved = realpath($directory);
     // Without a web server (tests, CLI) the repository's public folder stands in for the web root.
-    $publicRoot = realpath($_SERVER['DOCUMENT_ROOT'] ?? dirname(__DIR__) . '/public');
-    if ($resolved === false || ($publicRoot && ($resolved === $publicRoot || str_starts_with($resolved, $publicRoot . DIRECTORY_SEPARATOR)))) {
-        throw new RuntimeException('Rate-limit storage must be outside the document root.');
+    // The storage may sit neither in the web root nor in the backend code folder.
+    $publicRoot = realpath(($_SERVER['DOCUMENT_ROOT'] ?? '') ?: dirname(__DIR__) . '/public');
+    $codeRoot = realpath(__DIR__);
+    if ($resolved === false || $publicRoot === false || $codeRoot === false) {
+        throw new RuntimeException('Rate-limit storage or web root cannot be resolved.');
+    }
+    foreach ([$publicRoot, $codeRoot] as $forbidden) {
+        if ($resolved === $forbidden || str_starts_with($resolved, $forbidden . DIRECTORY_SEPARATOR)) {
+            throw new RuntimeException('Rate-limit storage must be outside the web root and the code folder.');
+        }
     }
     $file = fopen($resolved . '/mail-rate.json', 'c+');
     if (!$file || !flock($file, LOCK_EX)) throw new RuntimeException('Cannot lock rate-limit storage.');
