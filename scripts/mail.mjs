@@ -4,7 +4,7 @@ import { root, checkPort } from "./lib/runtime.ts";
 try {
   const { config, php } = await doctor({ mail: true });
   await checkPort(config.mail);
-  const child = spawn(php, ["-S", `127.0.0.1:${config.mail}`, "-t", "public"], {
+  const child = spawn(php, ["-S", `127.0.0.1:${config.mail}`, "-t", "backend/public"], {
     cwd: root,
     env: { ...process.env, HARNI_MAIL_ENABLED: "0" },
     stdio: "inherit",

@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { cpSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -46,6 +47,20 @@ const privateApi = () => ({
   configureServer: configurePrivateApi,
   configurePreviewServer: configurePrivateApi,
 });
+// The cPanel web root gets only the backend's public files (api/message.php and its .htaccess).
+// The private mail code in backend/src is deployed outside the web root, never into dist/.
+const backendPublic = fileURLToPath(new URL("./backend/public/", import.meta.url));
+const outDir = fileURLToPath(new URL("./dist/", import.meta.url));
+const backendEntry = () => ({
+  name: "harni-backend-entry",
+  apply: "build" as const,
+  closeBundle() {
+    cpSync(backendPublic, outDir, {
+      recursive: true,
+      filter: (source: string) => !source.endsWith("backend-path.php"),
+    });
+  },
+});
 export default defineConfig({
   root: pagesRoot,
   publicDir: fileURLToPath(new URL("./public/", import.meta.url)),
@@ -53,7 +68,7 @@ export default defineConfig({
     alias: { "/src": fileURLToPath(new URL("./src/", import.meta.url)) },
   },
   appType: "mpa",
-  plugins: [react(), tailwindcss(), privateApi()],
+  plugins: [react(), tailwindcss(), privateApi(), backendEntry()],
   server: {
     fs: {
       allow: [projectRoot],
@@ -84,7 +99,7 @@ export default defineConfig({
     proxy,
   },
   build: {
-    outDir: fileURLToPath(new URL("./dist/", import.meta.url)),
+    outDir,
     emptyOutDir: true,
     target: "es2022",
     cssTarget: "safari16",

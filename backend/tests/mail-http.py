@@ -6,7 +6,7 @@ with tempfile.TemporaryDirectory(prefix='harni-mail-http-') as folder:
     stub.write_text('#!/usr/bin/env python3\nimport sys, os, pathlib\np=pathlib.Path(os.environ["HARNI_TEST_CAPTURE"])\nwith p.open("ab") as out: out.write(b"\\n---MAIL---\\n"+sys.stdin.buffer.read())\n')
     stub.chmod(0o700)
     env=dict(os.environ,HARNI_WEB_PORT='5172',HARNI_MAIL_ENABLED='1',HARNI_MAIL_STATE_DIR=folder,HARNI_MAIL_RATE_KEY='local-test-key-not-a-production-secret',HARNI_TEST_CAPTURE=str(root/'messages.txt'))
-    server=subprocess.Popen(['php','-d','sendmail_path='+str(stub),'-S','127.0.0.1:5154','-t','public'],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    server=subprocess.Popen(['php','-d','sendmail_path='+str(stub),'-S','127.0.0.1:5154','-t',str(pathlib.Path(__file__).resolve().parents[1]/'public')],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     try:
         for _ in range(30):
             try: urllib.request.urlopen('http://127.0.0.1:5154/api/message.php')

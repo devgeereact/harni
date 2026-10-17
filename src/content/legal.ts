@@ -1,5 +1,5 @@
 // The four legal pages (ADR-024). Written from what the site and its mail handler actually do, so each
-// statement can be checked against the code: public/api/message.php, src/features/forms/MailForm.tsx, src/game/storage.ts
+// statement can be checked against the code: backend/src/message.php, src/features/forms/MailForm.tsx, src/game/storage.ts
 // and src/content/site.ts. Every retention period and every decision below is also listed, with its
 // reasoning, in docs/05-security/LEGAL-REVIEW.md. Outstanding owner facts are tracked there;
 // public postal-address and ICO placeholders were removed at the owner’s request on 2 October 2026.

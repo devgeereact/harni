@@ -14,3 +14,9 @@ test-results/
 
 # Local scratch folder; nothing in the project reads it.
 work/
+
+# Server-only pointer to the private backend folder. Written on the host, never committed.
+backend/public/api/backend-path.php
+
+# Playwright MCP session output.
+.playwright-mcp/

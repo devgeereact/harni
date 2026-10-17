@@ -11,7 +11,7 @@ import { cookies, privacy, terms } from '../../src/content/legal.ts';
 import { contact } from '../../src/content/pages.ts';
 import { site } from '../../src/content/site.ts';
 
-const php = readFileSync(new URL('../../public/api/message.php', import.meta.url), 'utf8');
+const php = readFileSync(new URL('../../backend/src/message.php', import.meta.url), 'utf8');
 const constant = (name: string): string => {
   const match = php.match(new RegExp(`const ${name} = '([^']*)';`));
   assert.ok(match, `${name} is defined in message.php`);
