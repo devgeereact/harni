@@ -1,0 +1,52 @@
+# Harni Muharami
+
+> NHS nurse, clinical educator and author, based in London. This is her author site. It lists her 13 books, each with a link to buy it on Amazon. harni.uk does not sell books itself.
+
+Harni Muharami is an NHS nurse and clinical educator in London. She leads a health training hub and holds an MSc in Management and Leadership in Health. She is currently doing a PhD.
+
+My books give general guidance, not medical advice.
+I write in a personal capacity. These are my views, not those of my employer.
+
+## Pages
+
+- [Home](https://harni.uk/): Introduction and featured books
+- [Books](https://harni.uk/books/): All 13 books, sorted into 4 groups
+- [About](https://harni.uk/about/): Background, FAQs and press bio
+- [Contact](https://harni.uk/contact/): Book questions, speaking enquiries and reader feedback
+- [Join the list](https://harni.uk/join/): Email when a new book comes out
+- [Events](https://harni.uk/events/): Event announcements and speaking enquiries
+- [Reviews](https://harni.uk/reviews/): Where to read and leave reader reviews
+- [Delivery and refunds](https://harni.uk/delivery-and-refunds/): Help with Amazon orders
+- [Privacy notice](https://harni.uk/privacy/): How the site handles personal data
+
+## Books
+
+### Safe practice
+
+- [Safe by Design, Safe by Culture](https://harni.uk/books/safe-by-design/): A Practical, Evidence-Based Guide to Reducing Incivility, Violence and Psychological Unsafety in NHS Wards, A&E and Mental Health Services
+- [Start the Shift, Not the Catch-Up](https://harni.uk/books/start-the-shift/): A Practical Guide for NHS Nurses to Reduce Backlogs, Improve Patient Flow and Protect Safety
+- [The Triage Mindset](https://harni.uk/books/the-triage-mindset/): Evidence-Based Prioritisation and Ethical Care When Time, Beds and Staff Are Stretched Across the NHS
+- [Care Begins from Home](https://harni.uk/books/care-begins-from-home/): Evidence-Based Home Care, Carer Support and Safe Discharge Planning for NHS Nurses
+- [From Cleanliness to Clinical Outcomes](https://harni.uk/books/from-cleanliness-to-clinical-outcomes/): A Practical NHS Handbook on Environmental Hygiene, Patient Safety and Reduced Length of Stay
+
+### Career and voice
+
+- [Your Next Step in Nursing](https://harni.uk/books/your-next-step-in-nursing/): A Motivational, Practical Guide to Clinical, Academic and Leadership Pathways Across NHS Bands
+- [Speaking Up Smart in the NHS](https://harni.uk/books/speaking-up-smart-in-the-nhs/): Practical Tools for Challenging Misinformation, Using Evidence and Raising Concerns with Confidence and Professionalism
+
+### Wellbeing for nurses
+
+- [The Honest Truth About Nurses](https://harni.uk/books/honest-truth-about-nurses/): Inside the Heart, Struggles, and Strength of Everyday Health Heroes
+- [Hands That Care, Hearts That Hope](https://harni.uk/books/hands-that-care-hearts-that-hope/): A Practical, Evidence-Based Guide to Wellbeing, Moral Distress and Meaningful Nursing for NHS Staff Who Believe God Heals
+- [The NHS Healer’s Handbook](https://harni.uk/books/nhs-healers-handbook/): Surviving Emotional Labour with Evidence-Based Tools to Restore Wellbeing for Nurses and Healthcare Professionals
+- [Beyond the Ward: Joyful Recovery for Nurses](https://harni.uk/books/beyond-the-ward/): Practical Hobbies, Micro-Adventures and Self-Care Routines to Keep Your Mind and Soul Refreshed
+
+### Everyday life
+
+- [Gratitude Reimagined](https://harni.uk/books/gratitude-reimagined/): A 21-Day Guided Path to a Steadier Mind
+- [The 30-Day Relationship Reboot](https://harni.uk/books/30-day-relationship-reboot/): Simple Daily Habits to Reconnect, Communicate and Rekindle
+
+## Optional
+
+- [Sitemap](https://harni.uk/sitemap.xml)
+- [Email](mailto:info@harni.uk)

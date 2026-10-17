@@ -1,11 +1,12 @@
-// Writes generated HTML under .generated/pages from src/data and src/content, plus public/sitemap.xml.
+// Writes generated HTML under .generated/pages from src/data and src/content, plus public/sitemap.xml
+// and public/llms.txt.
 //
 //   npm run pages            (also runs automatically before `npm run dev` and `npm run build`)
 //   npm run pages -- --list  (also lists every placeholder and owner check, page by page)
 //
 // Node runs this .ts file directly, so the imports below carry the .ts extension. The output
 // is plain HTML that Vite then treats as ordinary multi-page input. It writes only to the
-// project folder and to public/sitemap.xml. It never touches dist/ or the server.
+// project folder, public/sitemap.xml and public/llms.txt. It never touches dist/ or the server.
 //
 // It also refuses to build (exit 1) when the data or the pages are wrong, so a mistake cannot
 // reach dist/ quietly: duplicate slugs or titles, a missing or over-long description, a live
@@ -18,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { books, getBook, getBuyOptions } from '../src/data/books.ts';
 import { renderDocument } from '../src/content/layout.ts';
 import type { PageDef } from '../src/content/layout.ts';
+import { llmsText } from '../src/content/llms.ts';
 import * as legal from '../src/content/legal.ts';
 import * as pages from '../src/content/pages.ts';
 import { routes } from '../src/content/routes.ts';
@@ -109,7 +111,8 @@ for (const route of routes) {
   titles.set(page.title, route.path);
   if (!page.description) errors.push(`${route.path}: missing description`);
   if (page.description.length > 160) errors.push(`${route.path}: description is ${page.description.length} characters (max 160)`);
-  if (page.title.length > 70) warnings.push(`${route.path}: title is ${page.title.length} characters and may be cut in search results`);
+  if (page.title.length > 60) warnings.push(`${route.path}: title is ${page.title.length} characters (aim for 60 or fewer) and may be cut in search results`);
+  if (route.indexable && page.description.length < 70) warnings.push(`${route.path}: description is ${page.description.length} characters (aim for 70 to 160)`);
 
   const { html, notes } = renderDocument(route.path, page);
   write(route.file, reactDocument(html));
@@ -136,6 +139,10 @@ const urls = indexable
   .join('');
 write('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>\n`);
 
+// --- llms.txt -------------------------------------------------------------------------------
+
+write('public/llms.txt', llmsText());
+
 // --- Report ---------------------------------------------------------------------------------
 
 for (const warning of warnings) console.warn(`warning: ${warning}`);
@@ -145,7 +152,7 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`pages: wrote ${written + 1} pages into .generated/pages and public/sitemap.xml (${indexable.length} URLs)`);
+console.log(`pages: wrote ${written + 1} pages into .generated/pages, public/sitemap.xml and public/llms.txt (${indexable.length} URLs)`);
 console.log(
   `owner items left: ${flagTotal + site.ownerChecks.length} (${flagTotal} [NEEDS] or [CHECK] flags on ${flagged.length} pages, plus ${site.ownerChecks.length} site-wide checks)`,
 );
