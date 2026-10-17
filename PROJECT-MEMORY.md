@@ -19,6 +19,8 @@ Short index of the confirmed facts for harni. Agents treat this file as project 
 | CD-06 | Form sending stays disabled until the owner verifies host mail | `docs/07-operations/EMAIL.md` | 2026-10-02 |
 | CD-07 | Legal pages at Version 2026-10-17 | ADR-027 | 2026-10-17 |
 | CD-08 | British English, WCAG 2.2 AA target | `docs/03-design/ACCESSIBILITY.md` | 2026-09-05 |
+| CD-09 | Contact visitor email is a short receipt without sender-written text | ADR-029 | 2026-10-17 |
+| CD-10 | UK audience only; single-step sign-up; NEL off and security headers set on Cloudflare (both pending approval) | ADR-029, `docs/07-operations/SECURITY-HEADERS.md` | 2026-10-17 |
 
 ## Assumptions
 
@@ -30,7 +32,8 @@ Short index of the confirmed facts for harni. Agents treat this file as project 
 
 | ID | Question | Owner | Needed by | Blocks |
 |---|---|---|---|---|
-| Q-01 | Postal address, ICO fee, mail provider facts and NEL decision for the legal pages | owner: Harni Muharami | before launch | legal readiness (`docs/05-security/LEGAL-REVIEW.md`) |
+| Q-01 | Postal address, ICO fee, host and mail provider facts, log retention and complaints cover for the legal pages (NEL decided in ADR-029) | owner: Harni Muharami | before launch | legal readiness (`docs/05-security/LEGAL-REVIEW.md`) |
+| Q-03 | Approval for Cloudflare changes, host setup and deploy of Version 2026-10-17; solicitor review | owner: Gideon | before launch | release (`.agent/CURRENT-TASK.md`) |
 | Q-02 | When to set up `~/apps/harni/current` and hand-copy `api/.htaccess` on the host | owner: Gideon | next deploy | the new backend layout going live |
 
 ## Risks

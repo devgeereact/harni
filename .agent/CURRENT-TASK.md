@@ -1,3 +1,27 @@
+## Latest task: launch build pass and handoff, 17 October 2026
+
+Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017`, pushed to origin at the owner's request (commits 43660d3 to 91f6eb4 and this handoff). No deploy, no live mail, no Cloudflare or host change.
+
+Done:
+- Contact visitor email is a short receipt with no sender-written name, subject or message (PL-06, ADR-029). Privacy notice, contact page, FAQ and form status say "receipt".
+- Share cards (`og:image` with size and alt, Twitter tags) on every page, book pages use their cover: `src/content/social.ts`. `llms.txt` built from site and book data: `src/content/llms.ts`.
+- `/play/` chrome matches the bookstore (`src/styles/game.css`); unused Fraunces import removed.
+- New tests: `tests/e2e/accessibility.spec.ts` (axe, all 27 routes), `tests/e2e/mobile.spec.ts` (iPhone 13 emulation), `tests/e2e/social-meta.spec.ts`, `tests/unit/social.test.ts`.
+- `docs/07-operations/SECURITY-HEADERS.md` (Cloudflare values, CSP Report-Only first; the CSP hash must be recomputed if the inline script in `src/content/layout.ts` changes).
+- Owner decisions taken by the operator acting as CEO (ADR-029): NEL off on Cloudflare, UK audience only, single-step sign-up kept, short contact receipt, headers on Cloudflare.
+
+Evidence, 17 October 2026: typecheck PASS; 60 unit PASS; `npm run test:mail` PASS (31 PHP checks plus HTTP capture, no real mail); 171 browser PASS (includes build, 27 axe, 28 phone emulation). NOT TESTED: real phone, screen reader, real inbox delivery, live host.
+Reports (outside the repo, Mac only): `../reports/harni/docs/09-release/RELEASE-REPORT.md` (NO-GO), `../reports/harni/qa/reports/LAUNCH-BUILD-2026-10-17.md`, `../reports/harni/qa/reports/OWNER-QUESTIONS-2026-10-17.md`.
+
+Release decision: NO-GO. The code is complete; these gates are open, in order:
+1. Owner facts for the legal pages: postal address, ICO fee number or exemption, web host and mail provider names and data locations, host log retention, complaints cover person. Then update `src/content/legal.ts` and `docs/05-security/LEGAL-REVIEW.md`. Never invent these.
+2. Owner confirmations: employer policy on the personal-capacity wording, both mailboxes receive mail, Instagram and TikTok live (`src/content/site.ts`).
+3. Solicitor review of the legal pages.
+4. Cloudflare (needs explicit approval): NEL off, headers per `SECURITY-HEADERS.md`.
+5. Host (needs explicit approval): private backend at `~/apps/harni/current/`, hand-copy `api/.htaccess`, mail variables, SPF/DKIM/DMARC, one approved real test send (`docs/07-operations/DEPLOYMENT.md`, `EMAIL.md`).
+6. Deploy approval for Version 2026-10-17, then the smoke test in `DEPLOYMENT.md`.
+Approval to commit and push does not cover steps 4 to 6.
+
 ## Latest task: GEE OS 1.4.5 rebrand and cPanel restructure, 17 October 2026
 
 Mode: BUILD, local only. Branch `rebrand/gee-os-cpanel-20261017`. No push, deploy, live mail or Cloudflare change.
