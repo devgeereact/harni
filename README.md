@@ -39,7 +39,7 @@ mise exec -- npm run build
 mise exec -- npm run test:browser
 # With a local PHP 8.1+ installation, no real mail is sent:
 mise exec -- npm run test:mail
-python3 tests/integration/mail-http.py
+python3 backend/tests/mail-http.py
 ```
 
 The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. There is no separate lint configuration. Strict TypeScript, unit checks and browser checks cover the implemented changes.

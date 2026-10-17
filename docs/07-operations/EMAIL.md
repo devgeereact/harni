@@ -29,11 +29,11 @@ Subscription (to `subscribe@harni.uk`, copy from `subscribe@harni.uk`):
 
 Consent stays single-step: the required checkbox is the consent and there is no confirmation link. A contact enquiry never grants marketing consent. Sending stays disabled until the host sets `HARNI_MAIL_ENABLED=1`, `HARNI_MAIL_STATE_DIR` and `HARNI_MAIL_RATE_KEY`.
 
-Evidence, 1 October 2026: `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` captured 4 messages (owner and visitor copy for each form); no real email was sent. NOT TESTED: delivery to a real inbox, spam placement, SPF/DKIM/DMARC, the host's PHP version and mail transport, and rendering in real mail clients.
+Evidence, 1 October 2026: `php backend/tests/mail.test.php` 27 PASS; `python3 backend/tests/mail-http.py` captured 4 messages (owner and visitor copy for each form); no real email was sent. NOT TESTED: delivery to a real inbox, spam placement, SPF/DKIM/DMARC, the host's PHP version and mail transport, and rendering in real mail clients.
 
 ## Local checks
 
-Run `npm run dev:mail` for a loopback-only PHP server on 5153, alongside the Vite development server. Vite proxies `/api/` to it. Keep sending disabled: valid requests return 503 with a direct-email alternative. `npm test` and `npm run test:mail` use synthetic inputs and fake transport; they do not send email. `python3 tests/integration/mail-http.py` starts a temporary loopback PHP server on 5154 and replaces mail transport with a local capture executable. It verifies both complete submission paths without real mail delivery.
+Run `npm run dev:mail` for a loopback-only PHP server on 5153, alongside the Vite development server. Vite proxies `/api/` to it. Keep sending disabled: valid requests return 503 with a direct-email alternative. `npm test` and `npm run test:mail` use synthetic inputs and fake transport; they do not send email. `python3 backend/tests/mail-http.py` starts a temporary loopback PHP server on 5154 and replaces mail transport with a local capture executable. It verifies both complete submission paths without real mail delivery.
 
 The built `dist/api/message.php` must be executed by PHP. Do not serve it with a static-only public server. `vite preview` alone does not provide PHP execution. A production-like local preview can use PHP to serve `dist/` with sending disabled.
 

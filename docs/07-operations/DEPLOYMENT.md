@@ -1,5 +1,31 @@
 # Deployment
 
+## Backend layout from 17 October 2026 (ADR-028), NOT YET DEPLOYED
+
+The mail code moved out of the web root. `dist/api/message.php` is now a small entry file that loads
+the private code from `~/apps/harni/current/src/`. Deploying only `dist/` as before leaves the form
+answering 503 "temporarily unavailable". Sending is disabled on the host today, so visitors see the
+same outcome either way, but the steps below must run before or with the next `dist/` deploy. Each
+step needs owner approval in that session. Full layout: `backend/README.md`.
+
+1. Back up the live `~/harni.uk/api/` folder.
+2. Copy `backend/src/` to `~/apps/harni/releases/<YYYYMMDD-HHMM>/src/` and point
+   `~/apps/harni/current` at that release.
+3. Write `~/harni.uk/api/backend-path.php` returning the absolute path of `~/apps/harni/current`.
+4. Dry run `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin`. Read whether it
+   uploads `api/.htaccess` (the root `.htaccess` must stay untouched). UNKNOWN until the dry run is
+   read. If it skips the file, upload `dist/api/.htaccess` to `~/harni.uk/api/` by hand.
+5. Deploy with `--go`, then smoke test: `GET /api/message.php` returns 405 JSON, a valid POST
+   returns the 503 "not available yet" JSON while sending is off, `/api/backend-path.php` and
+   `/api/.htaccess` return 403.
+
+Rollback: restore the backed-up `~/harni.uk/api/` folder. The release folders can stay; nothing
+reads them once the old single-file `message.php` is back.
+
+Local proof, 17 October 2026: the built `dist/` served by PHP with a pointer to a copied release
+gave 405, 503 and the fail-closed 503; local Apache 2.4.67 with `dist/api/.htaccess` gave 200 for
+`message.php` and 403 for `backend-path.php`, `.htaccess`, other PHP files, JSON and the folder.
+
 Status: DEPLOYED on 2026-10-02 (commit 4a76e41), after the owner said "commit, push and deploy now". Sending of form email is still DISABLED on the host until HARNI_MAIL_ENABLED and its companions are set (EMAIL.md). Earlier text below describes the pre-deploy gates.
 
 Last deploy: `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin --go`. The script refuses to delete `.well-known` and `cgi-bin` unless they are kept, so always pass those two. It replaced 8 old welcome-page asset files and left `.htaccess` alone. A copy of the live site from before the deploy is in `~/.harni-backups/2026-10-02-pre-deploy/` (outside the repo). Rollback: re-sync that folder to `~/harni.uk/` over the `cpanel` SSH alias, keeping `.htaccess`. Smoke test after deploy: 16 pages and assets returned 200, a missing page returned 404, `www.harni.uk` returned 200, `/api/message.php` ran under PHP 8.4 and returned the JSON "sending not available yet", the console was clean, and the only host contacted was harni.uk with no cookies or local storage.

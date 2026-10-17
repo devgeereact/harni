@@ -3,7 +3,16 @@ project:
   type: "website"
   lifecycle: build
   risk: medium
+  url: "https://harni.uk"
+stack_profile: cpanel
+stack:
+  frontend: vite-7 react-19 typescript-5.9 tailwind-4, static multi-page build (27 routes)
+  hosting: cpanel static document root behind cloudflare, deployed with cpanel-deploy over ssh
+  api: php-8.1+ mail endpoint, public entry backend/public/api/message.php, private code backend/src
+  database: none
+  auth: none
 gee_os:
+  version: "1.4.5"
   workflow: change-safety
   primary_mode: build
   primary_system: existing-application-recovery
@@ -18,5 +27,8 @@ authority:
   external_mutation: explicit-approval-required
 sources_of_truth:
   product: docs/01-product/PRODUCT-SPEC.md
+  memory: PROJECT-MEMORY.md
+  backend: backend/README.md
+  deployment: docs/07-operations/DEPLOYMENT.md
   release: ../reports/harni/docs/09-release/RELEASE-REPORT.md
 mcp_profile: ".agent/MCP-PROFILE.yml"

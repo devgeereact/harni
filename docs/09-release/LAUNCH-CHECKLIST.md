@@ -68,7 +68,7 @@ Status: the real-catalogue build (ADR-023) runs on localhost and is awaiting own
 ## Email and content update, 1 October 2026
 
 - [ ] Resolve operator, address, provider, retention and transfer facts in `docs/05-security/LEGAL-REVIEW.md`; review all legal drafts.
-- [ ] Confirm PHP execution and mail transport before uploading `/api/message.php`.
+- [ ] Confirm PHP execution and mail transport before uploading `/api/message.php` (since ADR-028 a thin entry from `backend/public/api/`; the code lives in `backend/src/`).
 - [ ] Configure private rate-limit storage and sending only after verification in `docs/07-operations/EMAIL.md`.
 - [ ] Verify live owner and visitor inbox delivery with explicit approval, including subscription confirmation and opt-out handling.
 - [ ] Complete visual/mobile/keyboard review of updated pages and Pier Run controls. Current browser verification is blocked by unavailable computer-use permissions.
@@ -91,3 +91,16 @@ Deploy is NOT authorised. All of these are open. Details in `docs/05-security/LE
 - [ ] Pier Run checked on a real phone, with audio, with a screen reader and a full keyboard walk. About, Events, Reviews and legal pages browser-reviewed.
 - [ ] Replace the Amazon footer glyph with the proper brand mark if the owner wants one.
 - [ ] Obtain separate deployment approval.
+
+## Backend install and security headers, 17 October 2026 (ADR-028, ADR-029)
+
+Deploy is still NOT authorised. Every step below that touches the host or Cloudflare needs explicit owner approval in that session. Steps in full: `docs/07-operations/DEPLOYMENT.md`, `backend/README.md` and `docs/07-operations/SECURITY-HEADERS.md`.
+
+- [ ] Back up the live `~/harni.uk/api/` folder.
+- [ ] Private folder installed outside the web root: copy `backend/src/` to `~/apps/harni/releases/<YYYYMMDD-HHMM>/src/` and point the `~/apps/harni/current` symlink at that release.
+- [ ] `~/harni.uk/api/backend-path.php` written on the host (one line returning the absolute path of `~/apps/harni/current`). Never committed.
+- [ ] Dry run of `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` read, including whether `api/.htaccess` is uploaded; root `.htaccess` untouched.
+- [ ] After `--go`: `curl -s -i https://harni.uk/api/message.php` returns 405 with a JSON body and `Allow: POST`; `/api/backend-path.php` and `/api/.htaccess` return 403.
+- [ ] Security headers added on Cloudflare as Report-Only first, browser consoles checked on Home, Contact, Join and `/play/`, then enforced.
+- [ ] NEL switched off on Cloudflare and `NEL` / `Report-To` gone from `curl -sI https://harni.uk/`; Privacy and Cookies pages updated to match.
+

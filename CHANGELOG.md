@@ -1,6 +1,19 @@
+## 2026-10-17, GEE OS 1.4.5 cPanel restructure (local, not deployed)
+
+- Mail code moved out of the web root into `backend/src/` (render, message, delivery, rate-limit,
+  endpoint). `backend/public/api/message.php` is the only public PHP file and keeps the URL
+  `/api/message.php`. A deny-list `api/.htaccess` ships beside it. The build copies only those two
+  files into `dist/api/` (ADR-028).
+- PHP tests moved to `backend/tests/`; `npm run test:mail` now runs the unit and HTTP capture checks.
+- GEE OS contract completed: `.claude/settings.json` guard hook, `.githooks/pre-commit`,
+  `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `cpanel`
+  stack profile in `.agent/PROJECT.yml`.
+- Server steps for the next deploy are in `docs/07-operations/DEPLOYMENT.md`.
+
 ## 2026-10-07, project layout cleanup
 
 Moved 27 generated route HTML files into ignored `.generated/pages/` and removed the empty root route folders. Vite, development and production builds use the new layout while retaining existing URLs and public content. Also corrected email fallback HTML to match its client hydration data in development.
+
 
 ## 2026-10-07, local React/Tailwind rebuild candidate
 
