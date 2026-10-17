@@ -4,16 +4,17 @@
 // reasoning, in docs/05-security/LEGAL-REVIEW.md. Outstanding owner facts are tracked there;
 // public postal-address and ICO placeholders were removed at the owner’s request on 2 October 2026.
 // These pages are carefully drafted but are not legal advice: the owner should have a UK solicitor
-// read them before launch. Version date: 2026-10-01 (the mail handler records the same date as the
-// version of the notice and consent wording a visitor agreed to).
+// read them before launch. Version date: 2026-10-17 (the mail handler records the same date as the
+// version of the notice and consent wording a visitor agreed to; tests/unit/legal-records.test.ts
+// keeps the two equal). 2026-10-17 added Cloudflare's Network Error Logging, seen on the live site.
 
 import { amazonAuthorUrl } from '../data/books.ts';
 import { band, emailLink, esc } from './layout.ts';
 import type { PageDef } from './layout.ts';
 import { site } from './site.ts';
 
-const version = '2026-10-01';
-const updated = '1 October 2026';
+const version = '2026-10-17';
+const updated = '17 October 2026';
 const subscription = `<!--email_off--><a href="mailto:${site.subscriptionEmail}">${site.subscriptionEmail}</a><!--/email_off-->`;
 
 interface Section {
@@ -71,7 +72,8 @@ export const privacy = (): PageDef =>
 <tr><th scope="row">Book-update sign-up: email address, your consent, the wording you agreed to and its version, the date and time, and a reference</th><td>To email you when a new book comes out, and to prove that you asked.</td><td>Your consent (UK GDPR and the Privacy and Electronic Communications Regulations). You can withdraw it at any time.</td><td>While you stay subscribed. After you unsubscribe I delete the sign-up record within 12 months.</td></tr>
 <tr><th scope="row">Do-not-email record: your email address only, after you unsubscribe</th><td>To make sure I never email you by mistake.</td><td>Legitimate interests: respecting your choice. You can object and ask me to delete it, but then I cannot promise to stop an accidental re-sign-up.</td><td>Until you ask me to delete it, or I stop running a mailing list.</td></tr>
 <tr><th scope="row">Technical data when you visit: IP address, pages requested, time, browser type</th><td>To deliver the site, keep it secure and block abuse.</td><td>Legitimate interests: running a safe website.</td><td>Held by my web host and Cloudflare under their own schedules. I do not keep my own copy.</td></tr>
-<tr><th scope="row">Form protection counters: a one-way keyed hash of your IP address and of your email address, with a count</th><td>To stop someone using the forms to flood inboxes. No readable address or message is stored.</td><td>Legitimate interests: preventing abuse.</td><td>One hour. Expired entries are removed on the next request.</td></tr>
+<tr><th scope="row">Connection error reports: if your browser fails to reach harni.uk, it may send Cloudflare a short report with the page address, the type of error, the time and your IP address</th><td>To let Cloudflare detect and fix network problems that stop the site loading.</td><td>Legitimate interests: keeping the site reachable.</td><td>Held by Cloudflare under its own schedule. Your browser keeps the instruction to send these reports for up to 7 days after a visit.</td></tr>
+<tr><th scope="row">Form protection counters: a one-way keyed hash of your IP address and of your email address, with a count</th><td>To stop someone using the forms to flood inboxes. No readable address or message is stored.</td><td>Legitimate interests: preventing abuse.</td><td>Each counter expires one hour after it starts and is deleted the next time anyone uses a form.</td></tr>
 <tr><th scope="row">Pier Run best score, only if you tick the box</th><td>To remember your best score on that device.</td><td>Your consent: nothing is saved unless you choose it.</td><td>Until you untick the box, press Delete saved score, or clear your browser data. It never leaves your device.</td></tr>
 </tbody></table></div>
 <p>This site has no accounts, no checkout, no comments and no advertising or analytics code. Fonts, book covers and the map data for the contact page globe are all served from harni.uk itself, so your browser does not contact other companies when you read the pages.</p>`,
@@ -117,7 +119,13 @@ export const privacy = (): PageDef =>
         heading: 'Your rights',
         html: `<p>You have the right to ask me for a copy of your information, to have it corrected or deleted, to restrict how I use it, to object to uses based on legitimate interests, and, where it applies, to receive it in a portable form. You can object to direct marketing at any time, and you can withdraw consent at any time. These rights are not absolute and some have exceptions.</p>
 <p>To use a right, email ${emailLink()}. I may ask for proportionate proof of identity. I will reply within one month and tell you if I need longer and why. There is normally no charge.</p>
-<p>If you are unhappy with how I have handled your information you can complain to the UK Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/">ico.org.uk/make-a-complaint</a>. You are welcome to contact me first, but you do not have to.</p>`,
+<p>If you are unhappy with how I have handled your information you can complain to the UK Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/">ico.org.uk/make-a-complaint</a>. You are welcome to complain to me first (see below), but you do not have to.</p>`,
+      },
+      {
+        id: 'complaints',
+        heading: 'Complaints about your information',
+        html: `<p>If you think I have not handled your personal information properly, you can complain to me. Use the <a href="/contact/">contact form</a> with the subject &ldquo;Data protection complaint&rdquo;, or email ${emailLink()} with that subject. Tell me what happened and what you would like me to do. You do not need to use any particular words.</p>
+<p>I will acknowledge your complaint within 30 days of receiving it, look into it without undue delay, keep you updated, and tell you the outcome. Making a complaint to me does not stop you complaining to the Information Commissioner's Office at any time.</p>`,
       },
       {
         id: 'children',
@@ -175,7 +183,8 @@ export const cookies = (): PageDef =>
       {
         id: 'infrastructure',
         heading: 'Hosting and security',
-        html: `<p>The live site is delivered by a web host and through Cloudflare. To keep the site fast and secure, and to stop abusive traffic, those services may set or read essential security items, for example when they check that a visitor is not a robot. These are strictly necessary for security, they are not used for advertising, and they depend on the live configuration, which can change. They are separate from the Pier Run score above.</p>`,
+        html: `<p>The live site is delivered by a web host and through Cloudflare. To keep the site fast and secure, and to stop abusive traffic, those services may set or read essential security items, for example when they check that a visitor is not a robot. These are strictly necessary for security, they are not used for advertising, and they depend on the live configuration, which can change. They are separate from the Pier Run score above.</p>
+<p>Cloudflare also uses Network Error Logging. Each page response asks your browser to remember, for up to 7 days, to send Cloudflare a short report if a later visit fails to connect. The report holds the page address, the type of error, the time and your IP address. It is not a cookie, it is not used for advertising, and your browser handles it outside the page. The <a href="/privacy/#collect">privacy notice</a> explains how this information is used.</p>`,
       },
       {
         id: 'manage',

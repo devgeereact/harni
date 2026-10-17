@@ -84,7 +84,7 @@ export function gameDocument(): string {
           </details>
           <noscript><p>Enable JavaScript to play, or <a href="/books/">explore the books</a>.</p></noscript>
         </main>
-        <footer className="unwind-foot"><span>Take your time. Make it your moment.</span><nav aria-label="Footer"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://www.amazon.co.uk/stores/author/B0G27S5PSV" target="_blank" rel="noopener noreferrer">Amazon<span className="visually-hidden"> (opens in a new tab)</span></a></nav></footer>
+        <footer className="unwind-foot"><span>Take your time. Make it your moment.</span><nav aria-label="Footer"><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a><a href="https://www.amazon.co.uk/stores/author/B0G27S5PSV" target="_blank" rel="noopener noreferrer">Amazon<span className="visually-hidden"> (opens in a new tab)</span></a></nav></footer>
       </body>
     </html>
   );

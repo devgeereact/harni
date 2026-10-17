@@ -1,3 +1,10 @@
+## Latest task: privacy and legal readiness audit, 17 October 2026
+
+Mode: BUILD, local only. Authority: local changes and checks; no commit, push, deploy, live mail or Cloudflare change.
+Done: runtime privacy sweep of all 26 pages plus a read-only live check; legal pages to Version 2026-10-17 (NEL disclosure, s164A complaints section, counter wording); Cookies link on /play/; new tests `tests/e2e/privacy.spec.ts` and `tests/unit/legal-records.test.ts`; runbook `docs/07-operations/DATA-REQUESTS.md`; ADR-027.
+Evidence: ../reports/harni/qa/reports/PRIVACY-LEGAL-READINESS-2026-10-17.md. Readiness: BLOCKED, owner information required (postal address, ICO fee, mail provider facts, NEL decision) and solicitor review.
+Note: Mise is not installed on this Mac; checks ran with Node 26.8.1 directly.
+
 ## Latest task: simplify the project layout
 
 The user requested a cleaner GEE OS project layout. The 27 generated route HTML files have moved from project-root route folders into ignored `.generated/pages/`. Vite uses that generated directory as its HTML root while source remains in `src/`, assets/PHP in `public/` and production output in `dist/`. Public URLs and React/Tailwind behaviour are retained. The prior layout was backed up before moving exact generated files; only empty route directories were removed. The original active/harni is unchanged.

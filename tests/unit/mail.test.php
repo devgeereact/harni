@@ -34,7 +34,7 @@ foreach ([null, false, 'true', 1] as $value) {
     catch (InvalidArgumentException $e) { /* Expected. */ }
 }
 check(true, 'contact acknowledgement required as explicit boolean true');
-check(str_contains($prepared['owner'], 'Notice and terms version: 2026-10-01'), 'contact acknowledgement version recorded');
+check(str_contains($prepared['owner'], 'Notice and terms version: 2026-10-17'), 'contact acknowledgement version recorded');
 function mimePart(string $body, string $type): string {
     preg_match('/Content-Type: ' . preg_quote($type, '/') . '; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n([A-Za-z0-9+\/=\r\n]+)/', $body, $m);
     return base64_decode($m[1] ?? '', true) ?: '';

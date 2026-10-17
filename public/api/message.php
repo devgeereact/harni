@@ -2,7 +2,7 @@
 /** cPanel/PHP 8.1+ mail endpoint. Enable only after host and mailbox verification. */
 declare(strict_types=1);
 
-const HARNI_NOTICE_VERSION = '2026-10-01';
+const HARNI_NOTICE_VERSION = '2026-10-17';
 const HARNI_CONSENT_WORDING = 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.';
 const HARNI_ACK_WORDING = 'I have read the Privacy Notice and agree to the Website Terms.';
 
