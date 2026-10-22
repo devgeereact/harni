@@ -7,6 +7,7 @@
 import { navItems, site } from './site.ts';
 import { amazonAuthorUrl, groups } from '../data/books.ts';
 import type { Book } from '../data/books.ts';
+import { socialImageFor } from './social.ts';
 
 export interface PageDef {
   readonly title: string;
@@ -205,6 +206,8 @@ export const renderDocument = (path: string, page: PageDef): RenderedPage => {
   const is404 = path === '/404.html';
   const title = esc(page.title);
   const description = esc(page.description);
+  const image = socialImageFor(path);
+  const ogType = path.startsWith('/books/') && path !== '/books/' ? 'book' : 'website';
   const robots = page.noindex ? '\n    <meta name="robots" content="noindex" />' : '';
   const canonical = is404
     ? ''
@@ -225,11 +228,20 @@ export const renderDocument = (path: string, page: PageDef): RenderedPage => {
     <meta name="description" content="${description}" />
     <meta name="theme-color" content="#FFFFFF" />${robots}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />${canonical}
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${ogType}" />
     <meta property="og:site_name" content="${site.name}" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
+    <meta property="og:image" content="${image.url}" />
+    <meta property="og:image:width" content="${image.width}" />
+    <meta property="og:image:height" content="${image.height}" />
+    <meta property="og:image:alt" content="${esc(image.alt)}" />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${image.url}" />
+    <meta name="twitter:image:alt" content="${esc(image.alt)}" />
     <script>document.documentElement.classList.add('js');</script>
     <script type="module" src="/src/app/main.tsx"></script>
   </head>

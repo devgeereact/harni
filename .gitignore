@@ -14,3 +14,10 @@ test-results/
 
 # Local scratch folder; nothing in the project reads it.
 work/
+
+
+# Playwright MCP session output.
+.playwright-mcp/
+
+# Python bytecode from scripts/*.py
+__pycache__/

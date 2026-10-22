@@ -1,15 +1,28 @@
 /* Pier Run: a bright seaside scene inside the bookstore's white page.
-   Interface colours follow "Rausch on white" (ADR-020); the scene itself is drawn in daylight pastels. */
+   The page chrome (header, footer, type, buttons, cards, HUD, score settings) uses the bookstore tokens of
+   site.css ("Rausch on white", ADR-020, ADR-023). The canvas scene keeps its own daylight palette
+   (src/game/palette.ts) because the obstacles, pickups and hero are tuned for contrast against it.
+   Contrast (WCAG 2 formula): body #3F3F3F on the four zone grounds 7.08 to 8.77; ink on ground 10.69 or more;
+   muted on canvas 5.41, on soft 5.05; white on action 4.89; ink on flag yellow 12.44. */
 .unwind { min-height: 100svh; display: flex; flex-direction: column; }
-.unwind-head, .unwind-foot { width: min(100% - 2.5rem, 75rem); margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.unwind-head { min-height: 4.5rem; padding-block: .75rem; }
-.unwind-back { color: var(--body); font-size: .875rem; white-space: nowrap; }
-.unwind-main { width: min(100% - 2.5rem, 70rem); margin: auto; padding-block: .5rem 1rem; }
-.unwind-title { margin-bottom: 1rem; text-align: center; }
-.unwind-title h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 600; }
+
+/* Header: the bookstore header bar (white, hairline, 72px), without the sticky behaviour so the game keeps the viewport. */
+.unwind-head, .unwind-foot { width: 100%; padding-inline: max(1.25rem, calc((100% - 80rem) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.unwind-head { min-height: 4.5rem; padding-block: .5rem; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
+.unwind-back { position: relative; display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--muted); font-size: 1rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: color .2s var(--ease); }
+.unwind-back::after { content: ''; position: absolute; inset: auto 0 .35rem 0; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+.unwind-back:hover { color: var(--ink); }
+.unwind-back:hover::after { transform: scaleX(1); }
+
+.unwind-main { width: min(100% - 2.5rem, 70rem); margin: auto; padding-block: 1.5rem 1.5rem; }
+.unwind-title { margin-bottom: 1rem; text-align: left; }
+/* Same h1 as the bookstore pages (site.css): Inter 700, -0.02em. */
+.unwind-title h1 { font-size: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; }
+.unwind-title__dot { color: var(--action); }
 .unwind-title p { margin-top: .35rem; color: var(--muted); }
 
-.game { position: relative; overflow: hidden; border-radius: var(--radius); background: #d8f1ff; box-shadow: var(--lift); touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+/* Game frame: a 20px panel with the hairline and the single shadow tier. */
+.game { position: relative; overflow: hidden; border: 1px solid var(--hairline); border-radius: var(--radius-lg); background: #d8f1ff; box-shadow: var(--lift); touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .game:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .game__stage { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .game.is-playing .game__stage { touch-action: none; }
@@ -17,23 +30,26 @@
 
 .game__hud { position: absolute; inset: .75rem .75rem auto; display: flex; flex-direction: column; gap: .4rem; pointer-events: none; font-variant-numeric: tabular-nums; }
 .hud__row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
-.hud__pill { display: inline-flex; align-items: baseline; gap: .4rem; padding: .3rem .65rem; border-radius: 10px; background: rgb(255 255 255 / 92%); color: var(--ink); font-size: .9375rem; line-height: 1.2; }
+.hud__pill { display: inline-flex; align-items: baseline; gap: .4rem; padding: .3rem .65rem; border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--canvas); color: var(--ink); font-size: .9375rem; line-height: 1.2; }
 .hud__pill b { font-weight: 600; }
-.hud__pill--soft { background: rgb(247 247 247 / 92%); }
+.hud__pill--soft { background: var(--canvas); }
 .hud__label { color: var(--muted); font-size: .75rem; }
 .hud__hearts { align-items: center; gap: .15rem; padding-block: .3rem; }
 .hud__heart svg { display: block; width: 1.25rem; height: 1.25rem; fill: var(--strong); stroke: var(--hairline-strong); stroke-width: 1.5; stroke-linejoin: round; transition: fill .2s var(--ease); }
 .hud__heart.is-full svg { fill: var(--rausch); stroke: var(--action); }
 .hud__row--chips { min-height: 1.75rem; }
-.hud__chip { padding: .2rem .6rem; border-radius: 10px; background: #fff3c4; color: var(--ink); font-size: .8125rem; font-weight: 600; }
+/* Chips are pills, as on the bookstore pages. */
+.hud__chip { padding: .2rem .7rem; border: 1px solid var(--hairline-strong); border-radius: 999px; background: #f6e3a1; color: var(--ink); font-size: .8125rem; font-weight: 600; }
 .hud__chip[hidden] { display: none; }
-.hud__chip--combo { background: #ffffff; border: 1px solid var(--action); color: var(--action); }
+.hud__chip--combo { background: var(--canvas); border-color: var(--action); color: var(--action); }
 
-.game__overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 3.5rem 1rem 1rem; background: rgb(255 255 255 / 30%); touch-action: manipulation; }
+.game__overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 3.5rem 1rem 3rem; background: rgb(255 255 255 / 20%); touch-action: manipulation; }
 .game__overlay[hidden] { display: none; }
-.game__card { width: min(100%, 24rem); padding: 1.25rem 1.5rem 1.5rem; border-radius: var(--radius); background: var(--canvas); box-shadow: var(--lift); text-align: center; }
-.game__card-title { margin: 0; font-size: 1.375rem; font-weight: 600; line-height: 1.25; }
-.game__card-text { margin-top: .4rem; color: var(--body); font-size: .9375rem; }
+/* Start and result card: the bookstore panel (white, hairline, 14px, single shadow). */
+.game__card { position: relative; width: min(100%, 22rem); padding: 1.4rem 1.5rem; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--canvas); box-shadow: var(--lift); text-align: center; }
+.game__ticket-label { margin: 0 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--hairline); color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.game__card-title { margin: 0; font-size: clamp(1.15rem, 2vw, 1.5rem); font-weight: 600; line-height: 1.25; letter-spacing: -.01em; }
+.game__card-text { max-width: 25ch; margin: .4rem auto 0; color: var(--body); font-size: .9375rem; }
 .game__result { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 1rem 0 0; padding: .75rem; border-radius: var(--radius-sm); background: var(--soft); }
 .game__result[hidden] { display: none; }
 .game__result dt { color: var(--muted); font-size: .75rem; }
@@ -42,96 +58,81 @@
 .game__card-actions .btn { min-height: 3rem; }
 .game__card-actions [hidden] { display: none; }
 
+/* Route along the bottom of the scene. Labels sit on the canvas ground: body text 7.08:1 or better. */
+.game__journey { position: absolute; inset: auto 0 .6rem; display: flex; justify-content: center; gap: clamp(.7rem, 3vw, 2rem); margin: 0; padding: 0 .75rem; list-style: none; pointer-events: none; }
+.game__journey li { position: relative; color: var(--body); font-size: .75rem; line-height: 1.5; padding-top: .7rem; }
+.game__journey li::before { content: ''; position: absolute; width: 5px; height: 5px; top: .05rem; left: calc(50% - 2.5px); border: 1px solid var(--muted); border-radius: 50%; background: var(--canvas); }
+.game__journey [aria-current] { color: var(--ink); font-weight: 700; }
+.game__journey [aria-current]::before { background: var(--action); border-color: var(--action); box-shadow: 0 0 0 3px rgb(224 11 65 / 15%); }
+
 .unwind-controls { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: .85rem; }
 .unwind-controls p { font-size: .875rem; color: var(--muted); }
 .unwind-controls kbd { font-family: inherit; font-size: .8rem; color: var(--body); padding: .15rem .35rem; background: var(--soft); border: 1px solid var(--hairline); border-radius: 4px; }
 .unwind-controls__buttons { display: flex; gap: .5rem; flex: none; }
-.unwind-controls .btn { min-height: 44px; padding: .5rem 1rem; font-size: .875rem; }
+.unwind-controls .btn { min-height: 2.75rem; padding: .45rem 1.1rem; font-size: .9rem; }
 .unwind-controls button:disabled { cursor: default; }
 .game__hint-touch { display: none; }
 .unwind-settings { margin-top: .5rem; font-size: .875rem; color: var(--muted); }
-.unwind-settings summary { width: fit-content; min-height: 44px; padding-block: .7rem; cursor: pointer; }
-.unwind-settings__body { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.5rem; padding: 1rem; border-radius: var(--radius); background: var(--soft); }
+.unwind-settings summary { width: fit-content; min-height: 44px; padding-block: .7rem; color: var(--ink); font-weight: 600; cursor: pointer; }
+.unwind-settings__body { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--soft); }
 .unwind-settings__body label { display: flex; align-items: center; gap: .6rem; color: var(--body); }
 .unwind-settings__body input { width: 1.2rem; height: 1.2rem; accent-color: var(--action); }
 .unwind-settings__body p { width: 100%; margin: 0; }
 .unwind-settings__body button, .unwind-settings__body a { min-height: 44px; display: inline-flex; align-items: center; }
-.unwind-foot { padding-block: 1rem; font-size: .75rem; color: var(--muted); }
-.unwind-foot nav { display: flex; gap: 1rem; }
-.unwind-foot a { color: var(--muted); min-height: 32px; display: inline-flex; align-items: center; }
+
+/* Footer: the bookstore footer's base row (soft band, hairline, muted 13px links). */
+.unwind-foot { margin-top: 1.5rem; padding-block: 1.25rem 1.5rem; border-top: 1px solid var(--hairline); background: var(--soft); font-size: .8125rem; color: var(--muted); }
+.unwind-foot nav { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+.unwind-foot a { color: var(--muted); min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; }
+.unwind-foot a:hover { color: var(--ink); text-decoration: underline; }
 
 @media (hover: none) and (pointer: coarse) {
   .game__hint-keys { display: none; }
   .game__hint-touch { display: inline; }
 }
 @media (max-width: 35rem) {
-  .unwind-head, .unwind-main, .unwind-foot { width: calc(100% - 2rem); }
+  .unwind-head, .unwind-foot { padding-inline: 1rem; }
+  .unwind-main { width: calc(100% - 2rem); padding-block: 1rem; }
   .unwind-head { min-height: 4rem; }
   .unwind-head .brand__name { font-size: .875rem; }
-  .unwind-title { text-align: left; margin-bottom: .75rem; }
+  .unwind-back { font-size: .875rem; }
+  .unwind-title { margin-bottom: .75rem; }
   .unwind-title p { font-size: .875rem; }
+  .game { border-radius: var(--radius); }
+  .game__canvas { height: clamp(260px, calc(100svh - 335px), 560px); }
   .game__hud { inset: .5rem .5rem auto; }
   .hud__best { display: none; }
   .hud__pill { padding: .25rem .5rem; font-size: .875rem; }
+  .game__overlay { padding-top: 3rem; }
+  .game__card { max-width: 20rem; padding: 1rem; }
+  .game__ticket-label { margin-bottom: .7rem; padding-bottom: .6rem; }
+  .game__journey { bottom: .3rem; }
   .unwind-foot > span { display: none; }
-  .unwind-foot { justify-content: center; padding-block: .5rem; }
+  .unwind-foot { justify-content: center; padding-block: .5rem; margin-top: 1rem; }
   .unwind-controls { flex-direction: column; align-items: stretch; gap: .6rem; }
   .unwind-controls p { font-size: .8125rem; }
   .unwind-controls__buttons .btn { flex: 1; }
-  .game__overlay { padding-top: 3rem; }
 }
 @media (max-height: 500px) and (min-width: 40rem) {
   .unwind-head { min-height: 2.75rem; padding-block: .15rem; }
   .unwind-main { padding-block: .15rem .5rem; }
-  .unwind-title { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .35rem; text-align: left; }
+  .unwind-title { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .35rem; }
   .unwind-title h1 { font-size: 1.25rem; }
   .unwind-title p { margin: 0; font-size: .875rem; }
   .game__canvas { height: max(240px, calc(100svh - 138px)); }
-  .game__overlay { padding: 2.75rem 1rem .5rem; }
-  .game__card { padding: .75rem 1.25rem 1rem; display: grid; gap: .25rem; }
+  .game__overlay { padding: 2.75rem 1rem 2rem; }
+  .game__card { padding: .65rem 1rem; display: grid; gap: .25rem; }
+  .game__ticket-label { display: none; }
   .game__card-title { font-size: 1.125rem; }
   .game__card-text { display: none; }
   .game__result { margin-top: .5rem; padding: .35rem; }
   .game__result dd { font-size: 1.125rem; }
   .game__card-actions { margin-top: .5rem; }
   .game__card-actions .btn { min-height: 2.75rem; }
+  .game__journey { bottom: .2rem; }
   .unwind-controls { margin-top: .4rem; }
   .unwind-foot { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hud__heart svg { transition: none; }
+  .hud__heart svg, .unwind-back, .unwind-back::after { transition: none; }
 }
-
-/* A small seaside postcard, with a route that follows the actual game zones. */
-.unwind-title h1 { font-weight: 750; letter-spacing: -.055em; }
-.unwind-title__dot { color: var(--action); }
-.game { border: 5px solid #fff; outline: 1px solid #e7ded2; border-radius: 22px; box-shadow: 0 8px 30px rgb(89 76 58 / 8%); }
-.game__overlay { background: rgb(255 250 239 / 16%); padding-bottom: 3rem; }
-.game__card { position: relative; max-width: 22rem; padding: 1.4rem 1.5rem; border: 1px solid #eadfcc; border-radius: 8px; background: #fffdf7; box-shadow: 0 8px 20px rgb(76 64 45 / 10%); }
-.game__ticket-label { margin: 0 0 1rem; padding-bottom: .8rem; border-bottom: 1px dashed #d8cbb7; color: #795e4b; font-size: .6875rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-.game__card-title { font-size: clamp(1.15rem, 2vw, 1.65rem); letter-spacing: -.035em; }
-.game__card-text { max-width: 25ch; margin-inline: auto; font-size: .875rem; }
-.hud__pill { border: 1px solid rgb(126 117 93 / 12%); border-radius: 7px; background: #fffdf7; }
-.hud__pill--soft { background: rgb(255 253 247 / 92%); }
-.game__journey { position: absolute; inset: auto 0 .6rem; display: flex; justify-content: center; gap: clamp(.7rem, 3vw, 2rem); margin: 0; padding: 0 .75rem; list-style: none; pointer-events: none; }
-.game__journey li { position: relative; color: #695f51; font-size: .6875rem; line-height: 1.5; padding-top: .7rem; }
-.game__journey li::before { content: ''; position: absolute; width: 5px; height: 5px; top: .05rem; left: calc(50% - 2.5px); border: 1px solid #8a7866; border-radius: 50%; background: #fffaf0; }
-.game__journey [aria-current] { color: #9e1237; font-weight: 700; }
-.game__journey [aria-current]::before { background: var(--action); border-color: var(--action); box-shadow: 0 0 0 3px rgb(224 11 65 / 12%); }
-@media (max-width: 35rem) {
-  .game { border-width: 3px; border-radius: 16px; }
-  .game__card { max-width: 20rem; padding: 1rem; }
-  .game__ticket-label { margin-bottom: .7rem; padding-bottom: .6rem; }
-  .game__journey { bottom: .3rem; }
-  .game__canvas { height: clamp(260px, calc(100svh - 335px), 560px); }
-}
-@media (max-height: 500px) and (min-width: 40rem) {
-  .game__ticket-label { display: none; }
-  .game__overlay { padding-bottom: 2rem; }
-  .game__card { padding: .65rem 1rem; }
-  .game__journey { bottom: .2rem; }
-}
-
-/* Compact editorial header keeps the same alignment and type as the main site. */
-.unwind-title { text-align: left; }
-.unwind-title h1 { line-height: 1.04; letter-spacing: -.045em; font-weight: 750; }

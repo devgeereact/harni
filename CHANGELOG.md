@@ -1,3 +1,19 @@
+## 2026-10-17, GEE OS 1.4.5 cPanel restructure (local, not deployed)
+
+- Mail code moved out of the web root into `backend/src/` (render, message, delivery, rate-limit,
+  endpoint). `backend/public/api/message.php` is the only public PHP file and keeps the URL
+  `/api/message.php`. A deny-list `api/.htaccess` ships beside it. The build copies only those two
+  files into `dist/api/` (ADR-028).
+- PHP tests moved to `backend/tests/`; `npm run test:mail` now runs the unit and HTTP capture checks.
+- GEE OS contract completed: `.claude/settings.json` guard hook, `.githooks/pre-commit`,
+  `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `cpanel`
+  stack profile in `.agent/PROJECT.yml`.
+- Server steps for the next deploy are in `docs/07-operations/DEPLOYMENT.md`.
+- Review fixes: no server pointer file (a deploy with `--delete` would remove it); the entry
+  derives `~/apps/harni/current` from its own place and uses the repository layout only under
+  `php -S`; rate-limit storage must resolve and sit outside both the web root and the code folder;
+  the `.htaccess` rewrite block repeats the PHP deny for LiteSpeed; `api/.htaccess` is uploaded by hand.
+
 ## 2026-10-07, project layout cleanup
 
 Moved 27 generated route HTML files into ignored `.generated/pages/` and removed the empty root route folders. Vite, development and production builds use the new layout while retaining existing URLs and public content. Also corrected email fallback HTML to match its client hydration data in development.
@@ -46,7 +62,7 @@ Recorded as ADR-025 (ADR-024 was taken by an earlier session and is partly super
 - Docs updated: DECISIONS (ADR-025), EMAIL, LEGAL-REVIEW, DATA-PRIVACY, BUSINESS-RULES (BR-013 to BR-017),
   USER-JOURNEYS (J-007 to J-009), ARCHITECTURE, INTEGRATIONS, UX-SPEC, DESIGN-SYSTEM, ACCESSIBILITY,
   EVIDENCE-STATUS, LAUNCH-CHECKLIST, KNOWN-ISSUES (rows 30 to 38).
-- Checks: `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` 4 captured
+- Checks (paths as they were then; both files moved to `backend/tests/` on 2026-10-17): `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` 4 captured
   messages, no real email sent; 41 unit tests PASS; Lighthouse mobile About and Play 100/100/100. NOT TESTED:
   real inbox delivery, spam placement, SPF/DKIM/DMARC, host PHP, a real phone, audio, a screen reader.
 - Nothing is deployed or pushed.

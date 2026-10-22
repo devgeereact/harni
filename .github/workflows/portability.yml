@@ -22,5 +22,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: php --version
-      - run: php tests/unit/mail.test.php
-      - run: python3 tests/integration/mail-http.py
+      - run: php backend/tests/mail.test.php
+      - run: python3 backend/tests/mail-http.py

@@ -1,6 +1,6 @@
 # Website email
 
-Status: implemented locally, sending disabled by default. Updated 1 October 2026 (ADR-025): both recipients now get detailed copies. Verified locally with synthetic inputs and a capture transport only. Host PHP support, real inbox delivery, spam placement and SPF/DKIM/DMARC are NOT TESTED. This adds a small PHP backend to the formerly static-only site; the cPanel host has no Node requirement. PHP 8.1+ and a working local mail transfer agent are prerequisites, not verified host facts.
+Status: implemented locally, sending disabled by default. Updated 1 October 2026 (ADR-025): both recipients now get detailed copies. Updated 17 October 2026 (ADR-029): the contact visitor copy is a short receipt without sender-written text. Verified locally with synthetic inputs and a capture transport only. Host PHP support, real inbox delivery, spam placement and SPF/DKIM/DMARC are NOT TESTED. This adds a small PHP backend to the formerly static-only site; the cPanel host has no Node requirement. PHP 8.1+ and a working local mail transfer agent are prerequisites, not verified host facts.
 
 ## Routing and visitor experience
 
@@ -18,7 +18,7 @@ Contact (to `info@harni.uk`, copy from `info@harni.uk`):
 | Recipient | Content |
 |---|---|
 | Owner | Reference, received time (UTC), name, email, subject, the full message, the acknowledgement record and its version, and a "what to do" list. Reply-To is the visitor |
-| Visitor copy | Reference, time, name, email, subject, the full message, what they agreed to, what happens next (a reply is aimed for within five working days, not guaranteed; do not send patient information; ignore the email if it was not them), and a footer with the Privacy link. Reply-To is `info@harni.uk` |
+| Visitor receipt | Since ADR-029 (17 October 2026): reference, time, the address it was sent to, what they agreed to. No name, subject or message text, so the form cannot relay sender-written text to a typed address. Then what happens next (a reply is aimed for within five working days, not guaranteed; do not send patient information; ignore the email if it was not them), and a footer with the Privacy link. Reply-To is `info@harni.uk` |
 
 Subscription (to `subscribe@harni.uk`, copy from `subscribe@harni.uk`):
 
@@ -29,13 +29,13 @@ Subscription (to `subscribe@harni.uk`, copy from `subscribe@harni.uk`):
 
 Consent stays single-step: the required checkbox is the consent and there is no confirmation link. A contact enquiry never grants marketing consent. Sending stays disabled until the host sets `HARNI_MAIL_ENABLED=1`, `HARNI_MAIL_STATE_DIR` and `HARNI_MAIL_RATE_KEY`.
 
-Evidence, 1 October 2026: `php tests/unit/mail.test.php` 27 PASS; `python3 tests/integration/mail-http.py` captured 4 messages (owner and visitor copy for each form); no real email was sent. NOT TESTED: delivery to a real inbox, spam placement, SPF/DKIM/DMARC, the host's PHP version and mail transport, and rendering in real mail clients.
+Evidence, 1 October 2026: `php backend/tests/mail.test.php` 27 PASS; `python3 backend/tests/mail-http.py` captured 4 messages (owner and visitor copy for each form); no real email was sent. NOT TESTED: delivery to a real inbox, spam placement, SPF/DKIM/DMARC, the host's PHP version and mail transport, and rendering in real mail clients.
 
 ## Local checks
 
-Run `npm run dev:mail` for a loopback-only PHP server on 5153, alongside the Vite development server. Vite proxies `/api/` to it. Keep sending disabled: valid requests return 503 with a direct-email alternative. `npm test` and `npm run test:mail` use synthetic inputs and fake transport; they do not send email. `python3 tests/integration/mail-http.py` starts a temporary loopback PHP server on 5154 and replaces mail transport with a local capture executable. It verifies both complete submission paths without real mail delivery.
+Run `npm run dev:mail` for a loopback-only PHP server on 5153, alongside the Vite development server. Vite proxies `/api/` to it. Keep sending disabled: valid requests return 503 with a direct-email alternative. `npm test` and `npm run test:mail` use synthetic inputs and fake transport; they do not send email. `python3 backend/tests/mail-http.py` starts a temporary loopback PHP server on 5154 and replaces mail transport with a local capture executable. It verifies both complete submission paths without real mail delivery.
 
-The built `dist/api/message.php` must be executed by PHP. Do not serve it with a static-only public server. `vite preview` alone does not provide PHP execution. A production-like local preview can use PHP to serve `dist/` with sending disabled.
+The built `dist/api/message.php` must be executed by PHP. Since ADR-028 it is only an entry file: it finds the private code from its own place (on cPanel, `~/apps/harni/current/src/`, outside the web root). Without that folder it answers 503 "temporarily unavailable". Install steps: `backend/README.md` and `DEPLOYMENT.md`. Do not serve it with a static-only public server. `vite preview` alone does not provide PHP execution. A production-like local preview can use PHP to serve `dist/` with sending disabled. Under `php -S` the entry looks two levels up from `dist/api/`, finds no backend there and gives the fail-closed 503, so form checks belong on `npm run dev` instead.
 
 ## Before enabling on the host
 

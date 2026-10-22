@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
-define('HARNI_MAIL_TEST', true);
-require __DIR__ . '/../../public/api/message.php';
+require __DIR__ . '/../src/bootstrap.php';
 function check(bool $condition, string $label): void {
     if (!$condition) throw new RuntimeException('FAIL: ' . $label);
     echo "PASS: $label\n";
@@ -9,12 +8,12 @@ function check(bool $condition, string $label): void {
 $contact = ['kind' => 'contact', 'acknowledgement' => true, 'name' => 'Reader Example', 'email' => 'reader@example.org', 'subject' => 'Book question', 'message' => "Hello Harni,\nA question about chapter 2."];
 $prepared = prepareMessage($contact);
 check($prepared['to'] === 'info@harni.uk', 'contact recipient');
-check(str_contains($prepared['copy'], $contact['message']) && str_contains($prepared['copy'], $prepared['reference']), 'copy contains full message and reference');
+check(str_contains($prepared['copy'], $prepared['reference']) && !str_contains($prepared['copy'], 'chapter 2') && !str_contains($prepared['copyHtml'], 'chapter 2'), 'copy carries the reference but never the sender-written message');
 check(str_contains($prepared['owner'], 'Name: Reader Example') && str_contains($prepared['owner'], 'Received: ') && str_contains($prepared['owner'], 'UTC') && str_contains($prepared['owner'], 'Email: reader@example.org') && str_contains($prepared['owner'], 'Subject: Book question'), 'owner email contains who, when and what');
-check(str_contains($prepared['copy'], 'Hello Reader Example,') && str_contains($prepared['copy'], 'Your email: reader@example.org') && str_contains($prepared['copy'], 'Subject: Book question') && str_contains($prepared['copy'], 'five working days') && str_contains($prepared['copy'], 'did not sign you up'), 'contact copy is a detailed reference copy');
-check(str_contains($prepared['ownerHtml'], '<h1') && str_contains($prepared['copyHtml'], 'Hello Reader Example,') && str_contains($prepared['copyHtml'], 'A question about chapter 2.'), 'html versions exist');
+check(!str_contains($prepared['copy'], 'Reader Example') && !str_contains($prepared['copy'], 'Book question') && str_contains($prepared['copy'], 'Your email: reader@example.org') && str_contains($prepared['copy'], 'five working days') && str_contains($prepared['copy'], 'did not sign you up') && str_contains($prepared['copy'], HARNI_ACK_WORDING), 'contact copy is a short acknowledgement with no sender-written name or subject');
+check(str_contains($prepared['ownerHtml'], '<h1') && str_contains($prepared['ownerHtml'], 'A question about chapter 2.') && str_contains($prepared['copyHtml'], '<h1') && !str_contains($prepared['copyHtml'], 'Reader Example'), 'html versions exist');
 $evil = prepareMessage(array_replace($contact, ['name' => 'A <b>B</b>', 'message' => '<script>alert(1)</script>']));
-check(!str_contains($evil['ownerHtml'], '<script>') && !str_contains($evil['copyHtml'], '<script>') && str_contains($evil['copyHtml'], '&lt;script&gt;'), 'visitor text is escaped in html');
+check(!str_contains($evil['ownerHtml'], '<script>') && str_contains($evil['ownerHtml'], '&lt;script&gt;') && !str_contains($evil['copyHtml'], 'script') && !str_contains($evil['copyHtml'], '<b>'), 'visitor text is escaped for the owner and absent from the copy');
 $subscription = prepareMessage(['kind' => 'subscribe', 'email' => 'reader@example.org', 'consent' => true]);
 check($subscription['to'] === 'subscribe@harni.uk' && str_starts_with($subscription['visitorSubject'], 'You joined the mailing list: your copy [HM-') && str_contains($subscription['copy'], 'Thank you for joining my mailing list!') && !str_contains($subscription['copy'], 'CONFIRM'), 'subscription recipient and welcome');
 check(str_contains($subscription['copy'], 'Reference: ' . $subscription['reference']) && str_contains($subscription['copy'], 'Your email: reader@example.org') && str_contains($subscription['copy'], 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.') && str_contains($subscription['copy'], 'Unsubscribe') && str_contains($subscription['copy'], 'subscribe@harni.uk'), 'subscriber gets a copy of what they signed up to, with how to leave');
@@ -34,7 +33,7 @@ foreach ([null, false, 'true', 1] as $value) {
     catch (InvalidArgumentException $e) { /* Expected. */ }
 }
 check(true, 'contact acknowledgement required as explicit boolean true');
-check(str_contains($prepared['owner'], 'Notice and terms version: 2026-10-01'), 'contact acknowledgement version recorded');
+check(str_contains($prepared['owner'], 'Notice and terms version: 2026-10-17'), 'contact acknowledgement version recorded');
 function mimePart(string $body, string $type): string {
     preg_match('/Content-Type: ' . preg_quote($type, '/') . '; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n([A-Za-z0-9+\/=\r\n]+)/', $body, $m);
     return base64_decode($m[1] ?? '', true) ?: '';

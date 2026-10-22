@@ -18,7 +18,7 @@ export const site = {
   joinLine: "Join the list and I'll email you when a new book comes out.",
   consentLine: 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.',
   adviceNote: 'This book gives general guidance. It is not medical or legal advice, and it is not NHS guidance.',
-  // Subscription requests are confirmed by reply and managed in the subscription mailbox.
+  // Sign-up is single step: the ticked box is the consent (BR-016). The list is managed by hand in the subscription mailbox.
   /**
    * Off until a statistics tool is chosen (ADR-017). While it is off there is no consent banner,
    * no "Cookie choices" link, and the legal pages say that no statistics tool is used.

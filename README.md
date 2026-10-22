@@ -39,7 +39,7 @@ mise exec -- npm run build
 mise exec -- npm run test:browser
 # With a local PHP 8.1+ installation, no real mail is sent:
 mise exec -- npm run test:mail
-python3 tests/integration/mail-http.py
+python3 backend/tests/mail-http.py
 ```
 
 The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. There is no separate lint configuration. Strict TypeScript, unit checks and browser checks cover the implemented changes.
@@ -53,7 +53,8 @@ The project root contains source and GEE OS support folders. Page URLs are no lo
 ```text
 harni/
 ├── src/          React app, features, content, data and styles
-├── public/       Images, media and PHP endpoint
+├── public/       Images and media
+├── backend/      PHP mail endpoint: public entry in backend/public/api/, private code in backend/src/ (deployed outside the web root)
 ├── scripts/      Setup, development and page generation
 ├── tests/        Unit, browser and integration checks
 ├── docs/         GEE OS design, architecture and operations

@@ -11,7 +11,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "dev:mail": "node scripts/mail.mjs",
-    "test:mail": "php tests/unit/mail.test.php",
+    "test:mail": "php backend/tests/mail.test.php && python3 backend/tests/mail-http.py",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/unit/*.test.ts",
     "media": "node scripts/build-media.mjs",
@@ -20,6 +20,7 @@
     "test:browser": "playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "1.63.0",
     "@tailwindcss/vite": "4.3.3",
     "@types/d3-geo": "^3.1.1",

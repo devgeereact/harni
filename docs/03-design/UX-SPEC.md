@@ -57,7 +57,7 @@ The page also carries schema.org Person JSON-LD. Every fact comes from the owner
 
 ## Legal page layout (ADR-025)
 
-Privacy notice, Cookies and local storage, Website terms and Delivery and refunds share one layout: a title, "Version 2026-10-01, last updated 1 October 2026" (no Draft label), an "In short" summary box, a contents list that jumps to each numbered section, then the sections. Retention, recipients and similar facts sit in tables with captions. Visible [NEEDS] boxes remain only for facts the owner must supply (two on the Privacy page).
+Privacy notice, Cookies and local storage, Website terms and Delivery and refunds share one layout: a title, "Version 2026-10-17, last updated 17 October 2026" (no Draft label), an "In short" summary box, a contents list that jumps to each numbered section, then the sections. Retention, recipients and similar facts sit in tables with captions. The public [NEEDS] boxes were removed at the owner's request on 2 October 2026; the owner facts are tracked in LEGAL-REVIEW.md.
 
 ## Pier Run look (ADR-025)
 

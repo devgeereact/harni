@@ -1,0 +1,30 @@
+# Public API folder on cPanel. Only message.php may run; everything else is refused.
+Options -Indexes -MultiViews
+DirectoryIndex disabled
+
+# Deny private and build files outright, and every PHP file except message.php.
+<FilesMatch "(^\.|\.(map|sql|bak|env|log|ini|phar|lock|zip|json)$)">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.php$">
+  Require all denied
+</FilesMatch>
+<Files "message.php">
+  Require all granted
+</Files>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # LiteSpeed and some Apache builds rewrite before FilesMatch is checked, so repeat the deny list.
+  RewriteRule (^|/)\. - [F,L]
+  RewriteRule \.(map|sql|bak|env|log|ini|phar|lock|zip|json)$ - [F,L,NC]
+  RewriteCond %{REQUEST_URI} !/message\.php$ [NC]
+  RewriteRule \.php$ - [F,L,NC]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store, private"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "no-referrer"
+  Header always unset X-Powered-By
+</IfModule>

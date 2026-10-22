@@ -68,7 +68,7 @@ export const home = (): PageDef => {
       ? `${cover(left, { extra: 'cover--fan cover--fan-l', eager: true, sizes: '12rem' })}${cover(right, { extra: 'cover--fan cover--fan-r', eager: true, sizes: '12rem' })}${cover(centre, { extra: 'cover--fan cover--fan-c', eager: true, sizes: '14rem' })}`
       : '';
   return {
-    title: 'Harni Muharami | Books for NHS nurses and healthcare professionals',
+    title: 'Harni Muharami | Books for NHS nurses and healthcare staff',
     description:
       'Practical, evidence-based books by Harni Muharami, an NHS nurse and clinical educator in London, on safe practice, careers, speaking up and wellbeing.',
     body: `
@@ -265,7 +265,7 @@ const faqs: readonly (readonly [string, string])[] = [
   ['Are the books medical advice?', 'No. They offer general guidance and reflection, not individual clinical, medical or legal advice, and they are not official NHS guidance. Always use current authoritative guidance, your local policies and your own professional judgement.'],
   ['Do you speak at events or run sessions?', 'Event details are listed on the Events page when they are confirmed. If you are planning a book discussion, a nursing community event or an education session, you are welcome to send an outline through the contact page. An enquiry is not a booking.'],
   ['How can I hear about new books?', 'Join the list and I’ll email you when a new book comes out. You will get a copy of your sign-up, and you can unsubscribe at any time.'],
-  ['How do I reach you?', 'Use the contact page. You will receive a copy of your message by email for your records. For an Amazon order, please contact Amazon.'],
+  ['How do I reach you?', 'Use the contact page. You will receive an emailed receipt with a reference number. For an Amazon order, please contact Amazon.'],
   ['Do you write on behalf of the NHS or your employer?', `No. ${site.personalCapacity} The NHS name is used only to describe where I work and who my books are for.`],
 ];
 
@@ -315,7 +315,7 @@ const messageForm = (): string => `
 <div class="contact-card" data-contact data-reveal style="--reveal-delay:150ms">
   <div class="contact-card__head">
     <h2>Send a message</h2>
-    <p>I'd love to hear from you. You'll receive a copy of your message by email.</p>
+    <p>I'd love to hear from you. You'll receive an emailed receipt with a reference number.</p>
   </div>
   <div class="dots" aria-hidden="true"></div>
   <form class="contact-form" data-contact-form action="${site.formEndpoint}" method="post" novalidate>

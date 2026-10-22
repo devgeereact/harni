@@ -62,7 +62,7 @@ try {
     launch(
       "mail-disabled",
       php,
-      ["-S", `127.0.0.1:${config.mail}`, "-t", "public"],
+      ["-S", `127.0.0.1:${config.mail}`, "-t", "backend/public"],
       env,
     );
   launch(

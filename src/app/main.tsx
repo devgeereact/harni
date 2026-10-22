@@ -1,6 +1,4 @@
 import { hydrateRoot } from "react-dom/client";
-import "@fontsource-variable/fraunces/opsz.css";
-import "@fontsource-variable/fraunces/opsz-italic.css";
 import "@fontsource-variable/inter/index.css";
 import "../styles/tailwind.css";
 import "../styles/site.css";
