@@ -1,3 +1,9 @@
+## Latest task: consolidate and deploy, 22 October 2026
+
+Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017` merged into `main` (1f0983e, `--no-ff`), pushed, branch deleted locally and on origin. Backup bundle: `~/repo-backups/harni-2026-10-22-1157/` (Mac).
+Deployed on the owner's instruction with `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin --go`, after a private backend release and a hand-copied `api/.htaccess`. Rollback: re-sync `~/.harni-backups/2026-10-22-pre-deploy/` to `~/harni.uk/` (keep `.htaccess`), restoring the old single-file `api/message.php`.
+Evidence: typecheck, 60 unit, test:mail, 171 browser, verify.py PASS before merge. Live: 16 routes 200, missing page 404, `www` 200, GET `/api/message.php` 405 JSON, `/api/.htaccess` and other PHP 403, 7 routes loaded in headless Chromium with no console errors and only harni.uk contacted. NOT TESTED: a POST to the live form, mail delivery (sending off), Cloudflare headers (NEL header still sent; owner decision is off). The release gates above remain open.
+
 ## Latest task: launch build pass and handoff, 17 October 2026
 
 Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017`, pushed to origin at the owner's request (commits 43660d3 to 91f6eb4 and this handoff). No deploy, no live mail, no Cloudflare or host change.

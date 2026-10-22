@@ -1,8 +1,8 @@
 # Deployment
 
-Live site: the 2026-10-02 deploy of commit 4a76e41 (details further down). The ADR-028 backend layout below is local only and not deployed.
+Live site: the 2026-10-22 deploy of commit 1f0983e (Version 2026-10-17 of the legal pages). The ADR-028 backend layout is live: private code in `~/apps/harni/releases/20261022-1224/src/`, `~/apps/harni/current` points at it, `api/.htaccess` was copied by hand. Pre-deploy copy of the live site: `~/.harni-backups/2026-10-22-pre-deploy/` on the Mac. Mail sending is still off on the host and Cloudflare headers are unchanged. The release report is still NO-GO on the open owner and legal gates.
 
-## Backend layout from 17 October 2026 (ADR-028), NOT YET DEPLOYED
+## Backend layout from 17 October 2026 (ADR-028), DEPLOYED 22 October 2026
 
 The mail code moved out of the web root. `dist/api/message.php` is now a small entry file that loads
 the private code from `~/apps/harni/current/src/`. Deploying only `dist/` as before leaves the form
