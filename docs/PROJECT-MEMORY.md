@@ -45,4 +45,4 @@ Short index of the confirmed facts for harni. Agents treat this file as project 
 
 ## Where the rest lives
 
-Product: `docs/01-product/`. Architecture: `docs/02-architecture/`. Design: `docs/03-design/`. Security and privacy: `docs/05-security/`. Operations: `docs/07-operations/`. Decisions: `docs/08-change-management/DECISIONS.md`. Known issues: `KNOWN-ISSUES.md`.
+Product: `docs/01-product/`. Architecture: `docs/02-architecture/`. Design: `docs/03-design/`. Security and privacy: `docs/05-security/`. Operations: `docs/07-operations/`. Decisions: `docs/08-change-management/DECISIONS.md`. Known issues: `docs/KNOWN-ISSUES.md`.

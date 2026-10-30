@@ -1,12 +1,16 @@
 ## 2026-10-17, GEE OS 1.4.5 cPanel restructure (local, not deployed)
 
+## 2026-10-30
+- Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed.
+
+
 - Mail code moved out of the web root into `backend/src/` (render, message, delivery, rate-limit,
   endpoint). `backend/public/api/message.php` is the only public PHP file and keeps the URL
   `/api/message.php`. A deny-list `api/.htaccess` ships beside it. The build copies only those two
   files into `dist/api/` (ADR-028).
 - PHP tests moved to `backend/tests/`; `npm run test:mail` now runs the unit and HTTP capture checks.
 - GEE OS contract completed: `.claude/settings.json` guard hook, `.githooks/pre-commit`,
-  `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `cpanel`
+  `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `docs/PROJECT-MEMORY.md`, `cpanel`
   stack profile in `.agent/PROJECT.yml`.
 - Server steps for the next deploy are in `docs/07-operations/DEPLOYMENT.md`.
 - Review fixes: no server pointer file (a deploy with `--delete` would remove it); the entry

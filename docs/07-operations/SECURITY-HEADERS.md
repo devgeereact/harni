@@ -99,7 +99,7 @@ Maintenance:
    Any "[Report Only] Refused to ..." line is a finding to fix before enforcing.
 5. With a clean console, rename the header to `Content-Security-Policy` with the same value.
 6. Record the date, the result and the `curl` output in `../reports/harni/` and update
-   KNOWN-ISSUES.md row 39.
+   docs/KNOWN-ISSUES.md row 39.
 
 ## Verify
 

@@ -1,8 +1,68 @@
-# Website Launch and Quality Gates
+# Audit log
+
+Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
+
+## 2026-09-05 · Pwa Release Checklist
+
+_Merged from `docs/AUDIT.md` on 2026-10-30._
+
+## PWA Release Gates
+
+For every line record status, evidence, owner and date. Allowed statuses are `PASS`, `FAIL`, `PARTIAL`, `NOT TESTED`, `N/A` and `BLOCKED`. `N/A` requires a reason.
+
+### Runtime and network
+
+- [ ] Application works online.
+- [ ] Network failure produces intentional behaviour.
+- [ ] Offline behaviour matches the approved specification.
+- [ ] Service worker registration, scope and lifecycle behave correctly.
+- [ ] Old caches are removed safely.
+- [ ] New versions update without trapping users on stale code.
+- [ ] Failed requests recover appropriately.
+- [ ] Duplicate submissions are prevented or made idempotent.
+- [ ] API failures have visible, recoverable states.
+
+### Installation and navigation
+
+- [ ] Installation works on supported platforms.
+- [ ] App icons and launch presentation work.
+- [ ] The web app manifest is valid.
+- [ ] Start URL, scope, deep links and refreshed routes work.
+
+### Identity, data and synchronisation
+
+- [ ] Authentication survives the intended application lifecycle.
+- [ ] Private data is not cached accidentally.
+- [ ] User work is not silently lost.
+- [ ] Queueing, retry, conflict and synchronisation states are explicit where applicable.
+- [ ] Database policies and permissions are verified.
+- [ ] Role permissions are verified server-side.
+
+### Experience and release
+
+- [ ] Mobile layout works on supported sizes.
+- [ ] Desktop layout works on supported sizes.
+- [ ] Accessibility has been checked with recorded evidence.
+- [ ] Production build succeeds.
+- [ ] No critical console or runtime errors remain.
+- [ ] No exposed secrets are present.
+- [ ] No critical security findings remain open.
+- [ ] Monitoring and error reporting are operational.
+- [ ] Backup and recovery exist where applicable.
+- [ ] Rollback is documented and feasible.
+- [ ] The production environment has been verified directly.
+
+Test online, slow, intermittent, offline and restored-network transitions. A simulated checkbox without observed behaviour is not a pass.
+
+## 2026-09-05 · Website Launch Checklist
+
+_Merged from `docs/AUDIT.md` on 2026-10-30._
+
+## Website Launch and Quality Gates
 
 Record status, evidence, owner and date. The lists supplied by Gideon are consolidated here without duplicate or corrupted numbering.
 
-## Launch essentials
+### Launch essentials
 
 - [ ] Privacy policy reflects real data practices and has appropriate review.
 - [ ] Terms page uses verified organisation and jurisdiction details.
@@ -24,7 +84,7 @@ Record status, evidence, owner and date. The lists supplied by Gideon are consol
 - [ ] Internal and external links are checked.
 - [ ] Images, fonts, scripts and critical rendering are tuned to agreed budgets.
 
-## Interface repair
+### Interface repair
 
 - [ ] No unintended horizontal scrolling exists.
 - [ ] Buttons and links perform their labelled action.
@@ -36,7 +96,7 @@ Record status, evidence, owner and date. The lists supplied by Gideon are consol
 - [ ] Telephone numbers and email addresses are actionable where appropriate.
 - [ ] Copyright details are current.
 
-## Conversion risks
+### Conversion risks
 
 - [ ] Pop-ups are limited, timed responsibly and easy to dismiss.
 - [ ] Headline and value proposition are specific.
@@ -51,7 +111,7 @@ Record status, evidence, owner and date. The lists supplied by Gideon are consol
 - [ ] Navigation supports the next step.
 - [ ] Cookies and trackers are necessary, documented and controlled.
 
-## Security checks
+### Security checks
 
 - [ ] API keys and secrets are absent from client bundles and version history.
 - [ ] Environment variables and production settings are verified.

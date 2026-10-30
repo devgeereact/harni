@@ -38,7 +38,7 @@ Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017`, pushed. No deploy, live ma
 Done (commits f53ba64, e012f07, 3dab172; ADR-028):
 - Mail code moved out of the web root into `backend/src/` (render, message, delivery, rate-limit, endpoint). `backend/public/api/message.php` is the only public PHP file; URL `/api/message.php` unchanged. A deny-list `api/.htaccess` sits beside it. `npm run build` copies only those two files into `dist/api/`. Layout and host steps: `backend/README.md`.
 - On the host the entry finds `~/apps/harni/current/src/` from its own place (`~/harni.uk/api/` is two levels below home). No pointer file: `cpanel-deploy` runs rsync with `--delete` and would remove one. Only `php -S` uses the repository layout. Missing folder: fail-closed 503.
-- GEE OS contract: `.claude/settings.json` guard hook, `.githooks/pre-commit` (enable per clone: `git config core.hooksPath .githooks`), `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `PROJECT-MEMORY.md`, `stack_profile: cpanel` in `.agent/PROJECT.yml`.
+- GEE OS contract: `.claude/settings.json` guard hook, `.githooks/pre-commit` (enable per clone: `git config core.hooksPath .githooks`), `scripts/agent_guard.py`, `scripts/guard.py`, `scripts/verify.py`, `docs/PROJECT-MEMORY.md`, `stack_profile: cpanel` in `.agent/PROJECT.yml`.
 - PHP tests moved to `backend/tests/`; `npm run test:mail` runs the unit checks and the HTTP capture run.
 
 Review (security and finish reviewers, read-only): no Critical or High. Fixed in 3dab172: pointer file deleted by deploy, production fallback could load `~/src/bootstrap.php`, rate-limit root check could be skipped, LiteSpeed PHP deny, `api/.htaccess` never uploaded by `cpanel-deploy` (hand-copy step now required). The privacy-notice mismatch the security review found was closed by 43660d3. Accepted risk: subscribe receipts to typed addresses can use up the global hourly limit; revisit if abused.
@@ -82,3 +82,6 @@ Fresh typecheck, unit suite and production build PASS. Browser: PASS, 59 checks.
 
 ## Active promotion, 7 October 2026
 Owner requested promotion and push. Current directory: /home/mr-gee/Work/Projects/active/harni. Original preserved at /home/mr-gee/Work/Projects/archive/pre-rebrand-2026-10-07/harni. Branch: rebrand/gee-os-typescript-20261007. See ../reports/harni/qa/reports/ACTIVE-PROMOTION-2026-10-07.md. Earlier release gates remain open; no production merge/deployment performed.
+
+## 2026-10-30: docs tidy
+Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed. Tasks stay in this file; every audit is added to `docs/AUDIT.md`.

@@ -13,7 +13,7 @@ Read `.agent/PROJECT.yml` and `.agent/CURRENT-TASK.md`, then the shared GEE OS c
 - Operations: `docs/07-operations/`
 - Decisions: `docs/08-change-management/DECISIONS.md`
 - Backend (cPanel mail endpoint): `backend/README.md`
-- Project memory: `PROJECT-MEMORY.md`
+- Project memory: `docs/PROJECT-MEMORY.md`
 - Release decision: `../reports/harni/docs/09-release/RELEASE-REPORT.md`
 
 ## Commands

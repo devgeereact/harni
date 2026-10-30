@@ -16,7 +16,7 @@ CORE = ['AGENTS.md', 'CLAUDE.md', '.agent/PROJECT.yml', '.agent/CURRENT-TASK.md'
 PACK_DOCS = ['docs/BRIEF.md', 'docs/ARCHITECTURE.md', 'docs/SCHEMA.md', 'docs/DESIGN.md',
              'docs/DEPLOYMENT.md', 'docs/HOOKS.md', 'docs/VERIFICATION.md']
 FORGE_DOCS = ['docs/01-product/PRODUCT-SPEC.md', 'docs/05-security/SECURITY.md']
-MEMORY = ['PROJECT-MEMORY.md', 'docs/00-foundation/PROJECT-MEMORY.md']  # new builds, older GEE OS projects
+MEMORY = ['docs/PROJECT-MEMORY.md', 'docs/00-foundation/PROJECT-MEMORY.md']  # new builds, older GEE OS projects
 MARKER = re.compile(r'(^|[\s|])OPEN:|\{\{FILL:')
 SKIP = {'node_modules', 'vendor', '.git', 'dist'}
 
