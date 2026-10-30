@@ -1,0 +1,29 @@
+{
+  "host": "cpanel",
+  "project": "harni",
+  "url": "https://harni.uk",
+  "checks": [
+    "npm run typecheck",
+    "npm test",
+    "for f in $(find backend -name '*.php'); do php -l \"$f\" >/dev/null || exit 1; done",
+    "php backend/tests/mail.test.php"
+  ],
+  "build": "npm run build && test -f dist/api/.htaccess && test ! -f dist/.htaccess",
+  "parts": [
+    {
+      "from": "backend/src",
+      "to": "apps/harni/current/src",
+      "exclude": ["*.md"]
+    },
+    {
+      "from": "dist",
+      "to": "harni.uk",
+      "allow": [".htaccess"]
+    }
+  ],
+  "smoke": [
+    { "path": "/", "status": 200 },
+    { "path": "/books/", "status": 200 },
+    { "path": "/api/message.php", "status": 405 }
+  ]
+}
