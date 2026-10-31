@@ -130,3 +130,7 @@ Record status, evidence, owner and date. The lists supplied by Gideon are consol
 - [ ] Debug mode and verbose error disclosure are disabled in production.
 
 Do not mark the site ready while a critical gate is failed, blocked or not tested.
+
+## 31 Oct 2026: deploy on push
+
+- Push-to-deploy over SSH added (release.json, deploy.yml, kit release.mjs). First plan: server already matched. Repo made public 31 Oct 2026 after a full-history gitleaks scan (0 findings) and a check that no settings, keys or dumps were ever committed; Actions on.
