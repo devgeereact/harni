@@ -23,6 +23,19 @@ origin's value of the same header, so `/api/message.php` will show `strict-origi
 once the rule is live. That is harmless for a JSON response. Exclude `/api/` from the rule only if the
 owner prefers to keep `no-referrer` there.
 
+## Headers to remove (added 1 November 2026)
+
+In the same Response Header Transform Rule, add "Remove" for `X-Powered-By` and
+`X-Turbo-Charged-By`. Live on 1 November 2026 there was no `X-Powered-By` (PHP removes it in
+`backend/src/endpoint.php` and the public entry, and `api/.htaccess` unsets it), but
+`x-turbo-charged-by: LiteSpeed` was sent on every response. It names the origin web server, without a
+version. The root `.htaccess` is not ours to ship, and LiteSpeed may add the header after `.htaccess`
+rules run, so Cloudflare is the one reliable place to remove it. `Server: cloudflare` is set by
+Cloudflare, carries no origin version, and cannot be removed. The origin refuses direct requests, so
+its own `Server` header is never seen.
+
+Verify: `curl -sI https://harni.uk/ | grep -iE 'x-powered-by|x-turbo'` prints nothing.
+
 ## Header values
 
 | Header | Value |

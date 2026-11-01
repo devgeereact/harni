@@ -24,7 +24,7 @@ export function gameDocument(): string {
       <body className="unwind">
         <a className="skip-link" href="#play">Skip to game</a>
         <header className="unwind-head">
-          <a className="brand" href="/" aria-label="Harni Muharami home"><span className="brand__mark" aria-hidden="true">HM</span><span className="brand__name">Harni Muharami</span></a>
+          <a className="brand" href="/"><span className="brand__mark" aria-hidden="true">HM</span><span className="brand__name">Harni Muharami</span></a>
           <a className="unwind-back" href="/books/">Back to books</a>
         </header>
         <main className="unwind-main" id="play">

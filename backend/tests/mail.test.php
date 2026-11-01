@@ -23,6 +23,16 @@ foreach ([['email' => "a@example.org\r\nBcc: victim@example.org"], ['name' => "N
     catch (InvalidArgumentException $e) { /* Expected. */ }
 }
 check(true, 'invalid inputs, header injection, honeypot and limits rejected');
+// FILTER_VALIDATE_EMAIL alone accepts quoted local parts and IP literals. The receipt goes to this
+// address, so only plain mailbox@domain forms are allowed (audit SEC-1, 1 Nov 2026).
+foreach (['"a@evil.example,b"@example.org', '"a b"@example.org', 'reader@[127.0.0.1]', 'reader@[IPv6:::1]', '"reader"@example.org'] as $odd) {
+    try { prepareMessage(array_replace($contact, ['email' => $odd])); throw new RuntimeException('Unusual address accepted: ' . $odd); }
+    catch (InvalidArgumentException $e) { /* Expected. */ }
+}
+check(true, 'quoted local parts and domain literals rejected');
+foreach (['first.last+books@mail.example.co.uk', 'o\'neil@example.org', 'reader-1@sub-domain.example.org', 'READER@EXAMPLE.ORG'] as $plain) {
+    check(prepareMessage(array_replace($contact, ['email' => $plain]))['email'] === $plain, 'ordinary address accepted: ' . $plain);
+}
 try { prepareMessage(['kind' => 'subscribe', 'email' => 'reader@example.org', 'consent' => false]); throw new RuntimeException('Consent bypass'); }
 catch (InvalidArgumentException $e) { check(true, 'subscription consent enforced'); }
 foreach ([null, false, 'true', 1] as $value) {

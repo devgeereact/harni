@@ -6,12 +6,13 @@ Done:
 - Scoped security audit (mail endpoint, headers/CSP, third-party links, Privacy/Cookies): no Critical or High. Findings SEC-1 to SEC-4 in `docs/AUDIT.md`.
 - SEO audit of harni.uk: findings SEO-1 to SEO-10 in `docs/AUDIT.md`. Fixed SEO-1 in code: `src/content/schema.ts` (Book + BreadcrumbList on 13 book pages, WebSite on Home, ProfilePage/Person `@id` on About). No ISBN, price or review data is emitted. No site wording changed.
 - Stale line fixed: `docs/05-security/LEGAL-REVIEW.md` now says the 2026-10-17 legal version is live.
+- Security checklist pass (owner's 19 items, `docs/AUDIT.md`): directory listing off for `/assets/`, `/images/`, `/media/` (live showed "Index of"); email addresses with quotes or IP literals refused; npm audit High (vite) fixed, patch and minor updates applied, unused Fraunces package removed; Actions pinned to SHAs; `/play/` brand label fixed (found by the axe update). Auth, admin, database and password items are N/A: none exist.
 
-Evidence, 1 Nov 2026: `npm run verify` PASS; typecheck PASS; 65 unit PASS (5 new in `tests/unit/schema.test.ts`, seen failing first); 171 browser PASS; `npm run test:mail` PASS (no real mail). Live (GET only): no security headers, NEL still on, no cookies set, lab LCP 436–564 ms and CLS 0. NOT TESTED: field CWV, Rich Results Test on live (needs a deploy).
+Evidence, 1 Nov 2026: `npm run verify` PASS; typecheck PASS; 65 unit PASS (5 new in `tests/unit/schema.test.ts`, seen failing first); 173 browser PASS (new `tests/e2e/hardening.spec.ts`, seen failing first); `npm run test:mail` PASS, 36 checks (new address checks seen failing first), no real mail. Live (GET only): no security headers, NEL still on, no cookies set, lab LCP 436–564 ms and CLS 0. NOT TESTED: field CWV, Rich Results Test on live (needs a deploy).
 
 Gap: the release report (`../reports/harni/docs/09-release/RELEASE-REPORT.md`) is not on this Mac; it was written on the old Linux machine. The NO-GO gates below are the copy kept in this file.
 
-Next (owner): answer the NO-GO items below, the copy changes in the SEO audit, paperback ISBN-13s (SEO-2), the Amazonbot decision (SEO-4), then approve merge, push and deploy.
+Next (owner): answer the NO-GO items below, the copy changes in the SEO audit, paperback ISBN-13s (SEO-2), the Amazonbot decision (SEO-4), approve the Cloudflare rule (security headers plus removing `X-Powered-By` and `X-Turbo-Charged-By`), then approve merge, push and deploy. After the deploy, check that `/assets/` returns 403.
 
 ## Latest task: consolidate and deploy, 22 October 2026
 

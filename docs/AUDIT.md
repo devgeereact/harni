@@ -2,6 +2,34 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 1 Nov 2026 · Security checklist pass (owner's 19-item list), branch `golive/2026-11`
+
+The owner's list was checked item by item against this site. It is a static author site with one PHP mail endpoint. It has no accounts, logins, admin area, database or stored passwords. Items that assume those are N/A with evidence; adding auth with nothing to protect would only add attack surface.
+
+| Item | Result | Evidence or change |
+|---|---|---|
+| Hide API keys | PASS | No keys in the client: no `import.meta.env` or `process.env` in `src/`, and no key patterns in `dist/`. The only secrets are the host mail variables (never in git) and the GitHub deploy SSH key (GitHub Secrets, written to a 600 file and removed in an `always()` step). |
+| Check env variables | PASS | `.env*` is gitignored except `.env.example`, which holds names only. Mail needs `HARNI_MAIL_ENABLED`, `HARNI_MAIL_STATE_DIR` and `HARNI_MAIL_RATE_KEY` (32+ chars) on the host. It fails closed with a 503 when they are missing. |
+| Protect admin routes / proper authentication / check user access | N/A | There is no admin route, account or role. Live probes: `/backend/`, `/src/` and `/apps/` return 404; `/api/` and `/api/*.php` other than the entry return 403. Revisit if a CMS or admin is ever added (then Clerk, per the house stack). |
+| Sanitise forms | PASS + FIXED | Server-side validation in `backend/src/message.php` (types, lengths, CR/LF/NUL, consent flags). New: quoted local parts and IP-literal addresses are refused (SEC-1). Test: `backend/tests/mail.test.php`, 36 checks. |
+| Protect against XSS | PASS | Email HTML escapes every value (`esc()`). Pages are built from repo content. The build-time converter rejects `<script>` (other than JSON-LD), `on*` attributes and `javascript:` URLs. The only `dangerouslySetInnerHTML` is `<noscript>` with repo-owned build HTML. Form status is rendered as React text. JSON-LD escapes `<`. |
+| Add rate limiting | PASS | 5/h per IP, 3/h per email, 100/h global, HMAC-keyed, locked file outside the web root. Behind Cloudflare it needs the real client IP (SEC-2, host check before mail is switched on). |
+| Secure API endpoints | PASS | POST only (405 otherwise), exact `Origin` allow-list, JSON only, 64 KB cap, `no-store` and `nosniff`. Private code is outside the web root. |
+| Check CORS | PASS | No `Access-Control-*` header on any response. Live preflight from `https://evil.example` got a 405 with no CORS headers, so cross-origin reads are blocked by the browser and writes by the Origin check. |
+| Add security headers | BLOCKED (Cloudflare approval) | Values in `docs/07-operations/SECURITY-HEADERS.md`. The root `.htaccess` is not ours (ADR-029). |
+| Remove X-Powered-By / hide server version | PASS + PLANNED | Live: no `X-Powered-By` (PHP `header_remove` plus `api/.htaccess`). `Server: cloudflare` has no version, and the origin refuses direct requests. `x-turbo-charged-by: LiteSpeed` (no version) is still sent; its removal is added to the Cloudflare rule in `SECURITY-HEADERS.md`. |
+| Turn off debug mode | PASS | `display_errors=0` in the entry. Errors are generic and logged without contents. No `console.log` or `debugger` in `src/` or `dist/`. No source maps in `dist/`. |
+| Update dependencies | FIXED | `npm audit`: 1 High (vite 7.3.6 dev server, GHSA-9jrq-w75r-8gcw and others), now 0. vite 7.3.7 (range floor `^7.3.7`), react and react-dom 19.3.1, parse5 8.1.0, @axe-core/playwright 4.14.0. Majors held back as a planned task (owner rule): TypeScript 7, Vite 8, @vitejs/plugin-react 6, @playwright/test 1.64 (needs a browser download). `@types/node` stays on 24 to match Node 24. |
+| Remove unused packages | FIXED | `@fontsource-variable/fraunces` removed: no import anywhere and no Fraunces font in `dist/` (headings already fall back to Georgia; no visual change). |
+| Check for exposed files | FIXED | Live had **directory listing on** for `/assets/` and `/images/` ("Index of /assets/"), and `/media/` was exposed the same way. Added `public/{assets,images,media}/.htaccess` with `Options -Indexes`, a build test (`tests/e2e/hardening.spec.ts`: every built folder without an index page refuses listing) and a `release.json` build guard. Live after a deploy: NOT TESTED. Already safe: `/.git/*`, `/.htaccess`, `/api/mail-rate.json`, `/server-status` and `/cgi-bin/` return 403; `package.json`, `release.json`, `README.md`, `phpinfo.php` and `error_log` return 404. |
+| Secure the database / hash passwords | N/A | There is no database and no passwords. The only state is the rate-limit file of HMAC hashes (no raw IP or email). |
+| Check git for leaked secrets | PASS | `gitleaks git`: 30 commits, no leaks. `gitleaks dir`: 2 hits, both in untracked `graphify-out/cache/stat-index.json` (sha256 file hashes, false positives). |
+| Full security audit | DONE | The scoped audit below, plus Semgrep (`p/php`, `p/typescript`, `p/react`, `p/secrets`, `p/github-actions`): 0 findings on 7 PHP and 51 TS files. PARTIAL: 3 rules hit internal engine errors on the JS/TS files. |
+| CI supply chain (extra) | FIXED | GitHub Actions pinned to commit SHAs (`actions/checkout`, `actions/setup-node`, the third-party `shivammathur/setup-php`, which runs in the job that holds the deploy key). The deploy checkout uses `persist-credentials: false`. |
+| Accessibility regression found by the axe update (extra) | FIXED | `/play/` brand link had `aria-label="Harni Muharami home"`, which differs from its visible text (WCAG 2.5.3). It now matches the site-wide brand link. |
+
+Evidence: `npm run verify` PASS, 65 unit PASS, `npm run test:mail` PASS (36 PHP checks plus HTTP capture, no real mail), 173 browser PASS.
+
 ## 1 Nov 2026 · SEO audit (harni.uk), branch `golive/2026-11`
 
 Scope: all 25 sitemap URLs plus 404 and thanks, from the local build (`dist/`) and read-only GETs of the live site. No Search Console, CrUX, GA4 or backlink data is available, so the results are lab and source evidence only. Business type: an author site. Every sale goes to Amazon and there is no shop on the site.
@@ -43,7 +71,7 @@ Scope: mail endpoint (`backend/public/api/message.php`, `backend/src/*`, `api/.h
 | Header injection | PASS. Subjects are fixed strings. Email is checked with `FILTER_VALIDATE_EMAIL` plus a CR/LF/NUL reject, and name and subject reject CR/LF. `mail()` gets headers as an array (PHP 8 rejects CR/LF in header values), and there is no 5th `mail()` parameter, so no `-f` injection is possible. Visitor text appears only in the base64 body and is HTML-escaped by `esc()`. |
 | Open relay | PASS. The visitor receipt carries no sender-written text (ADR-029), so the form cannot relay chosen text to a chosen inbox. |
 | Spam and abuse | PASS (with an accepted risk). Honeypot `website` field, exact `Origin` allow-list (no Origin means 403), JSON-only (415), 64 KB cap (413), field limits, consent and acknowledgement flags. HMAC-keyed rate limit: 5/h per IP, 3/h per email, 100/h global, locked file outside the web root. Accepted risk, unchanged: 100 bad requests an hour can use up the global limit. Add Cloudflare Turnstile only if abuse appears; that needs owner approval and a privacy-page update. |
-| SEC-1 · Low | `FILTER_VALIDATE_EMAIL` accepts quoted local parts (`"a@x,b"@y.com`) and domain literals (`a@[127.0.0.1]`). The receipt content is fixed and the per-email limit applies, so the impact is low. Optional hardening: reject `"` and `[` in the address. |
+| SEC-1 · Low | `FILTER_VALIDATE_EMAIL` accepts quoted local parts (`"a@x,b"@y.com`) and domain literals (`a@[127.0.0.1]`). The receipt content is fixed and the per-email limit applies, so the impact is low. FIXED the same day: see the security checklist pass above. |
 | SEC-2 · Needs validation | Behind Cloudflare, `REMOTE_ADDR` must be restored from `CF-Connecting-IP` (mod_remoteip or the LiteSpeed equivalent), or every visitor shares the per-IP limit. Check on the host before mail is switched on. |
 | SEC-3 · Medium (Cloudflare) | Live `https://harni.uk/` (GET, 1 Nov 2026) sends no HSTS, CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy, and still sends `NEL`/`Report-To`. The values are decided in `docs/07-operations/SECURITY-HEADERS.md`. The CSP hash `sha256-/x7W7R75…gpw=` still matches the inline script (recomputed today). Applying them is the Cloudflare gate and needs owner approval. |
 | SEC-4 · Info | The no-JavaScript fallback `<form action="/api/message.php" method="post">` sends form-encoded data, which the endpoint refuses with 415 JSON. This is a usability issue, not a security one. |

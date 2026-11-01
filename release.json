@@ -8,7 +8,7 @@
     "for f in $(find backend -name '*.php'); do php -l \"$f\" >/dev/null || exit 1; done",
     "php backend/tests/mail.test.php"
   ],
-  "build": "npm run build && test -f dist/api/.htaccess && test ! -f dist/.htaccess",
+  "build": "npm run build && test -f dist/api/.htaccess && test -f dist/assets/.htaccess && test -f dist/images/.htaccess && test -f dist/media/.htaccess && test ! -f dist/.htaccess",
   "parts": [
     {
       "from": "backend/src",
