@@ -1,3 +1,8 @@
+## 2026-11-01, go-live prep (branch `golive/2026-11`, not deployed)
+
+- Structured data: `Book` and `BreadcrumbList` on all 13 book pages, `WebSite` on Home, About is now a `ProfilePage` whose `Person` has the stable id `https://harni.uk/about/#person` (`src/content/schema.ts`, `tests/unit/schema.test.ts`). No ISBN, price or review data is emitted: none is supplied or shown.
+- Scoped security audit and full SEO audit recorded in `docs/AUDIT.md`. No Critical or High security findings; no wording on the site changed.
+
 ## 2026-10-17, GEE OS 1.4.5 cPanel restructure (local, not deployed)
 
 ## 2026-10-30

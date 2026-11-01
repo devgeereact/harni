@@ -13,6 +13,7 @@ import { events as eventList, formatEventDate, pastEvents, upcomingEvents } from
 import type { EventItem } from '../data/events.ts';
 import { arrow, band, button, esc, joinForm, needs, socialItems, statusLabel } from './layout.ts';
 import type { PageDef } from './layout.ts';
+import { bookBreadcrumbSchema, bookSchema, jsonLdScript, profilePageSchema, websiteSchema } from './schema.ts';
 import { site } from './site.ts';
 
 const newTabNote = '<span class="visually-hidden"> (opens in a new tab)</span>';
@@ -72,6 +73,7 @@ export const home = (): PageDef => {
     description:
       'Practical, evidence-based books by Harni Muharami, an NHS nurse and clinical educator in London, on safe practice, careers, speaking up and wellbeing.',
     body: `
+${jsonLdScript(websiteSchema())}
 <section class="hero page-heading page-heading--split">
   <div class="shell hero__inner">
     <div class="hero__text">
@@ -213,6 +215,7 @@ export const bookPage = (book: Book): PageDef => {
         ? `${book.title} by ${site.name}. ${book.hook} Read more and choose where to buy.`
         : `${book.title} by ${site.name}. Coming soon. Join the list to hear when it is out.`,
     body: `
+${jsonLdScript(bookSchema(book))}${jsonLdScript(bookBreadcrumbSchema(book))}
 <section class="band band--book page-heading page-heading--book">
   <div class="shell book-head">
     <div class="book-head__cover">${cover(book, { extra: 'cover--hero', alt: coverAlt(book), sizes: '(min-width: 48rem) 15rem, 13rem', eager: true })}</div>
@@ -273,17 +276,7 @@ export const about = (): PageDef => ({
   title: 'About Harni Muharami | NHS Nurse, Educator and Author',
   description: 'Meet Harni Muharami, a London-based NHS nurse, clinical educator and author. Her background, her books, who they are for, FAQs and press bio.',
   body: `
-<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: site.name,
-    url: `${site.origin}/about/`,
-    image: `${site.origin}/images/author/harni-600.jpg`,
-    jobTitle: 'NHS nurse, clinical educator and author',
-    description: site.shortBio,
-    address: { '@type': 'PostalAddress', addressLocality: 'London', addressCountry: 'GB' },
-    sameAs: [amazonAuthorUrl, site.instagram.url, site.tiktok.url],
-  }).replace(/</g, '\\u003c')}</script>
+${jsonLdScript(profilePageSchema())}
 <div class="author-page">
   <section class="shell author-hero page-heading page-heading--split" aria-labelledby="about-title">
     <div class="author-hero__copy"><p class="eyebrow">Meet the author</p><h1 id="about-title">Harni<br />Muharami</h1><p class="author-role">NHS nurse · Clinical educator · Author</p><p class="author-lead">Care is at the heart of my work.<br />And at the heart of my writing.</p><p>Based in London, I write about nursing, professional growth and the everyday work of caring for ourselves and others.</p><a class="author-link" href="#background">Discover my story <span aria-hidden="true">↓</span></a></div>

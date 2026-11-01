@@ -62,7 +62,7 @@ Why each part fits this site:
 |---|---|
 | One module script per page, `/assets/main-<hash>.js`, plus lazily imported chunks from `/assets/` (Pier Run, globe) | `script-src 'self'` |
 | One inline script on 26 pages (every page except `/play/`): `document.documentElement.classList.add('js');` from `src/content/layout.ts` | its SHA-256 hash in `script-src` |
-| `<script id="harni-page" type="application/json">` (hydration data, every page) and one `application/ld+json` block (About) | none needed: data blocks are not executed, so CSP does not apply |
+| `<script id="harni-page" type="application/json">` (hydration data, every page) and `application/ld+json` blocks (Home, About, every book page; since 1 Nov 2026) | none needed: data blocks are not executed, so CSP does not apply |
 | One stylesheet `/assets/main-<hash>.css`; no `<style>` element in any page | `style-src 'self'` |
 | One `style` attribute: `style="--reveal-delay:150ms"` on the Contact card | `style-src-attr 'unsafe-inline'`. Runtime changes through `element.style` are not affected by CSP |
 | Fonts: Inter and Fraunces woff2 files in `/assets/`, referenced from the stylesheet | `font-src 'self'` |

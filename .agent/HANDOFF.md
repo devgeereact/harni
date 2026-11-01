@@ -15,3 +15,6 @@ Owner authorised moving the rebuild into active and pushing it. Current checkout
 
 ## 2026-10-30: docs tidy
 Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed.
+
+## 2026-11-01: go-live prep
+Branch `golive/2026-11`, local only, not pushed. Security audit (no Critical/High) and SEO audit in `docs/AUDIT.md`; Book/Breadcrumb/WebSite/ProfilePage schema added (`src/content/schema.ts`). verify, 65 unit, 171 browser PASS. Owner items and NO-GO gates: `.agent/CURRENT-TASK.md`. Merge, push and deploy need owner approval.

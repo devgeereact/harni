@@ -1,3 +1,18 @@
+## Latest task: go-live prep, 1 November 2026
+
+Mode: BUILD, local only. Branch `golive/2026-11` (not pushed). No deploy, no server, Cloudflare or GitHub change, mail sending still off.
+
+Done:
+- Scoped security audit (mail endpoint, headers/CSP, third-party links, Privacy/Cookies): no Critical or High. Findings SEC-1 to SEC-4 in `docs/AUDIT.md`.
+- SEO audit of harni.uk: findings SEO-1 to SEO-10 in `docs/AUDIT.md`. Fixed SEO-1 in code: `src/content/schema.ts` (Book + BreadcrumbList on 13 book pages, WebSite on Home, ProfilePage/Person `@id` on About). No ISBN, price or review data is emitted. No site wording changed.
+- Stale line fixed: `docs/05-security/LEGAL-REVIEW.md` now says the 2026-10-17 legal version is live.
+
+Evidence, 1 Nov 2026: `npm run verify` PASS; typecheck PASS; 65 unit PASS (5 new in `tests/unit/schema.test.ts`, seen failing first); 171 browser PASS; `npm run test:mail` PASS (no real mail). Live (GET only): no security headers, NEL still on, no cookies set, lab LCP 436–564 ms and CLS 0. NOT TESTED: field CWV, Rich Results Test on live (needs a deploy).
+
+Gap: the release report (`../reports/harni/docs/09-release/RELEASE-REPORT.md`) is not on this Mac; it was written on the old Linux machine. The NO-GO gates below are the copy kept in this file.
+
+Next (owner): answer the NO-GO items below, the copy changes in the SEO audit, paperback ISBN-13s (SEO-2), the Amazonbot decision (SEO-4), then approve merge, push and deploy.
+
 ## Latest task: consolidate and deploy, 22 October 2026
 
 Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017` merged into `main` (1f0983e, `--no-ff`), pushed, branch deleted locally and on origin. Backup bundle: `~/repo-backups/harni-2026-10-22-1157/` (Mac).

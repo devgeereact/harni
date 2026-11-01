@@ -2,6 +2,55 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 1 Nov 2026 · SEO audit (harni.uk), branch `golive/2026-11`
+
+Scope: all 25 sitemap URLs plus 404 and thanks, from the local build (`dist/`) and read-only GETs of the live site. No Search Console, CrUX, GA4 or backlink data is available, so the results are lab and source evidence only. Business type: an author site. Every sale goes to Amazon and there is no shop on the site.
+
+**Health score: 78/100 (estimate).** Technical 85, content 65, on-page 85, schema 40 before this branch and 85 after it, performance 95 (lab only), AI search 70, images 85.
+
+What works (DONE, evidence from `dist/` scan and live headers):
+
+- 27 pages, each with its own title (22–60 chars) and description (41–158 chars), a canonical, one `h1`, and `og:`/Twitter cards. Book pages use `og:type=book` and their own cover.
+- Every `<img>` has `alt` (decorative ones use `alt=""`) and `width`/`height`. Covers have 400w and 800w `srcset`. The hero image uses eager loading with `fetchpriority=high`.
+- `sitemap.xml` lists 25 URLs and leaves out 404 and thanks. Both of those are `noindex`. `robots.txt` names the sitemap. `llms.txt` is live and returns 200.
+- Lab Core Web Vitals on live (Playwright, Pixel 7, 4× CPU throttle, 150 ms latency): LCP 436–564 ms, CLS 0 on `/`, `/books/`, a book page and `/about/`. Pages weigh 210–595 KB. No third-party scripts. INP cannot be measured in the lab, and the site has little JavaScript on the main thread. NOT TESTED: field data (no CrUX record yet).
+
+Findings:
+
+| # | Severity | Finding | Status |
+|---|---|---|---|
+| SEO-1 | High | Book pages had no `Book` structured data, so the books were not machine-readable as books. The only schema on the site was a lone `Person` on About. | FIXED in this branch: `src/content/schema.ts` adds `Book` (title, subtitle, cover, pages, date, en-GB, author by `@id`, EBook and Paperback editions linking to Amazon) and a `BreadcrumbList` to all 13 book pages. Home gets `WebSite`. About becomes `ProfilePage` with `Person` `@id https://harni.uk/about/#person`. Test: `tests/unit/schema.test.ts`. |
+| SEO-2 | Medium | No ISBNs in the data, so `isbn` cannot be emitted. The paperback ASINs are not ISBNs. | OWNER: supply each paperback ISBN-13 from KDP. It is then a one-field change. |
+| SEO-3 | Info | No `offers`/price and no `review`/`aggregateRating`, by design (BR-003). No real reviews are shown. Do not add either until real, permissioned reviews are on the page. | Kept as is. The test fails if any of these appear. |
+| SEO-4 | Medium | The live `robots.txt` is Cloudflare's managed version, not the repo's. It blocks AI training crawlers, which is fine, but it also blocks **Amazonbot**, which feeds Amazon's Rufus and Alexa answers. That matters for an author who sells only on Amazon. Search and answer bots (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, PerplexityBot) are allowed. `Content-Signal: search=yes, ai-train=no, use=reference`. | OWNER decision (Cloudflare setting): keep it, or allow Amazonbot. |
+| SEO-5 | Medium | The 13 book blurbs are the Amazon descriptions, so the pages duplicate Amazon's text and Amazon will outrank them. | COPY (owner): add one original paragraph per book. |
+| SEO-6 | Medium | `/events/` ("no public events") and `/reviews/` (links only) are thin pages that can be indexed. | OWNER: add real content, or approve `noindex` until there is some. |
+| SEO-7 | Low | Every book-page description ends with the same "Read more and choose where to buy." | COPY (owner). |
+| SEO-8 | Low | The sitemap has no `<lastmod>`. Google ignores `changefreq` and `priority`. | Backlog: add an accurate `lastmod` only from a real change date, never the build date. |
+| SEO-9 | Low | Covers ship as JPEG only (800w up to 256 KB). WebP or AVIF variants would cut weight. LCP is already under 0.6 s. | Backlog (`scripts/build-media.mjs`). |
+| SEO-10 | Info | Author visibility: no Google Search Console or Bing Webmaster verification is recorded, and there is no Goodreads author profile. Amazon Author Central is the main authority source. | OWNER: verify GSC and Bing (a DNS TXT record on Cloudflare needs approval), submit the sitemap, and claim a Goodreads author profile. Add the Goodreads URL to `sameAs` when it is live. |
+
+Local SEO: a Person with London as the locality is enough. There is no shop or service area, so no Google Business Profile applies.
+
+## 1 Nov 2026 · Security audit (scoped), branch `golive/2026-11`
+
+Scope: mail endpoint (`backend/public/api/message.php`, `backend/src/*`, `api/.htaccess`), static-site headers and CSP, third-party links, Privacy and Cookies pages. Source review, local PHP 8.5 checks and read-only GETs of the live site. No POST was sent to live and no mail was sent.
+
+**Result: no Critical or High findings.** Nothing needed fixing under step 2.
+
+| Area | Result |
+|---|---|
+| Header injection | PASS. Subjects are fixed strings. Email is checked with `FILTER_VALIDATE_EMAIL` plus a CR/LF/NUL reject, and name and subject reject CR/LF. `mail()` gets headers as an array (PHP 8 rejects CR/LF in header values), and there is no 5th `mail()` parameter, so no `-f` injection is possible. Visitor text appears only in the base64 body and is HTML-escaped by `esc()`. |
+| Open relay | PASS. The visitor receipt carries no sender-written text (ADR-029), so the form cannot relay chosen text to a chosen inbox. |
+| Spam and abuse | PASS (with an accepted risk). Honeypot `website` field, exact `Origin` allow-list (no Origin means 403), JSON-only (415), 64 KB cap (413), field limits, consent and acknowledgement flags. HMAC-keyed rate limit: 5/h per IP, 3/h per email, 100/h global, locked file outside the web root. Accepted risk, unchanged: 100 bad requests an hour can use up the global limit. Add Cloudflare Turnstile only if abuse appears; that needs owner approval and a privacy-page update. |
+| SEC-1 · Low | `FILTER_VALIDATE_EMAIL` accepts quoted local parts (`"a@x,b"@y.com`) and domain literals (`a@[127.0.0.1]`). The receipt content is fixed and the per-email limit applies, so the impact is low. Optional hardening: reject `"` and `[` in the address. |
+| SEC-2 · Needs validation | Behind Cloudflare, `REMOTE_ADDR` must be restored from `CF-Connecting-IP` (mod_remoteip or the LiteSpeed equivalent), or every visitor shares the per-IP limit. Check on the host before mail is switched on. |
+| SEC-3 · Medium (Cloudflare) | Live `https://harni.uk/` (GET, 1 Nov 2026) sends no HSTS, CSP, X-Frame-Options, Referrer-Policy or Permissions-Policy, and still sends `NEL`/`Report-To`. The values are decided in `docs/07-operations/SECURITY-HEADERS.md`. The CSP hash `sha256-/x7W7R75…gpw=` still matches the inline script (recomputed today). Applying them is the Cloudflare gate and needs owner approval. |
+| SEC-4 · Info | The no-JavaScript fallback `<form action="/api/message.php" method="post">` sends form-encoded data, which the endpoint refuses with 415 JSON. This is a usability issue, not a security one. |
+| `/api/` hardening | PASS live: GET returns 405 JSON with `Allow: POST`, `no-store`, `nosniff`, `no-referrer`. The deny-list `.htaccess` is in place (proof from 22 Oct). |
+| Third-party links | PASS. Every `target="_blank"` link has `rel="noopener noreferrer"` and a new-tab note. The site loads no third-party scripts, fonts, images or frames. |
+| Privacy and Cookies pages | PASS against live: no `Set-Cookie` on `/` or `/play/`, NEL disclosed, only `localStorage` (Pier Run score, opt-in). The open owner facts are unchanged (see `.agent/CURRENT-TASK.md` gates). |
+
 ## 2026-09-05 · Pwa Release Checklist
 
 _Merged from `docs/AUDIT.md` on 2026-10-30._
