@@ -1,3 +1,7 @@
+## 2026-11-08, CSP enforced
+
+- The Cloudflare rule now sends `Content-Security-Policy` instead of `-Report-Only` after 0 violations in Chromium and WebKit on all 26 pages. Firefox not tested. Rollback: rename the header back in the rule.
+
 ## 2026-11-08, sign-ups go to info@harni.uk (ADR-033)
 
 - The owner has no `subscribe@harni.uk` mailbox, so with sending now on, a sign-up would have been accepted by the server and then bounced. Sign-up notifications, the subscriber's copy, `List-Unsubscribe` and the no-JavaScript link on Join now use `info@harni.uk`. Tests changed first (PHP, HTTP capture, Playwright). Current docs updated; dated history left as written.

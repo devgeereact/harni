@@ -1,3 +1,7 @@
+## Latest task: CSP enforced, 8 November 2026
+
+Installed Playwright Firefox and WebKit (same cache as Chromium). Chromium and WebKit: 0 CSP violations on 26 pages; Firefox would not launch (NOT TESTED). Header renamed to enforcing on Cloudflare; live checks pass. Owner: open the site in Firefox with the console open. If anything is blocked, rename the header back in the rule.
+
 ## Latest task: sign-ups moved to info@harni.uk (ADR-033), 8 November 2026
 
 Owner: "subscribe@harni.uk is not live, I use only info@harni.uk". With sending on, sign-ups would have bounced. Changed (tests first): `backend/src/message.php`, `src/content/site.ts`, PHP, HTTP-capture and Playwright tests, current docs. Checks: `npm run check` 83 pass; PHP 37 checks; `test:mail` PASS; `npm run verify` PASS; browser suite 167 pass. Merging deploys this.

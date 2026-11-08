@@ -1,7 +1,10 @@
 # Security headers
 
-Status, 17 October 2026: DECIDED, NOT APPLIED. Applying it is an external Cloudflare change and needs
-explicit owner approval in that session (ADR-029). The live site sent no HSTS, CSP, Referrer-Policy or
+Status, 8 November 2026: APPLIED on Cloudflare (owner approved). HSTS, the response-header rule (rule id
+`e7dc581e73d6485caf18bbf8b09d6280`), NEL off and minimum TLS 1.2 are live. The CSP went out as
+`Content-Security-Policy-Report-Only` first and is now enforced after a clean pass over every page in
+Chromium and WebKit (Firefox could not be launched here: NOT TESTED). Rollback: rename the header back or delete the rule.
+Original status, 17 October 2026: DECIDED, NOT APPLIED (ADR-029). The live site sent no HSTS, CSP, Referrer-Policy or
 Permissions-Policy header on 2026-10-17 (finding PL-04 in
 `../reports/harni/qa/reports/PRIVACY-LEGAL-READINESS-2026-10-17.md`).
 

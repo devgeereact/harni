@@ -2,6 +2,16 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · CSP enforced
+
+| Check | Result | Evidence |
+|---|---|---|
+| Report-only pass, Chromium and WebKit | 0 violations on 26 pages (25 sitemap pages plus `/play/` with a run started) | `work/csp-check.mjs` using `securitypolicyviolation` events |
+| Firefox | NOT TESTED | Playwright's Firefox failed to launch ("Could not find profile folder") |
+| Enforced header | DONE | `content-security-policy` present and no `report-only` header on `/` (curl); the rule was updated in place |
+| After enforcing | 0 violations in Chromium and WebKit; `/`, `/books/`, `/play/`, `/contact/`, `/join/` all 200 | same script, curl |
+| Forms | Not submitted (sending is live, so a submit would send mail); `connect-src 'self'` and `form-action 'self'` match the same-origin endpoint | policy text |
+
 ## 8 Nov 2026 · Mail enabled and tested
 
 | Check | Result | Evidence |
