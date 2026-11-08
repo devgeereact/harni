@@ -1,7 +1,7 @@
 # Handoff
 
-## 2026-11-08: Phase 1 release readiness
-Branch `gsd/phase-1-release-alignment` pushed; PR #4 open and CLEAN; `main` protected (PR plus 3 required checks). verify, 65 unit, mail and 173 browser tests PASS locally; Portability PASS on the PR. Not merged: merging deploys, and the owner has not yet said go. Next steps: `.agent/CURRENT-TASK.md`.
+## 2026-11-08: Phase 1 release alignment done
+PR #4 merged into `main` (d60e544) and deployed; Deploy run green; live checks pass (JSON-LD present, no directory listing, API 405). `main` is protected. Open: push of this closeout branch, branch deletions (both need owner approval), then Phase 2. Details: `.agent/CURRENT-TASK.md`.
 
 ## 17 October 2026: GEE OS cPanel restructure and launch build pass
 
