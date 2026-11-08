@@ -4,7 +4,7 @@ PRs 5 to 8 merged into `main` in order (merge commits; `main` at 4b3828d). The t
 
 Found: `https://harni.uk/thanks/` still returns 200 with the old "Thank you for joining" page. The route is gone from the build, but the release rsyncs without delete, so the old `thanks/index.html` stays on the host. It is unlinked and not in the sitemap. Fixing it means removing one file on the server (owner approval) or teaching the release to prune removed pages.
 
-Open (owner): approve removing the stale `/thanks/index.html` on the host (or a release change); decide `origin/chore/add-gsap-lenis` (unmerged `e139600`); delete the two superseded docs; Phase 5 (Cloudflare headers, mail test, host checks) and Phase 6 (legal, devices).
+Done: the two superseded docs were deleted (owner approved). Open (owner): approve removing the stale `/thanks/index.html` on the host (or a release change); decide `origin/chore/add-gsap-lenis` (unmerged `e139600`); Phase 5 (Cloudflare headers, mail test, host checks) and Phase 6 (legal, devices).
 
 ## Previous task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
 

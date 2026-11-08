@@ -1,3 +1,8 @@
+## 2026-11-08, Phases 1 to 4 merged and deployed
+
+- PRs 5 to 8 merged in order; the three code-bearing merges deployed with green smoke checks. The superseded `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md` were deleted on the owner's approval (their content lives in this file and in `docs/07-operations/EMAIL.md`).
+- Known: the removed `/thanks/` page is still served from the host, because the release never deletes server files (`docs/AUDIT.md`).
+
 ## 2026-11-08, Phase 4 workspace hygiene, part 1 (local branch `gsd/phase-4-workspace-hygiene`, not pushed, not deployed)
 
 - `.idea/` is now ignored and no longer tracked (`git rm --cached`; the files stay on disk). A guard in `tests/unit/project-standards.test.ts` keeps it that way.
