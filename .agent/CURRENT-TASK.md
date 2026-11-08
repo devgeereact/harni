@@ -1,3 +1,7 @@
+## Latest task: 404, host facts, preload fix, 8 November 2026
+
+Done: `ErrorDocument 404 /404.html` added to the host root `.htaccess` (backup kept, ADR-034, live check passes); preload fix deployed (PR 15); client IP: the host `.htaccess` says Cloudflare IP restoration is on (not proven by request); web PHP likely 8.4 (CloudLinux default). Remaining for the owner: inbox check, Firefox console check, reload the home page to confirm the preload warnings are gone, Phase 6.
+
 ## Latest task: home hero preload warnings, 8 November 2026
 
 Owner's Chrome console showed two "preloaded but not used" warnings (honest-truth-400, your-next-step-400). Not reproducible here. Fix: hero cover `sizes` in px and vw (not rem) and high priority on the centre cover only; two tests first. NOT CONFIRMED on the owner's browser: reload after deploy and check the console.
