@@ -1,5 +1,7 @@
 // Every page on the site. The generator (scripts/build-pages.ts), the Vite config and the
-// sitemap all read this list, so a page is added in one place. ADR-014: 14 designs, 23 pages.
+// sitemap all read this list, so a page is added in one place. This list is the single source
+// for every page. ADR-014 set the first page set; later ADRs added the book pages, Pier Run
+// and the legal pages.
 
 import { books } from '../data/books.ts';
 

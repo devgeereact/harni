@@ -1,4 +1,28 @@
-## Latest task: Phase 1 release alignment, DONE, 8 November 2026
+## Latest task: Phase 2 docs and standards alignment, DONE (local branch, not pushed), 8 November 2026
+
+Mode: BUILD, local only. Branch `gsd/phase-2-docs-alignment` (from the unpushed `gsd/phase-1-closeout`). Plans 02-01 to 02-06 are done and committed locally. Nothing pushed, merged, deployed or deleted.
+
+Done: plan 02-01. `.node-version` and `npm run check` added test-first (6 of 6 RED, then 6 of 6 GREEN); `npm test` 71 pass; ADR-030 recorded (npm kept, pnpm and Biome deferred).
+
+Done: plan 02-02 (docs only). `backend/README.md` and `docs/07-operations/DEPLOYMENT.md` match `release.json`; rollback procedure written (manual rollback and Actions path NOT TESTED, they need SSH); "what does not deploy" taken from `deploy.yml`; ADR-031 records the Actions deploy as an approved exception; current-method `cpanel-deploy` mentions swept. No code changed.
+
+Done: plan 02-03 (docs plus one source comment). KNOWN-ISSUES rows 5, 6, 11, 19, 25, 26 corrected and row 13 annotated (open until Phase 3 removes `/thanks/`); `routes.ts` header comment no longer hard-codes a page count (diff checked as comment-only); DATA-MODEL Event and ReviewQuote match the data files. Typecheck and 71 unit tests pass. Lighthouse not re-run; no live page fetched.
+
+Done: plan 02-04 (docs only). API-SPEC filled from the PHP source (one operation; differences from the plan notes recorded in `docs/AUDIT.md`: no application log line in the exception handler, browser aborts after 20 s). Five specs (AUTH, PWA, SYNC, OFFLINE, UPDATE-STRATEGY) marked N/A with reason, date and owner. Real mail, client IP behind Cloudflare and host PHP stay NOT TESTED. No code changed.
+
+Done: plan 02-05 (docs only). The one changelog entry missing from the root `CHANGELOG.md` was merged in; `docs/07-operations/EMAIL.md` has a "Specification summary" covering the six `EMAIL-SPEC.md` fields (bounce and complaint monitoring UNKNOWN, next check in Phase 5). Comparison recorded in `docs/AUDIT.md`. Nothing deleted.
+
+Done: plan 02-06 (test-first for env names and wording, then docs). Three guards added to `tests/unit/project-standards.test.ts` and seen failing first (RED: 3 fail, 6 pass), then GREEN (9 of 9) after the fixes: `.env.example` now lists only `HARNI_MAIL_ENABLED=`, `HARNI_MAIL_STATE_DIR=` and `HARNI_MAIL_RATE_KEY=` (names only; `APP_ENV` and `PUBLIC_APP_URL` removed because nothing reads them); the `package.json` description, README opening and `docs/PROJECT-MEMORY.md` no longer call the site a bookstore (it takes no orders); the README release status now says merged (PR 4, d60e544) and deployed on 2026-11-08 and lists the open items; stale linked-worktree sentences removed (`git worktree list` shows one worktree, so this is a standalone clone). Committed docs no longer point into the local planning folder. The re-read of map inconsistencies 1 to 8 is a table in `docs/AUDIT.md`.
+
+Checks, 8 November 2026: `npm run check` PASS; `npm run typecheck` PASS; `npm test` 74 pass (65 existing + 6 + 3 new); `npm run verify` PASS (it left no tracked file changed); `npm run test:mail` PASS. Browser suite not run: no page output changed.
+
+Next (owner), in order:
+1. Approve pushing the Phase 2 branch as a PR. Merging it triggers one Deploy run (`package.json`, `.node-version`, tests and a source comment change); the site output is identical, so the run is expected and harmless.
+2. Approve deleting the two superseded duplicates (git rm, local commit, PR): `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md`. Until then each carries a notice.
+3. Confirm whether `~/apps/harni/current` is a symlink on the host (one directory listing of `~/apps/harni/`); the answer goes in `backend/README.md` (UNKNOWN until then).
+4. Then Phase 3 (dead code and CSS cleanup, `/thanks/` removal, endpoint constant). Also approve pushing the Phase 1 closeout branch and deleting merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
+
+## Previous task: Phase 1 release alignment, DONE, 8 November 2026
 
 Mode: BUILD. PR #4 merged into `main` (merge commit d60e544) with the owner's explicit approval; the Deploy run succeeded (run 42457618070: 1 backend file changed, 27 site files changed, 4 new, 3 smoke checks passed). `main` equals `origin/main`; the merged tree is identical to the reviewed branch tip.
 
@@ -12,7 +36,7 @@ Evidence, 8 November 2026:
 Next:
 1. Owner: approve pushing branch `gsd/phase-1-closeout` (these notes) as a docs-only PR (docs and `.agent/` pushes do not deploy).
 2. Owner: approve deleting merged branches `golive/2026-11` and `gsd/phase-1-release-alignment` (local and remote).
-3. Phase 2 (docs and standards alignment), planned in `.planning/ROADMAP.md`; open questions in `.planning/QUESTIONS.md`.
+3. Phase 2 (docs and standards alignment): planned in the local planning notes (not part of this repository), then done on its own branch.
 
 ## Previous task: go-live prep, 1 November 2026
 

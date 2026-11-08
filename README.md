@@ -1,6 +1,6 @@
 # Harni
 
-Author website and bookstore for harni.uk, with 13 existing books and Pier Run. This React and Tailwind rebuild preserves the public wording, design, URLs, search metadata and PHP mail contract. Original source and Git history remain in the original repository; this directory is a linked worktree.
+Author website for harni.uk. It presents Harni Muharami's 13 books, which are sold on Amazon, with a contact form, a mailing-list sign-up and the Pier Run game. The site takes no orders. This React and Tailwind rebuild preserves the public wording, design, URLs, search metadata and PHP mail contract.
 
 ## Run on Linux or macOS
 
@@ -13,9 +13,9 @@ mise exec -- npm run setup
 mise exec -- npm run dev
 ```
 
-Open http://127.0.0.1:5152. Setup uses the committed npm lockfile and installs dependencies for the current OS, including Sharp and Chromium. Never transfer `node_modules`, `dist`, browser caches or machine-specific tools between systems. Transfer tracked source through Git, retain the lockfile, and run setup on the destination. Keep private configuration on its own machine. This worktree needs its original Git repository; for another computer use a standalone clone or export of reviewed source, rather than copying its `.git` pointer.
+Open http://127.0.0.1:5152. Setup uses the committed npm lockfile and installs dependencies for the current OS, including Sharp and Chromium. Never transfer `node_modules`, `dist`, browser caches or machine-specific tools between systems. Transfer tracked source through Git, retain the lockfile, and run setup on the destination. Keep private configuration on its own machine. `.env.example` lists variable names only, never values; the real values live in the host's private configuration.
 
-Node 24.21.0 is pinned in `mise.toml`. Do not substitute another package manager. PHP 8.1+ is optional for browsing and required to exercise the mail endpoint. Supply an installed PHP through PATH or `HARNI_PHP_BIN`; setup does not alter the global toolchain. The launcher forces mail sending off, starts PHP on loopback if available, reports port conflicts and stops its own children on Ctrl+C. Without PHP, frontend browsing works but form delivery does not.
+Node 24.21.0 is pinned in `mise.toml` and `.node-version` (a unit test keeps them and the CI workflows equal). Do not substitute another package manager: npm stays and pnpm is deferred (ADR-030). PHP 8.1+ is optional for browsing and required to exercise the mail endpoint. Supply an installed PHP through PATH or `HARNI_PHP_BIN`; setup does not alter the global toolchain. The launcher forces mail sending off, starts PHP on loopback if available, reports port conflicts and stops its own children on Ctrl+C. Without PHP, frontend browsing works but form delivery does not.
 
 ## Intentional trusted-LAN preview
 
@@ -33,6 +33,7 @@ Open `http://192.168.1.50:5152` from your trusted LAN. The address must actually
 
 ```sh
 mise exec -- npm run doctor
+mise exec -- npm run check        # typecheck, unit tests and PHP lint in one gate (no browser tests)
 mise exec -- npm run typecheck
 mise exec -- npm test
 mise exec -- npm run build
@@ -42,7 +43,7 @@ mise exec -- npm run test:mail
 python3 backend/tests/mail-http.py
 ```
 
-The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. There is no separate lint configuration. Strict TypeScript, unit checks and browser checks cover the implemented changes.
+The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. Biome and a separate lint configuration are deferred (ADR-030). Strict TypeScript, unit checks and browser checks cover the implemented changes.
 
 `npm run media` regenerates the existing shore image derivatives using project-local Sharp, without `sips`, Homebrew, `cwebp` or `avifenc`. Alternative public source/output paths: `npm run media -- --input '/path/source photo.jpg' --output '/path/derived assets'`. Only generated shore files at the chosen output are replaced. Existing images were retained during this migration; the encoder was tested using synthetic temporary fixtures.
 
@@ -77,4 +78,14 @@ All 27 generated HTML pages live inside `.generated/pages/`. `npm run dev` and `
 
 The build converts repository-owned content to a typed tree, renders it with React on the server, then hydrates that same tree. Static pages remain useful without JavaScript. This is not an API for rendering arbitrary external HTML. Browser forms validate input and POST JSON to the unchanged PHP endpoint, with duplicate-request protection and preserved input after failures.
 
-Release status and evidence: `../reports/harni/qa/reports/REACT-REBUILD-2026-10-07.md`. Actual macOS execution, real inbox delivery, hosting and owner/legal checks remain open. The rebuild branch is pushed to origin; this rebuild has not been merged to main or deployed.
+## Release status
+
+The React rebuild was merged to `main` as PR 4 (merge commit d60e544) and deployed on 2026-11-08 (Deploy run 42457618070, 3 smoke checks passed). Live GET checks showed Book and BreadcrumbList JSON-LD on a book page, 403 on `/assets/`, `/images/` and `/media/`, and 405 on a GET to `/api/message.php`. `main` is protected.
+
+Still open:
+
+- Mail sending is switched off on the host (NOT TESTED).
+- Real devices and a screen reader have not been used (NOT TESTED).
+- The live site still lacks HSTS and a Content-Security-Policy, and Cloudflare NEL is on; both are planned for Phase 5.
+
+The detailed release report is on the owner's Mac, outside this repository (`../reports/harni/qa/reports/REACT-REBUILD-2026-10-07.md`).

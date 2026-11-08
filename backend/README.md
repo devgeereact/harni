@@ -24,19 +24,26 @@ backend/
 
 ## Server layout (cPanel)
 
+What `release.json` writes on the host (see `docs/07-operations/DEPLOYMENT.md`):
+
 ```
-~/harni.uk/api/message.php          from dist/
-~/harni.uk/api/.htaccess            from dist/
-~/apps/harni/releases/<id>/src/     a copy of backend/src for each release
-~/apps/harni/current                symlink to the live release
+~/harni.uk/api/message.php          from dist/ (the built entry file)
+~/harni.uk/api/.htaccess            from dist/ (uploaded because the release lists .htaccess in "allow")
+~/harni.uk/{assets,images,media}/.htaccess   from dist/ (each blocks folder listings)
+~/apps/harni/current/src/           from backend/src/ (Markdown files excluded)
 ~/apps/harni/shared/mail-state/     HARNI_MAIL_STATE_DIR, mode 700
 ```
 
+The release never uploads a site-root `.htaccess` (the build refuses to make one) and never deletes
+anything on the server. Whether `~/apps/harni/current` is a symlink or a plain directory on the host
+is UNKNOWN. The release rsyncs into `current/src` either way and, if `current` is a symlink, the
+files land in the folder it points to. Next check: the owner runs a directory listing of
+`~/apps/harni/` on the host and the answer is recorded here.
+
 `message.php` finds the private folder from its own place: two levels above `~/harni.uk/api/`
-is the home folder, then `apps/harni/current`. There is no pointer file on the server, so
-`cpanel-deploy --delete` has nothing to remove. This relies on the document root being
-`~/harni.uk`, directly under the home folder. `cpanel-deploy` never uploads any `.htaccess`, so
-copy `dist/api/.htaccess` to `~/harni.uk/api/` by hand.
+is the home folder, then `apps/harni/current`. There is no pointer file on the server. This
+relies on the document root being `~/harni.uk`, directly under the home folder. No step is done
+by hand: the built `.htaccess` files travel with `dist/`.
 
 If the release folder is missing, `message.php` answers 503 with the usual
 "temporarily unavailable" message and logs `backend not installed`. Nothing leaks. Only PHP's
@@ -50,4 +57,5 @@ Configuration stays in server environment variables, unchanged by the restructur
 
 ```sh
 npm run test:mail        # unit checks, then the HTTP capture run (needs php and python3)
+npm run check            # typecheck, unit tests and PHP lint: the one local gate
 ```

@@ -21,7 +21,7 @@
 - Explicit exclusions: authentication, forms, database, service worker, PWA install,
   cookie banner. None of them have a use yet.
 - Constraints: the cPanel host has no Node, so the build runs locally and ships a
-  static `dist/`. Deploys go through `~/.claude/bin/cpanel-deploy` over rsync.
+  static `dist/`. Deploys are built locally or in the Deploy workflow and shipped with `scripts/release.mjs` (rsync over SSH, snapshot, smoke, automatic restore), see DEPLOYMENT.md and ADR-031.
 - Existing assets to preserve: `docs/IMG_3620.jpeg` is the supplied source
   photograph: a figure in a pale coat on the seafront at dusk, photographing the
   low sun over the ruined West Pier at Brighton. Every image in `public/media/` is
@@ -39,7 +39,7 @@
 | Visible copy is placeholder voice, not final | FACT | Written for this scaffold | Owner replaces before launch |
 | Port 5152 is allocated to this project | DECISION | `~/.claude/CLAUDE.md` § Dev-server ports, block 15 | — |
 | The owner is Harni Muharami, an NHS nurse and clinical educator in London | FACT | Owner bio, 2026-10-01 | None |
-| The bookstore contact address is `info@harni.uk`; the live page uses `hello@harni.uk` | ASSUMPTION | Owner message, 2026-10-01 | Confirm which mailbox receives mail |
+| The site contact address is `info@harni.uk`; the live page uses `hello@harni.uk` | ASSUMPTION | Owner message, 2026-10-01 | Confirm which mailbox receives mail |
 | Instagram `@lulu_harni` and TikTok `@harni_m` are live and public | ASSUMPTION | Owner messages, 2026-10-01 | Confirm both |
 | Print is made and shipped by Amazon KDP. Each book is sold in one channel, Amazon. All 13 books are live on Amazon.co.uk as Kindle and paperback | FACT | ADR-012, ADR-023; Amazon listings read 2026-10-01 | Re-check at deploy |
 | The launch ten titles of ADR-015 are superseded. The catalogue is the 13 books on the owner's Amazon author page, listed in `docs/01-product/CATALOGUE.md` | FACT | ADR-023; Amazon author page and 13 listings read 2026-10-01 | Re-read Amazon before any deploy |
@@ -61,5 +61,5 @@
 - Scope: Home, Books, 13 book pages (the real catalogue, ADR-023), About, Contact, Join the list, Thank you, Events, Reviews, Pier Run, Privacy, Cookies, Terms, Delivery and refunds.
 - Allowed by ADR-011: a mailing list form, a statistics tool after consent, a cookie consent banner, hosted checkout links, social links. Checkout links are not used: every book is in KDP Select, so the site links to Amazon only (ADR-023). The other items are placeholders in the localhost preview.
 - Still excluded: authentication, database, service worker, PWA install, basket, accounts, prices on the site.
-- Hosting is unchanged: cPanel behind Cloudflare, build locally and ship `dist/` with `cpanel-deploy`. Choosing other hosts and payment companies is not decided.
+- Hosting is unchanged: cPanel behind Cloudflare, built locally or in the Deploy workflow, shipped with `scripts/release.mjs` (rsync over SSH, snapshot, smoke, automatic restore), see DEPLOYMENT.md and ADR-031. Choosing other hosts and payment companies is not decided.
 - Built on localhost only. Nothing is pushed or deployed. The owner checks the preview first, and deploy is NOT authorised.

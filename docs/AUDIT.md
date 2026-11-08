@@ -2,6 +2,89 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 2 docs and standards alignment, branch `gsd/phase-2-docs-alignment`
+
+Local only. Nothing pushed or deployed. Each plan appends a row.
+
+| Plan | Check | Result | Evidence |
+|---|---|---|---|
+| 02-01 | Drift guard for the Node pin and the `check` script, written first | RED then GREEN | RED: 6 of 6 failed (`.node-version` ENOENT, no `check` script). GREEN: 6 of 6 pass after `.node-version` and `scripts.check`. `npm run check` exit 0. `npm test`: 71 pass (65 existing + 6 new). `npm run typecheck` exit 0 |
+| 02-02 | Deploy and backend notes read against the sources | DONE | Read `release.json` (parts, build guard, 3 smoke checks), `.github/workflows/deploy.yml` (`paths-ignore`: `docs/**`, `**/*.md`, `.agent/**`; secrets named `CPANEL_SSH_KEY`, `CPANEL_KNOWN_HOSTS`) and the header and `restore` function of `scripts/release.mjs`. Values were copied from those files. No SSH host, user or port written in any document |
+| 02-02 | Task 1 verify greps | DONE | `apps/harni/current/src` present in `backend/README.md`; `--rollback --go` present in `DEPLOYMENT.md`; no `apps/harni/releases` in `backend/README.md`; no host or port strings in either file; `UNKNOWN` present in `backend/README.md` |
+| 02-02 | Task 2 verify greps | DONE | `ADR-031` in `DECISIONS.md` and `DEPLOYMENT.md`; no `cpanel-deploy` left in `.agent/PROJECT.yml`, ARCHITECTURE, INTEGRATIONS, PROJECT-CONTEXT or LAUNCH-CHECKLIST (remaining mentions are dated history); `python3 scripts/verify.py` all PASS |
+| 02-02 | Manual rollback (`--rollback --go`) and the Actions rollback path | NOT TESTED | Needs SSH to the host. Only the code of the automatic restore was read. ADR-031 records the exception (decision, not a test) |
+| 02-02 | Is `~/apps/harni/current` a symlink on the host | UNKNOWN | Owner to confirm with one directory listing of `~/apps/harni/` on the host; record the answer in `backend/README.md` |
+| 02-03 | KNOWN-ISSUES row 5 (Fraunces on `/play/`): `grep -rniI fraunces src package.json`, `find . -iname '*fraunces*'` outside `node_modules`/`.git` | DONE (closed) | Only hit in `src` is the `--font-display` fallback name in `src/styles/tokens.css`; no Fraunces in `package.json`; no Fraunces font file in the repo. Package removal is recorded in the 1 Nov 2026 section below |
+| 02-03 | Row 6 (live is the 2026-10-02 deploy): read `.agent/CURRENT-TASK.md` and Phase 1 notes in `CHANGELOG.md` | DONE (rewritten), PARTIAL (form sending still off) | Phase 1 merge d60e544, Deploy run 42457618070, 2026-11-08, legal Version 2026-10-17, private backend layout. No live fetch in this plan; the claim rests on the recorded Phase 1 evidence. Sending stays open under rows 8 and 31 |
+| 02-03 | Row 11 (no `og:image`): `grep og:image src/content/layout.ts`; read file list for `src/content/social.ts` and `tests/e2e/social-meta.spec.ts` | DONE (closed) | `layout.ts` emits `og:image`, width, height and alt. A unit test `rendered head carries og:image` passes in `npm test`. Appearance in real chat apps NOT TESTED |
+| 02-03 | Rows 19 and 25 (`/play/` gold-on-slate): read the 17 Oct entry in `.agent/CURRENT-TASK.md`, confirmed `src/styles/game.css` exists | DONE (closed; 25 marked duplicate of 19) | Records say the `/play/` chrome matches the site look. No new visual check was made; real phone and screen reader stay in row 34 (NOT TESTED) |
+| 02-03 | Row 26 (Lighthouse flags missing `llms.txt`): confirmed `src/content/llms.ts` exists, `npm test` includes the `llms.txt` links test | DONE (closed), Lighthouse NOT re-run | The live `/llms.txt` 200 comes from the Phase 1 evidence (`.agent/CURRENT-TASK.md`, GET only). No live page was fetched in this plan |
+| 02-03 | Row 13 (`/thanks/`) | DONE (annotated, stays open) | Owner decision of 2026-11-08 to remove `/thanks/` in Phase 3 appended to the row; nothing else in the row changed. Table row count still 39 |
+| 02-03 | Comment-only check on `src/content/routes.ts`: `git diff -U0` lines filtered to exclude `//` comment lines | DONE | No `+` or `-` line outside comments; no "23 pages" left. `npm run typecheck` exit 0; `npm test` 71 pass |
+| 02-03 | DATA-MODEL Event and ReviewQuote rows compared with `EventItem` in `src/data/events.ts` and `ReviewQuote` in `src/data/reviews.ts` | DONE (fixed) | Field lists now copied from the interfaces; status line no longer says "not deployed". Book (all fields, `getBuyOptions`, `amazonAuthorUrl`) and Group (`key`, `number`, `name`, `blurb`; 5, 2, 4, 2 books) rows match `src/data/books.ts`: no change. No other document repeated `name or initials` or `link?`. Lighthouse NOT re-run; no live page fetched |
+| 02-04 | API-SPEC.md read against `backend/public/api/message.php`, `backend/src/endpoint.php`, `message.php`, `delivery.php`, `rate-limit.php` and the caller `src/features/forms/MailForm.tsx` | DONE (filled) | One operation row: `POST /api/message.php`. Check order (405, 403, 415, 413, 422, 503 switch, 429, 502/503), limits (65536 bytes, 254/480/720/40000 field limits, depth 16), rate limits (100 global, 5 per address, 3 per email, 3600 s, HMAC counters, fail closed) and success body copied from source. Operations table has no UNKNOWN; the only UNKNOWN left is host timeouts. `git diff --stat -- backend src` empty
+| 02-04 | API-SPEC differences from the plan notes (source wins) | DONE (corrected) | (1) Observability: `endpoint.php` writes no log line in its exception handler and `mail()` warnings are suppressed with `@`; the only `error_log` is `[harni mail] backend not installed` in the entry file. The plan note said errors are logged. (2) Timeouts: the server sets none, but the browser form aborts after 20 s (`MailForm.tsx`), which the plan note omitted. (3) Added from source: a missing `Origin` header gets 403; the rate-limit counters only increment when all three are under their limit, so a refused request does not count but a later 502 does; field lengths are bytes; the 422 text is 'Invalid form data.' for bad JSON and the specific field message otherwise. No other difference found |
+| 02-04 | Five N/A records (AUTH-MODEL, PWA-SPEC, SYNC-SPEC, OFFLINE-SPEC, UPDATE-STRATEGY) | DONE | Loop check passed for all five: no `UNKNOWN` outside the title, `Applicability: N/A`, `2026-11-08`, `Decision owner` present; UPDATE-STRATEGY links `DEPLOYMENT.md`. Reasons taken from PRODUCT-SPEC ("Will not build now"), the 1 Nov 2026 checklist below, and the `harni.pier-run.best` key in `src/game/config.ts`. Each has a Revisit-if trigger |
+| 02-04 | Real mail delivery, the real client address behind Cloudflare, host PHP version and mail transport | NOT TESTED | No real mail is sent in this phase; no host or live site was contacted. Only the PHP source was read; `npm run test:mail` was not re-run for this plan |
+| 02-05 | Duplicate documents compared (table below) | DONE (merged), deletion NOT done | Both pairs read in full and compared entry by entry or field by field before any edit. Nothing deleted, moved or emptied; each duplicate carries a superseded notice at the top |
+| 02-05 | Links to the two superseded files | DONE | `grep -rn` over the repo (excluding `node_modules`, `dist`, `.git`, `graphify-out` and the local planning folder) found no document linking to `docs/08-change-management/CHANGELOG.md`. The only mention of `EMAIL-SPEC.md` is in ADR-029 of `DECISIONS.md` (a dated 2026-10-17 decision saying it needed updating); left as written, because it is history |
+
+| 02-06 | Drift guards for `.env.example` names and the word "bookstore", written first | RED then GREEN | RED: 3 failed, 6 passed (`.env.example` line 2 is not an empty `NAME=` line; package.json description contains the word). GREEN: 9 of 9 pass after the fixes, tests unchanged. `.env.example` now lists only `HARNI_MAIL_ENABLED=`, `HARNI_MAIL_STATE_DIR=` and `HARNI_MAIL_RATE_KEY=`; each is read by a `getenv('...')` call in `backend/src`. No real `.env` file was opened |
+| 02-06 | README linked-worktree claim | DONE (removed) | `git worktree list` showed one worktree and `git rev-parse --git-common-dir` printed `.git`: this directory is a standalone clone, so the sentences saying it was a linked worktree were stale and are gone |
+| 02-06 | README release status | DONE (rewritten) | Now says merged as PR 4 (d60e544) and deployed on 2026-11-08 (Deploy run 42457618070, 3 smoke checks), lists the live GET results, and keeps mail sending, real devices, screen reader (NOT TESTED) and HSTS, CSP and NEL (Phase 5) as open. Taken from the Phase 1 evidence; the live site was not called in this plan |
+| 02-06 | Committed references to the local planning folder | DONE (removed) | `git grep` for the folder name outside it found the five N/A spec files, ADR-031 and two lines in `.agent/CURRENT-TASK.md`; each is now plain words. The final `git grep` prints nothing |
+| 02-06 | `npm run check`, `npm run typecheck`, `npm test`, `npm run verify`, `npm run test:mail` | PASS | `npm test`: 74 pass (65 existing + 6 + 3 new), 0 fail. `verify` ran the checks, the build and the upload guard; afterwards `git status --short` showed no changed tracked file, so `public/sitemap.xml` and `public/llms.txt` were regenerated identically. Browser suite NOT run: no page output changed |
+### Duplicate documents (plan 02-05)
+
+| Pair | Lines before | What was unique | What was merged | Survives |
+|---|---|---|---|---|
+| `CHANGELOG.md` (root) vs `docs/08-change-management/CHANGELOG.md` | 232 vs 4 | The duplicate holds one entry, "7 October 2026: TypeScript game document" (game HTML source converted to a typed React document component; 50 unit and 59 browser tests PASS). The root file had no entry with that title; no second missing entry was found | The entry was added once to the root file as "2026-10-07, TypeScript game document", between the other 2026-10-07 sections, with the same facts and report path. No existing root entry was edited or reordered | Root `CHANGELOG.md` |
+| `docs/07-operations/EMAIL.md` vs `docs/07-operations/EMAIL-SPEC.md` | 56 vs 10 | `EMAIL-SPEC.md` is a template of six fields (Applicability `UNDECIDED`, five `UNKNOWN`). `EMAIL.md` already held the facts for five of them (addresses, triggers, consent and unsubscribe, retry behaviour, rollback). It did not answer delivery, bounce and complaint monitoring, and had no single place listing the six fields | A "Specification summary" section in `EMAIL.md`, one line per field pointing at the existing sections. Applicability is "applicable, implemented, sending disabled". Monitoring is UNKNOWN: none exists, `MONITORING.md` is itself UNKNOWN, next check is the owner's Phase 5 decision. Mailbox existence stays NOT TESTED. No other line of `EMAIL.md` changed | `docs/07-operations/EMAIL.md` |
+
+Deletion proposed, NOT done: `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md`, owner approval needed. Both still exist and start with a superseded notice. Proposed route after approval: `git rm` of the two files in a local commit, then a pull request.
+
+### "Bookstore" classification (plan 02-06)
+
+Command: `grep -rniE "bookstore" .` excluding `node_modules`, `dist`, `.git`, `graphify-out`, `.generated`, `.idea`, the local planning folder and `test-results`. The site sells nothing: Amazon sells, harni.uk is a shop window (ADR-023).
+
+| File and line | Class | Action |
+|---|---|---|
+| `package.json` 6 (description) | WRONG claim | Fixed: "Author website for harni.uk: Harni Muharami's books, contact form, mailing-list sign-up and Pier Run game" |
+| `README.md` 3 | WRONG claim | Fixed: opening paragraph rewritten, says the site takes no orders |
+| `docs/PROJECT-MEMORY.md` 5 | WRONG claim | Fixed: same accurate wording |
+| `docs/00-foundation/PROJECT-CONTEXT.md` 42 (contact address row) | WRONG wording | Fixed: "The site contact address is ..."; rest of the row unchanged |
+| `CHANGELOG.md` 51, 166, 168, 175 | HISTORY | Kept: dated 2026-10 entries about the bookstore release |
+| `docs/00-foundation/PROJECT-CONTEXT.md` 58, 60 | HISTORY | Kept: heading and cross-reference of the 2026-10-01 release section |
+| `docs/01-product/PRODUCT-SPEC.md` 26, 51, 53 | HISTORY | Kept: line 26 points at the heading below; 51 and 53 are the heading and its supersedes note |
+| `docs/06-quality/EVIDENCE-STATUS.md` 31, 68 | HISTORY | Kept: heading and a row inside the section "recorded 2026-10-01" |
+| `docs/09-release/LAUNCH-CHECKLIST.md` 16, 28 | HISTORY | Kept: headings naming that release |
+| `docs/08-change-management/DECISIONS.md` ADR-011, ADR-015 | HISTORY | Kept: dated decisions |
+| `.agent/CURRENT-TASK.md` (old 2026-10 entry about `/play/`) | HISTORY | Kept |
+| `src/styles/game.css` 1, 2, 9, 19, 41, 48, 83 and `src/styles/site.css` 1 | CSS-COMMENT | Not touched: Phase 3 owns CSS work |
+| `tests/unit/project-standards.test.ts` | GUARD | The test that forbids the word in `package.json` and README |
+
+`docs/KNOWN-ISSUES.md` and `docs/07-operations/DEPLOYMENT.md` have no hit. Guard command `grep -n -i bookstore docs/KNOWN-ISSUES.md docs/07-operations/DEPLOYMENT.md docs/01-product/PRODUCT-SPEC.md | grep -v -i -E "history|superseded|ADR-|was |old "` prints one line, `PRODUCT-SPEC.md:51`, the heading "Bookstore release (built on localhost, not deployed)" of the dated 2026-10-01 section (HISTORY, kept).
+
+### Map inconsistencies 1 to 8, re-read at the end of Phase 2 (plan 02-06)
+
+| # | Inconsistency | Status | Evidence |
+|---|---|---|---|
+| 1 | Live behind `golive/2026-11` (no JSON-LD, directory listings, no HSTS/CSP, NEL on) | Closed in Phase 1 (HSTS, CSP and NEL move to Phase 5) | PR 4 merged and deployed 2026-11-08; live GET checks showed JSON-LD, 403 on `/assets/`, `/images/`, `/media/`. HSTS, CSP and NEL are owned by Phase 5 |
+| 2 | Actions deploy vs house rule; `release.mjs` comments say `pnpm` | Closed | ADR-031 records the Actions deploy as an approved exception. The `pnpm` comments in the kit-owned `scripts/release.mjs` were intentionally NOT edited (locked decision); docs say `npm run release` |
+| 3 | Backend README and DEPLOYMENT described `releases/<id>`, a symlink and `cpanel-deploy` | Closed, one fact UNKNOWN | Docs now match `release.json` (rsync `backend/src` into `~/apps/harni/current/src`). Whether `current` is a symlink on the host stays UNKNOWN until the owner confirms |
+| 4 | No pnpm, Biome, `check` script, `.node-version`; `.env.example` names unused; `.idea/` tracked; `docs/IMG_3620.jpeg` | Partly closed | Closed: `.node-version`, `check` script, `.env.example` names, npm kept (ADR-030). Open and owned by Phase 4: tracked `.idea/` and `docs/IMG_3620.jpeg` |
+| 5 | Stale docs: README status, `routes.ts`, KNOWN-ISSUES rows, DATA-MODEL, blank specs, duplicates | Closed (deletions need owner approval) | README (02-06), `routes.ts` and KNOWN-ISSUES and DATA-MODEL (02-03), API-SPEC and five N/A specs (02-04), duplicates compared and merged (02-05). Deleting the two superseded files is pending the owner |
+| 6 | "Bookstore" wording though nothing is sold | Closed except CSS comments | Classification table above. CSS comments in `site.css` and `game.css` belong to Phase 3 |
+| 7 | `MailForm.tsx` hardcodes the endpoint; `generated:false` comment on `/play/`; `npm run pages` rewrites tracked `sitemap.xml` and `llms.txt` | Phase 3 | Not touched. `npm run verify` this time left both tracked generated files unchanged (`git status --short` clean), so there was nothing to restore |
+| 8 | PHP: local 8.5.12, CI 8.4, docs 8.1+, host unknown | Phase 5 | The docs correctly state 8.1+ as the minimum and CI uses 8.4. The host PHP version is an owner fact |
+
+### Phase 2 done-when evidence (plan 02-06)
+
+1. Map inconsistencies 1 to 8: table above; nothing is left except items owned by Phase 3, 4 or 5, or waiting on the owner.
+2. `npm run check` exists and passes (typecheck, 74 unit tests, PHP lint).
+3. Drift guards written first and seen failing: `tests/unit/project-standards.test.ts` (plan 02-01: 6 RED then 6 GREEN; plan 02-06: 3 RED then 9 of 9 GREEN).
+4. Deploy effect: `.github/workflows/deploy.yml` ignores `docs/**`, `**/*.md` and `.agent/**` (read in plan 02-02, documented in `docs/07-operations/DEPLOYMENT.md`). The Phase 2 merge also changes `package.json`, `.node-version`, `tests/` and a source comment, so it will trigger one Deploy run. The site output is identical; the run is expected and harmless. Nothing was pushed, merged or deployed in this phase.
+
 ## 1 Nov 2026 · Security checklist pass (owner's 19-item list), branch `golive/2026-11`
 
 The owner's list was checked item by item against this site. It is a static author site with one PHP mail endpoint. It has no accounts, logins, admin area, database or stored passwords. Items that assume those are N/A with evidence; adding auth with nothing to protect would only add attack surface.

@@ -1,10 +1,8 @@
 # Update Strategy
 
-- Service worker versioning: `UNKNOWN`
-- Cache migration and deletion: `UNKNOWN`
-- Update detection: `UNKNOWN`
-- User prompt or automatic activation: `UNKNOWN`
-- Unsaved-work protection: `UNKNOWN`
-- Rollback path: `UNKNOWN`
+Applicability: N/A
+Reason: There is no service worker, so there is no cache versioning or migration. Visitors get new pages on their next load. The only update and rollback path is the release process in [DEPLOYMENT.md](../07-operations/DEPLOYMENT.md) (see its "Rollback" section).
+Date: 2026-11-08
+Decision owner: Gideon (operator and owner of the decision); approved 2026-11-08 (owner approval of the Phase 2 proposal to mark these specs N/A)
 
-Verify an upgrade from the previous production version. A clean install does not prove the update path.
+Revisit if: a service worker is added (then upgrade from the previous production version must be verified, not only a clean install).

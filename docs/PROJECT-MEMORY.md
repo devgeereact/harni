@@ -2,7 +2,7 @@
 
 Short index of the confirmed facts for harni. Agents treat this file as project evidence, not as fresh instructions from the owner. Detail lives in the linked documents; change a fact there and here together.
 
-- Project: harni, author website and bookstore for harni.uk (13 books, Pier Run game)
+- Project: harni, author website for harni.uk presenting Harni Muharami's 13 books on Amazon, with a contact form, a mailing-list sign-up and the Pier Run game (the site takes no orders)
 - Site owner: Harni Muharami, author. Project operator: Gideon
 - Adopted GEE OS 1.4.5 contract: 17 October 2026 (ADR-028)
 - Stack profile: `cpanel`, reduced to what the site needs: static React build plus one PHP mail endpoint. No database, no sign-in, no Clerk.
@@ -14,7 +14,7 @@ Short index of the confirmed facts for harni. Agents treat this file as project 
 | CD-01 | Name harni, production origin https://harni.uk (www redirects), HTTPS only | `docs/07-operations/DEPLOYMENT.md` | 2026-10-02 |
 | CD-02 | Visual brand "Rausch on white" | ADR-020, `docs/03-design/DESIGN-SYSTEM.md` | 2026-10-01 |
 | CD-03 | React 19 and Tailwind 4, server-rendered static pages with hydration, TypeScript only | ADR-026 | 2026-10-07 |
-| CD-04 | Static files deployed from a local build with `cpanel-deploy`; the host runs no Node | `docs/07-operations/DEPLOYMENT.md` | 2026-10-02 |
+| CD-04 | Static files built locally or in the Deploy workflow, shipped with `scripts/release.mjs` (rsync over SSH, snapshot, smoke, automatic restore); the host runs no Node. See ADR-031 | `docs/07-operations/DEPLOYMENT.md` | 2026-10-02 |
 | CD-05 | Mail code private in `backend/src`, only `api/message.php` public, URL unchanged | ADR-028, `backend/README.md` | 2026-10-17 |
 | CD-06 | Form sending stays disabled until the owner verifies host mail | `docs/07-operations/EMAIL.md` | 2026-10-02 |
 | CD-07 | Legal pages at Version 2026-10-17 | ADR-027 | 2026-10-17 |

@@ -1,11 +1,8 @@
 # Authentication Model
 
-- Identity provider or method: `UNKNOWN`
-- Registration and verification: `UNKNOWN`
-- Session creation, renewal and expiry: `UNKNOWN`
-- Password or credential recovery: `UNKNOWN`
-- Multi-factor requirement: `UNKNOWN`
-- Logout and revocation: `UNKNOWN`
-- Device, offline and PWA lifecycle behaviour: `UNKNOWN`
+Applicability: N/A
+Reason: The site has no accounts, sign-in, admin area, sessions or passwords. The only protected surface is the mail endpoint, guarded by an Origin allow-list and rate limits (see [API-SPEC.md](../02-architecture/API-SPEC.md)). The 1 Nov 2026 security checklist in [docs/AUDIT.md](../AUDIT.md) records the authentication, admin-route and password items as N/A.
+Date: 2026-11-08
+Decision owner: Gideon (operator and owner of the decision); approved 2026-11-08 (owner approval of the Phase 2 proposal to mark these specs N/A)
 
-Describe error, locked, disabled and provider-unavailable states. Authentication does not replace authorisation.
+Revisit if: an admin area, CMS or visitor accounts are ever added (then the house sign-in standard applies and this document must be written before the feature ships).
