@@ -1,3 +1,36 @@
+## Latest task: Phase 1 release alignment, local readiness, 8 November 2026
+
+Mode: BUILD. Branch `gsd/phase-1-release-alignment` (from `golive/2026-11`, 2 feature commits ahead of `origin/main`) is pushed. PR #4 is open and CLEAN; `main` is now protected. Nothing is merged or deployed.
+
+Done (no code changed, so no new logic and no new tests were needed):
+- Local: `npm run verify` PASS. 65 unit PASS. `npm run test:mail` PASS. `npm run test:browser` 173 PASS. Dry-run merge into `origin/main`: conflict-free.
+- Owner approved on 2026-11-08: push the branch, open PR #4 (https://github.com/devgeereact/harni/pull/4), protect `main`. Owner said NOT yet to merge.
+- CI on the branch and on the PR: Portability PASS (web ubuntu, web macOS, php-local-capture). Deploy did not run (it runs only on `main`).
+- `main` protection: PR required (0 approvals), required checks `web (ubuntu-latest)`, `web (macos-latest)`, `php-local-capture`, no force-push, no deletion, applies to admins. Emergency change: edit the protection in GitHub settings first.
+- Lesson: never write the literal text `[skip ci]` in a commit body unless you want CI skipped; GitHub reads it anywhere in the message.
+- Roadmap, requirements and the decision register are in `.planning/` (local, not committed).
+
+Next, needs the owner's explicit "approved: merge" (merging DEPLOYS harni.uk; Deploy restores the old files if its smoke checks fail):
+1. Squash- or merge-commit PR #4 into `main`; watch the Deploy run.
+2. GET-check live: JSON-LD on a book page, no "Index of" on `/assets/`, `/images/`, `/media/`, `GET /api/message.php` = 405, `main` = `origin/main`.
+3. Delete `golive/2026-11` and `gsd/phase-1-release-alignment` only after the merge, with approval.
+
+## Previous task: go-live prep, 1 November 2026
+
+Mode: BUILD, local only. Branch `golive/2026-11` (not pushed). No deploy, no server, Cloudflare or GitHub change, mail sending still off.
+
+Done:
+- Scoped security audit (mail endpoint, headers/CSP, third-party links, Privacy/Cookies): no Critical or High. Findings SEC-1 to SEC-4 in `docs/AUDIT.md`.
+- SEO audit of harni.uk: findings SEO-1 to SEO-10 in `docs/AUDIT.md`. Fixed SEO-1 in code: `src/content/schema.ts` (Book + BreadcrumbList on 13 book pages, WebSite on Home, ProfilePage/Person `@id` on About). No ISBN, price or review data is emitted. No site wording changed.
+- Stale line fixed: `docs/05-security/LEGAL-REVIEW.md` now says the 2026-10-17 legal version is live.
+- Security checklist pass (owner's 19 items, `docs/AUDIT.md`): directory listing off for `/assets/`, `/images/`, `/media/` (live showed "Index of"); email addresses with quotes or IP literals refused; npm audit High (vite) fixed, patch and minor updates applied, unused Fraunces package removed; Actions pinned to SHAs; `/play/` brand label fixed (found by the axe update). Auth, admin, database and password items are N/A: none exist.
+
+Evidence, 1 Nov 2026: `npm run verify` PASS; typecheck PASS; 65 unit PASS (5 new in `tests/unit/schema.test.ts`, seen failing first); 173 browser PASS (new `tests/e2e/hardening.spec.ts`, seen failing first); `npm run test:mail` PASS, 36 checks (new address checks seen failing first), no real mail. Live (GET only): no security headers, NEL still on, no cookies set, lab LCP 436–564 ms and CLS 0. NOT TESTED: field CWV, Rich Results Test on live (needs a deploy).
+
+Gap: the release report (`../reports/harni/docs/09-release/RELEASE-REPORT.md`) is not on this Mac; it was written on the old Linux machine. The NO-GO gates below are the copy kept in this file.
+
+Next (owner): answer the NO-GO items below, the copy changes in the SEO audit, paperback ISBN-13s (SEO-2), the Amazonbot decision (SEO-4), approve the Cloudflare rule (security headers plus removing `X-Powered-By` and `X-Turbo-Charged-By`), then approve merge, push and deploy. After the deploy, check that `/assets/` returns 403.
+
 ## Latest task: consolidate and deploy, 22 October 2026
 
 Mode: BUILD. Branch `rebrand/gee-os-cpanel-20261017` merged into `main` (1f0983e, `--no-ff`), pushed, branch deleted locally and on origin. Backup bundle: `~/repo-backups/harni-2026-10-22-1157/` (Mac).

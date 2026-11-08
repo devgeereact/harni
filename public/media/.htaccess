@@ -1,0 +1,3 @@
+# Static files only. The host lists a folder without an index page, so turn that off here
+# (covers sub-folders). The root .htaccess belongs to the host and is never shipped.
+Options -Indexes

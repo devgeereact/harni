@@ -1,3 +1,9 @@
+## 2026-11-01, go-live prep (branch `golive/2026-11`, not deployed)
+
+- Structured data: `Book` and `BreadcrumbList` on all 13 book pages, `WebSite` on Home, About is now a `ProfilePage` whose `Person` has the stable id `https://harni.uk/about/#person` (`src/content/schema.ts`, `tests/unit/schema.test.ts`). No ISBN, price or review data is emitted: none is supplied or shown.
+- Security checklist pass (`docs/AUDIT.md`): directory listing turned off for `/assets/`, `/images/` and `/media/` (`.htaccess` per folder, build test and release guard); the mail form refuses quoted and IP-literal email addresses; vite 7.3.7 (fixes a High dev-server advisory), react 19.3.1, parse5 8.1.0, axe-core 4.14; unused `@fontsource-variable/fraunces` removed; GitHub Actions pinned to commit SHAs and the deploy checkout no longer keeps credentials; `/play/` brand link name now matches its visible text.
+- Scoped security audit and full SEO audit recorded in `docs/AUDIT.md`. No Critical or High security findings; no wording on the site changed.
+
 ## 2026-10-17, GEE OS 1.4.5 cPanel restructure (local, not deployed)
 
 ## 2026-10-30

@@ -24,6 +24,11 @@ step needs owner approval in that session. Full layout: `backend/README.md`.
    `Allow: POST`, a valid POST returns the 503 "not available yet" JSON while sending is off, and
    `/api/.htaccess` and any other `/api/*.php` return 403.
 
+Folder listing: the host lists any folder without an index page. `dist/assets/`, `dist/images/` and
+`dist/media/` each ship a `.htaccess` with `Options -Indexes` (from `public/`). `release.json` refuses
+a build without them, and `tests/e2e/hardening.spec.ts` fails if a new built folder lacks one. After
+the next deploy, check that `https://harni.uk/assets/` returns 403 instead of "Index of /assets/".
+
 Security headers are set on Cloudflare, not in this repo (ADR-029). Steps, verification and
 rollback: `SECURITY-HEADERS.md`. They are an external change and need the same owner approval.
 

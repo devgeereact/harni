@@ -1,6 +1,6 @@
 # Legal and mail launch review
 
-Status: PARTIAL. Rewritten on 1 October 2026 (ADR-025) and updated on 17 October 2026 (ADR-027). No solicitor review and no live email test has taken place. The 2026-10-01 version is live (deployed 2 October 2026); the 2026-10-17 version is in the repository only.
+Status: PARTIAL. Rewritten on 1 October 2026 (ADR-025) and updated on 17 October 2026 (ADR-027). No solicitor review and no live email test has taken place. The 2026-10-17 version is live (deployed 22 October 2026, commit 1f0983e).
 
 ## 17 October 2026 audit
 
@@ -18,7 +18,7 @@ The full report and the owner questions sit in `../reports/harni/qa/reports/`, o
 
 | ID | P | Issue | Status | Next action and owner |
 |---|---|---|---|---|
-| PL-01 | P1 | No data protection complaints process (DPA 2018 s164A, in force 19 June 2026) | Fixed in repo: Privacy `#complaints` and `docs/07-operations/DATA-REQUESTS.md`. Not deployed | Owner: postal route once an address exists; name a backup person for the 30-day acknowledgement |
+| PL-01 | P1 | No data protection complaints process (DPA 2018 s164A, in force 19 June 2026) | Fixed in repo: Privacy `#complaints` and `docs/07-operations/DATA-REQUESTS.md`. Deployed 22 October 2026 | Owner: postal route once an address exists; name a backup person for the 30-day acknowledgement |
 | PL-02 | P2 | Cloudflare Network Error Logging not disclosed | Disclosed in repo. Decided: switch NEL off (ADR-029) | Owner approves the Cloudflare change, then remove the disclosure and bump the notice version |
 | PL-03 | P2 | Postal address and ICO fee status missing | Open | Owner (Harni Muharami) |
 | PL-04 | P2 | No HSTS, CSP, Referrer-Policy or Permissions-Policy on the live site | Decided: set on Cloudflare, values in `docs/07-operations/SECURITY-HEADERS.md`, CSP Report-Only first | Owner approves the Cloudflare change |

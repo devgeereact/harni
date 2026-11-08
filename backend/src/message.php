@@ -24,7 +24,9 @@ function prepareMessage(array $input): array
         throw new InvalidArgumentException('Unable to accept this request.');
     }
     $email = trim($input['email'] ?? '');
-    if (strlen($email) > 254 || preg_match('/[\r\n\x00]/', $email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    // FILTER_VALIDATE_EMAIL also accepts quoted local parts and IP literals, which no reader needs
+    // and which mail software may parse differently, so the characters they rely on are refused.
+    if (strlen($email) > 254 || preg_match('/[\r\n\x00"\[\]\\\\(),;:<>\s]/', $email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new InvalidArgumentException('Enter a valid email address.');
     }
     $name = trim($input['name'] ?? '');
