@@ -2,6 +2,18 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 5: Cloudflare headers applied, CSP report-only check
+
+| Check | Result | Evidence |
+|---|---|---|
+| HSTS | DONE | `strict-transport-security: max-age=31536000` on `/`, `www`, `/play/` and `/api/message.php` (curl) |
+| Header rule | DONE | `referrer-policy`, `permissions-policy`, `x-content-type-options`, `x-frame-options` and `content-security-policy-report-only` present on all four; `x-turbo-charged-by` and `x-powered-by` absent; rule id `e7dc581e73d6485caf18bbf8b09d6280` |
+| NEL off, minimum TLS 1.2 | DONE | Settings API responses; no `nel` or `report-to` header in curl |
+| CSP report-only, Chromium | No violations from the site's own pages | Playwright visited all 25 sitemap pages plus `/play/` (start, jump) and `/contact/`; the only messages were the "upgrade-insecure-requests is ignored in report-only" notice (expected) |
+| CSP, Firefox and Safari | NOT TESTED | Owner: open the pages with the console open; enforce only after a clean pass |
+| Unknown path | Finding | The host answers with its own generic "404 Not Found" page (inline styles), not the built `404.html`. Under an enforced CSP that generic page would lose its inline styles (cosmetic only). Fix is an `ErrorDocument 404 /404.html` line in the root `.htaccess`, which this repo does not own (KNOWN-ISSUES row 10) |
+| Host facts | Recorded | `apps/harni/current` is a symlink to `releases/20261022-1224`; CLI PHP 8.4.27 (web PHP not read); no mail environment set; no `shared/mail-state` yet |
+
 ## 8 Nov 2026 · Phase 5 start: host cleanup and Cloudflare read-only
 
 | Check | Result | Evidence |

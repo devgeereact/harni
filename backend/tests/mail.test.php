@@ -79,3 +79,17 @@ try {
     file_put_contents($dir . '/mail-rate.json', json_encode($entries));
     check(allowRequest($dir, $key, '127.0.0.1', 'reader@example.org'), 'expired limits pruned');
 } finally { unlink($dir . '/mail-rate.json'); rmdir($dir); }
+// Private settings file outside the web root: read for the three mail names only, never overriding the real environment.
+$settings = sys_get_temp_dir() . '/harni-settings-' . bin2hex(random_bytes(4)) . '.conf';
+try {
+    putenv('HARNI_MAIL_STATE_DIR=/already/set');
+    putenv('HARNI_MAIL_ENABLED');
+    putenv('HARNI_MAIL_RATE_KEY');
+    putenv('SOMETHING_ELSE');
+    file_put_contents($settings, "# comment\nHARNI_MAIL_ENABLED=1\nHARNI_MAIL_STATE_DIR=/from/file\nHARNI_MAIL_RATE_KEY=\"abc def\"\nSOMETHING_ELSE=bad\nnot a line\n");
+    check(loadMailSettings($settings) === 2, 'settings file sets the two names that were missing');
+    check(getenv('HARNI_MAIL_ENABLED') === '1' && getenv('HARNI_MAIL_RATE_KEY') === 'abc def', 'values are read, quotes removed');
+    check(getenv('HARNI_MAIL_STATE_DIR') === '/already/set', 'an existing environment value is never overridden');
+    check(getenv('SOMETHING_ELSE') === false, 'names outside the mail list are ignored');
+    check(loadMailSettings($settings . '.missing') === 0, 'a missing settings file is not an error');
+} finally { @unlink($settings); putenv('HARNI_MAIL_ENABLED'); putenv('HARNI_MAIL_STATE_DIR'); putenv('HARNI_MAIL_RATE_KEY'); }

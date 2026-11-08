@@ -11,9 +11,29 @@ function respond(int $status, array $body): never
     exit;
 }
 
-/** Handles one request and always ends it with a JSON response. */
-function handleMessageRequest(): void
+/**
+ * Reads the three mail settings from a private file outside the web root (KEY=value lines) for
+ * hosts where server environment variables cannot be set. A value already in the environment wins.
+ * Only the three mail names are read; anything else in the file is ignored. Returns how many were set.
+ */
+function loadMailSettings(string $file): int
 {
+    $lines = is_file($file) && is_readable($file) ? file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : false;
+    if ($lines === false) return 0;
+    $set = 0;
+    foreach ($lines as $line) {
+        if (preg_match('/^\s*(HARNI_MAIL_ENABLED|HARNI_MAIL_STATE_DIR|HARNI_MAIL_RATE_KEY)\s*=\s*(.*?)\s*$/D', $line, $m) !== 1) continue;
+        if (getenv($m[1]) !== false) continue;
+        putenv($m[1] . '=' . trim($m[2], "\"'"));
+        $set++;
+    }
+    return $set;
+}
+
+/** Handles one request and always ends it with a JSON response. */
+function handleMessageRequest(?string $settingsFile = null): void
+{
+    if ($settingsFile !== null) loadMailSettings($settingsFile);
     // Do not advertise the PHP version when the host has expose_php enabled.
     header_remove('X-Powered-By');
     header('Content-Type: application/json; charset=utf-8');

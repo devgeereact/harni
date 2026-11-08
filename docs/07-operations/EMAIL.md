@@ -54,7 +54,7 @@ The built `dist/api/message.php` must be executed by PHP. Since ADR-028 it is on
 
 1. Obtain deployment approval separately. Confirm exact host/account/domain and PHP execution, mail transport availability, both mailbox addresses, sending limits, SPF/DKIM/DMARC and envelope-sender alignment.
 2. Resolve `docs/05-security/LEGAL-REVIEW.md`, including provider details and the manual subscription operating process.
-3. Configure server-side environment variables, never client-side `VITE_` variables:
+3. Configure the settings server-side, never in client-side `VITE_` variables. On this host no environment mechanism is set up, so they live in the private file `~/apps/harni/shared/mail.conf` (mode 600, outside the web root; `KEY=value` lines; read by `loadMailSettings`). Real environment variables, where a host has them, take precedence:
    - `HARNI_MAIL_ENABLED=1` only after readiness checks.
    - `HARNI_MAIL_STATE_DIR`: an existing private directory outside the document root, writable only by the application account. Suggested permissions 0700.
    - `HARNI_MAIL_RATE_KEY`: a random secret of at least 32 characters, generated and installed by the operator. Never commit or paste it into chat.
