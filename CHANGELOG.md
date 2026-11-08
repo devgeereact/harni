@@ -1,6 +1,7 @@
 ## 2026-11-08, Phase 2 docs and standards alignment (local branch `gsd/phase-2-docs-alignment`, not pushed, not deployed)
 
 - Plan 02-01: `.node-version` (24.21.0) and `npm run check` (typecheck, unit tests, PHP lint). New drift-guard test `tests/unit/project-standards.test.ts` keeps the Node pin equal across `mise.toml`, `.node-version`, both workflows, `engines` and `scripts/lib/runtime.ts`, and keeps `check` equal to the PHP lint in `release.json`. ADR-030 records npm kept, pnpm and Biome deferred.
+- Plan 02-02: `backend/README.md` and `docs/07-operations/DEPLOYMENT.md` now describe what `release.json` does (rsync `backend/src` into `~/apps/harni/current/src`, `dist` into `~/harni.uk`, snapshot to `~/backups/harni/releases/<utc>`, newest 3 kept, 3 smoke checks, automatic restore). DEPLOYMENT.md has a rollback procedure (automatic, or `npm run release -- --rollback --go`) and a list of what does not deploy, taken from `deploy.yml` `paths-ignore`. ADR-031 records the GitHub Actions deploy on push to `main` as an approved exception. Current-method mentions of `cpanel-deploy` were replaced in ARCHITECTURE, INTEGRATIONS, PROJECT-CONTEXT, PROJECT-MEMORY (CD-04), LAUNCH-CHECKLIST and `.agent/PROJECT.yml`; dated history was left as written. No code changed, not deployed.
 
 ## 2026-11-01, go-live prep (branch `golive/2026-11`; deployed 2026-11-08 through PR #4)
 

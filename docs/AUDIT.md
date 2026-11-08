@@ -9,6 +9,11 @@ Local only. Nothing pushed or deployed. Each plan appends a row.
 | Plan | Check | Result | Evidence |
 |---|---|---|---|
 | 02-01 | Drift guard for the Node pin and the `check` script, written first | RED then GREEN | RED: 6 of 6 failed (`.node-version` ENOENT, no `check` script). GREEN: 6 of 6 pass after `.node-version` and `scripts.check`. `npm run check` exit 0. `npm test`: 71 pass (65 existing + 6 new). `npm run typecheck` exit 0 |
+| 02-02 | Deploy and backend notes read against the sources | DONE | Read `release.json` (parts, build guard, 3 smoke checks), `.github/workflows/deploy.yml` (`paths-ignore`: `docs/**`, `**/*.md`, `.agent/**`; secrets named `CPANEL_SSH_KEY`, `CPANEL_KNOWN_HOSTS`) and the header and `restore` function of `scripts/release.mjs`. Values were copied from those files. No SSH host, user or port written in any document |
+| 02-02 | Task 1 verify greps | DONE | `apps/harni/current/src` present in `backend/README.md`; `--rollback --go` present in `DEPLOYMENT.md`; no `apps/harni/releases` in `backend/README.md`; no host or port strings in either file; `UNKNOWN` present in `backend/README.md` |
+| 02-02 | Task 2 verify greps | DONE | `ADR-031` in `DECISIONS.md` and `DEPLOYMENT.md`; no `cpanel-deploy` left in `.agent/PROJECT.yml`, ARCHITECTURE, INTEGRATIONS, PROJECT-CONTEXT or LAUNCH-CHECKLIST (remaining mentions are dated history); `python3 scripts/verify.py` all PASS |
+| 02-02 | Manual rollback (`--rollback --go`) and the Actions rollback path | NOT TESTED | Needs SSH to the host. Only the code of the automatic restore was read. ADR-031 records the exception (decision, not a test) |
+| 02-02 | Is `~/apps/harni/current` a symlink on the host | UNKNOWN | Owner to confirm with one directory listing of `~/apps/harni/` on the host; record the answer in `backend/README.md` |
 
 ## 1 Nov 2026 · Security checklist pass (owner's 19-item list), branch `golive/2026-11`
 
