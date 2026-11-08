@@ -2,6 +2,18 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Mail enabled and tested
+
+| Check | Result | Evidence |
+|---|---|---|
+| Settings on host | DONE | `mail.conf` mode 600 and `mail-state` mode 700 (listing); key generated on the host, 48 hex characters, never displayed |
+| Endpoint after deploy | DONE | PR 11 deploy green; `GET /api/message.php` 405 |
+| Contact test, second send | PARTIAL | HTTP 200, `{"ok":true,"copyAccepted":true}`: the host mail transport accepted both messages |
+| Delivery to the inbox | NOT TESTED | Owner to confirm two test messages and two receipts in `info@harni.uk` |
+| Sign-up test | NOT TESTED | `subscribe@harni.uk` not confirmed live |
+| SPF, DKIM, DMARC | Present | `dig`: SPF includes the host ranges, DKIM `default._domainkey`, DMARC `p=quarantine` |
+| Real client IP behind Cloudflare | NOT TESTED | Per-IP limit may see Cloudflare addresses (`endpoint.php` comment) |
+
 ## 8 Nov 2026 · Phase 5: Cloudflare headers applied, CSP report-only check
 
 | Check | Result | Evidence |

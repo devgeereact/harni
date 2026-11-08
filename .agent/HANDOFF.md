@@ -1,5 +1,8 @@
 # Handoff
 
+## 2026-11-08: Headers live, mail sending on
+Cloudflare headers applied (CSP report-only). Mail enabled via private `mail.conf`; two test sends returned 200; inbox check and the sign-up test are owner steps. Details: `.agent/CURRENT-TASK.md`.
+
 ## 2026-11-08: Phase 5 reads done, changes await approval
 `/thanks/` removed from the host (backed up), `chore/add-gsap-lenis` deleted (commit `e139600`). Cloudflare read-only: HSTS off, no header rules, NEL on, min TLS 1.0. Four exact changes proposed in `.agent/CURRENT-TASK.md`; none applied.
 
