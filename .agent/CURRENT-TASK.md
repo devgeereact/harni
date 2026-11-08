@@ -1,4 +1,19 @@
-## Latest task: go-live prep, 1 November 2026
+## Latest task: Phase 1 release alignment, local readiness, 8 November 2026
+
+Mode: BUILD, local only. Branch `gsd/phase-1-release-alignment` (from `golive/2026-11`, 2 commits ahead of `origin/main`; `origin/main` fetched and unmoved). Nothing pushed, merged or deployed.
+
+Done (no code changed, so no new logic and no new tests were needed):
+- `npm run verify` PASS (checks, build, upload guard). 65 unit PASS. `npm run test:mail` PASS (PHP checks plus HTTP capture, no real mail). `npm run test:browser` 173 PASS.
+- Merge of this branch into `origin/main` is conflict-free (22 files, dry run).
+- Roadmap, requirements and the decision register are in `.planning/` (local, not committed): `ROADMAP.md`, `REQUIREMENTS.md`, `QUESTIONS.md`, `DIRECTION.md`.
+
+Next, each needs the owner's explicit "approved:":
+1. Push the branch (CI runs the tests; Deploy runs only on `main`).
+2. Open the PR with `gh`; consider protecting `main` with required checks first (`.planning/QUESTIONS.md` A1). `main` is NOT protected today and pushing it deploys.
+3. Merge, watch the Deploy run, then GET-check live: JSON-LD on a book page, no "Index of" on `/assets/`, `/images/`, `/media/`, `GET /api/message.php` = 405.
+4. Delete `golive/2026-11` only after the merge, with approval.
+
+## Previous task: go-live prep, 1 November 2026
 
 Mode: BUILD, local only. Branch `golive/2026-11` (not pushed). No deploy, no server, Cloudflare or GitHub change, mail sending still off.
 
