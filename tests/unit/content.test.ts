@@ -59,3 +59,19 @@ test('every book has a read-reviews link and a write-a-review link on Amazon.co.
     assert.equal(write, `https://www.amazon.co.uk/review/create-review?ie=UTF8&asin=${asin}`);
   }
 });
+
+test("home hero: only the centre cover asks for high priority", async () => {
+  const { home } = await import("../../src/content/pages.ts");
+  const body = home().body;
+  const heroImages = [...body.matchAll(/<span class="cover cover--fan cover--fan-([lrc])[^"]*"><img[^>]*>/g)];
+  assert.equal(heroImages.length, 3, "three fanned covers");
+  const high = heroImages.filter((m) => /fetchpriority="high"/.test(m[0])).map((m) => m[1]);
+  assert.deepEqual(high, ["c"]);
+});
+
+test("home hero covers state their size in px or vw, not rem, so the preload and the image pick the same file", async () => {
+  const { home } = await import("../../src/content/pages.ts");
+  const sizes = [...home().body.matchAll(/<span class="cover cover--fan[^"]*"><img[^>]*sizes="([^"]*)"/g)].map((m) => m[1] ?? "");
+  assert.equal(sizes.length, 3);
+  for (const value of sizes) assert.doesNotMatch(value, /rem|em\b/, `sizes="${value}"`);
+});

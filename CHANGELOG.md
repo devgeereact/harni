@@ -1,3 +1,7 @@
+## 2026-11-08, home hero cover preload warnings
+
+- Owner saw two Chrome console warnings on the home page (side covers preloaded but not used). Not reproduced in Chromium at nine window sizes and densities. Most likely cause: the hero covers gave `sizes` in `rem` at a width (12rem, 384 px at 2x) one step under the 400 px file, so the preload and the image can choose different files when the browser's font size differs. The hero covers now give `sizes` in px and vw, and only the centre cover asks for high priority. Two tests (seen failing first). Not confirmed on the owner's browser: reload and check the console.
+
 ## 2026-11-08, CSP enforced
 
 - The Cloudflare rule now sends `Content-Security-Policy` instead of `-Report-Only` after 0 violations in Chromium and WebKit on all 26 pages. Firefox not tested. Rollback: rename the header back in the rule.

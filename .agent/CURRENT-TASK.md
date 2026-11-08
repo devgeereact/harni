@@ -1,3 +1,7 @@
+## Latest task: home hero preload warnings, 8 November 2026
+
+Owner's Chrome console showed two "preloaded but not used" warnings (honest-truth-400, your-next-step-400). Not reproducible here. Fix: hero cover `sizes` in px and vw (not rem) and high priority on the centre cover only; two tests first. NOT CONFIRMED on the owner's browser: reload after deploy and check the console.
+
 ## Latest task: CSP enforced, 8 November 2026
 
 Installed Playwright Firefox and WebKit (same cache as Chromium). Chromium and WebKit: 0 CSP violations on 26 pages; Firefox would not launch (NOT TESTED). Header renamed to enforcing on Cloudflare; live checks pass. Owner: open the site in Firefox with the console open. If anything is blocked, rename the header back in the rule.
