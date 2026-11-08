@@ -1,17 +1,19 @@
 ## Latest task: Phase 1 release alignment, local readiness, 8 November 2026
 
-Mode: BUILD, local only. Branch `gsd/phase-1-release-alignment` (from `golive/2026-11`, 2 commits ahead of `origin/main`; `origin/main` fetched and unmoved). Nothing pushed, merged or deployed.
+Mode: BUILD. Branch `gsd/phase-1-release-alignment` (from `golive/2026-11`, 2 feature commits ahead of `origin/main`) is pushed. PR #4 is open and CLEAN; `main` is now protected. Nothing is merged or deployed.
 
 Done (no code changed, so no new logic and no new tests were needed):
-- `npm run verify` PASS (checks, build, upload guard). 65 unit PASS. `npm run test:mail` PASS (PHP checks plus HTTP capture, no real mail). `npm run test:browser` 173 PASS.
-- Merge of this branch into `origin/main` is conflict-free (22 files, dry run).
-- Roadmap, requirements and the decision register are in `.planning/` (local, not committed): `ROADMAP.md`, `REQUIREMENTS.md`, `QUESTIONS.md`, `DIRECTION.md`.
+- Local: `npm run verify` PASS. 65 unit PASS. `npm run test:mail` PASS. `npm run test:browser` 173 PASS. Dry-run merge into `origin/main`: conflict-free.
+- Owner approved on 2026-11-08: push the branch, open PR #4 (https://github.com/devgeereact/harni/pull/4), protect `main`. Owner said NOT yet to merge.
+- CI on the branch and on the PR: Portability PASS (web ubuntu, web macOS, php-local-capture). Deploy did not run (it runs only on `main`).
+- `main` protection: PR required (0 approvals), required checks `web (ubuntu-latest)`, `web (macos-latest)`, `php-local-capture`, no force-push, no deletion, applies to admins. Emergency change: edit the protection in GitHub settings first.
+- Lesson: never write the literal text `[skip ci]` in a commit body unless you want CI skipped; GitHub reads it anywhere in the message.
+- Roadmap, requirements and the decision register are in `.planning/` (local, not committed).
 
-Next, each needs the owner's explicit "approved:":
-1. Push the branch (CI runs the tests; Deploy runs only on `main`).
-2. Open the PR with `gh`; consider protecting `main` with required checks first (`.planning/QUESTIONS.md` A1). `main` is NOT protected today and pushing it deploys.
-3. Merge, watch the Deploy run, then GET-check live: JSON-LD on a book page, no "Index of" on `/assets/`, `/images/`, `/media/`, `GET /api/message.php` = 405.
-4. Delete `golive/2026-11` only after the merge, with approval.
+Next, needs the owner's explicit "approved: merge" (merging DEPLOYS harni.uk; Deploy restores the old files if its smoke checks fail):
+1. Squash- or merge-commit PR #4 into `main`; watch the Deploy run.
+2. GET-check live: JSON-LD on a book page, no "Index of" on `/assets/`, `/images/`, `/media/`, `GET /api/message.php` = 405, `main` = `origin/main`.
+3. Delete `golive/2026-11` and `gsd/phase-1-release-alignment` only after the merge, with approval.
 
 ## Previous task: go-live prep, 1 November 2026
 
