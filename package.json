@@ -13,6 +13,7 @@
     "dev:mail": "node scripts/mail.mjs",
     "test:mail": "php backend/tests/mail.test.php && python3 backend/tests/mail-http.py",
     "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && for f in $(find backend -name '*.php'); do php -l \"$f\" >/dev/null || exit 1; done",
     "test": "node --import tsx --test tests/unit/*.test.ts",
     "media": "node scripts/build-media.mjs",
     "setup": "node scripts/setup.mjs",
