@@ -1,5 +1,8 @@
 # Handoff
 
+## 2026-11-08: Phase 5 reads done, changes await approval
+`/thanks/` removed from the host (backed up), `chore/add-gsap-lenis` deleted (commit `e139600`). Cloudflare read-only: HSTS off, no header rules, NEL on, min TLS 1.0. Four exact changes proposed in `.agent/CURRENT-TASK.md`; none applied.
+
 ## 2026-11-08: Phases 1 to 4 merged and deployed
 PRs 5 to 8 merged; three Deploy runs green. Stale `/thanks/` page still served from the host (release does not delete removed files): needs owner approval to remove. Next: Phase 5 (owner-gated). Details: `.agent/CURRENT-TASK.md`.
 
