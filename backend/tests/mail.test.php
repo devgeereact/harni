@@ -15,8 +15,8 @@ check(str_contains($prepared['ownerHtml'], '<h1') && str_contains($prepared['own
 $evil = prepareMessage(array_replace($contact, ['name' => 'A <b>B</b>', 'message' => '<script>alert(1)</script>']));
 check(!str_contains($evil['ownerHtml'], '<script>') && str_contains($evil['ownerHtml'], '&lt;script&gt;') && !str_contains($evil['copyHtml'], 'script') && !str_contains($evil['copyHtml'], '<b>'), 'visitor text is escaped for the owner and absent from the copy');
 $subscription = prepareMessage(['kind' => 'subscribe', 'email' => 'reader@example.org', 'consent' => true]);
-check($subscription['to'] === 'subscribe@harni.uk' && str_starts_with($subscription['visitorSubject'], 'You joined the mailing list: your copy [HM-') && str_contains($subscription['copy'], 'Thank you for joining my mailing list!') && !str_contains($subscription['copy'], 'CONFIRM'), 'subscription recipient and welcome');
-check(str_contains($subscription['copy'], 'Reference: ' . $subscription['reference']) && str_contains($subscription['copy'], 'Your email: reader@example.org') && str_contains($subscription['copy'], 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.') && str_contains($subscription['copy'], 'Unsubscribe') && str_contains($subscription['copy'], 'subscribe@harni.uk'), 'subscriber gets a copy of what they signed up to, with how to leave');
+check($subscription['to'] === 'info@harni.uk' && str_starts_with($subscription['visitorSubject'], 'You joined the mailing list: your copy [HM-') && str_contains($subscription['copy'], 'Thank you for joining my mailing list!') && !str_contains($subscription['copy'], 'CONFIRM'), 'subscription recipient and welcome');
+check(str_contains($subscription['copy'], 'Reference: ' . $subscription['reference']) && str_contains($subscription['copy'], 'Your email: reader@example.org') && str_contains($subscription['copy'], 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.') && str_contains($subscription['copy'], 'Unsubscribe') && str_contains($subscription['copy'], 'info@harni.uk'), 'subscriber gets a copy of what they signed up to, with how to leave');
 check(str_contains($subscription['owner'], 'Consent given on sign-up') && str_contains($subscription['owner'], 'Email: reader@example.org') && str_contains($subscription['owner'], 'Wording version'), 'owner receives the consent record without a confirmation step');
 foreach ([['email' => "a@example.org\r\nBcc: victim@example.org"], ['name' => "Name\nInjected"], ['subject' => "Subject\rInjected"], ['website' => 'spam'], ['message' => ''], ['email' => ['invalid']], ['message' => str_repeat('x', 40001)], ['kind' => 'other']] as $bad) {
     try { prepareMessage(array_replace($contact, $bad)); throw new RuntimeException('Invalid input accepted'); }
@@ -58,7 +58,7 @@ check(str_starts_with($calls[1][3]['Content-Type'], 'multipart/alternative; boun
 $sub = prepareMessage(['kind' => 'subscribe', 'email' => 'reader@example.org', 'consent' => true]);
 $subCalls = [];
 deliverMessage($sub, function(...$args) use (&$subCalls) { $subCalls[] = $args; return true; });
-check(!isset($subCalls[0][3]['List-Unsubscribe']) && ($subCalls[1][3]['List-Unsubscribe'] ?? '') === '<mailto:subscribe@harni.uk?subject=Unsubscribe>', 'visitor copy of a sign-up carries List-Unsubscribe');
+check(!isset($subCalls[0][3]['List-Unsubscribe']) && ($subCalls[1][3]['List-Unsubscribe'] ?? '') === '<mailto:info@harni.uk?subject=Unsubscribe>', 'visitor copy of a sign-up carries List-Unsubscribe');
 $count = 0;
 $result = deliverMessage($prepared, function() use (&$count) { return ++$count === 1; });
 check($result['ok'] && !$result['copyAccepted'], 'copy failure preserves accepted owner status');

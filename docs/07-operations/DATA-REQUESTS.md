@@ -2,12 +2,12 @@
 
 Status: written 17 October 2026 from the code and the Privacy notice (Version 2026-10-17). Not legal advice. A UK solicitor should confirm it with the legal pages (`docs/05-security/LEGAL-REVIEW.md`).
 
-harni.uk has no accounts and no database. Personal information lives in two places the owner controls: the `info@harni.uk` mailbox (contact enquiries, rights requests, complaints) and the `subscribe@harni.uk` mailbox (sign-up records, unsubscribe requests, the do-not-email list). Rate-limit counters on the host hold keyed hashes only and expire within an hour. Every request below is therefore handled by hand in those mailboxes.
+harni.uk has no accounts and no database. Personal information lives in two places the owner controls: the `info@harni.uk` mailbox (contact enquiries, rights requests, complaints) and the `info@harni.uk` mailbox (sign-up records, unsubscribe requests, the do-not-email list). Rate-limit counters on the host hold keyed hashes only and expire within an hour. Every request below is therefore handled by hand in those mailboxes.
 
 ## How people reach you
 
 - Rights requests and data protection complaints: the contact form or an email to `info@harni.uk`. The Privacy notice asks for the subject "Data protection complaint" for complaints. Treat a request as valid whatever words or channel are used, including a reply to any harni.uk email.
-- Unsubscribe: a reply with "Unsubscribe", an email to `subscribe@harni.uk`, or the `List-Unsubscribe` mailto link in the sign-up copy.
+- Unsubscribe: a reply with "Unsubscribe", an email to `info@harni.uk`, or the `List-Unsubscribe` mailto link in the sign-up copy.
 - Postal route: NOT AVAILABLE until the owner supplies a correspondence address (owner item). Section 164A of the Data Protection Act 2018 asks controllers to accept complaints electronically "and by other means".
 
 ## Keep a request log
@@ -41,7 +41,7 @@ Arrange cover for holidays and illness. The 30-day complaint acknowledgement sti
 The site cannot delete mail for you. Once a month:
 
 1. In `info@harni.uk`, delete enquiries where the last message is over 12 months old, unless a complaint or legal claim is open. Empty trash.
-2. In `subscribe@harni.uk`, delete sign-up records of people who unsubscribed over 12 months ago. Keep only the address on the do-not-email list.
+2. In `info@harni.uk`, delete sign-up records of people who unsubscribed over 12 months ago. Keep only the address on the do-not-email list.
 3. Check the request log for rows due for deletion.
 4. Note the date of the sweep in the log.
 

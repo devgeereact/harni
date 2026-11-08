@@ -23,7 +23,7 @@ Header: `Content-Type: application/json` (the part before any `;`, lower-cased, 
 | `consent` | Not used | Must be boolean `true` |
 | `website` | Honeypot. Must be absent or empty after trimming, otherwise the request is refused | Same |
 
-Any of `email`, `name`, `subject`, `message`, `website` that is present but not a string is refused. Lengths are measured in bytes (`strlen`). Recipients are fixed on the server and cannot be set by the payload: `contact` goes to `info@harni.uk`, `subscribe` to `subscribe@harni.uk`. The owner mail is sent first with the visitor as Reply-To; then a copy is sent to the visitor's address.
+Any of `email`, `name`, `subject`, `message`, `website` that is present but not a string is refused. Lengths are measured in bytes (`strlen`). Recipients are fixed on the server and cannot be set by the payload: `contact` goes to `info@harni.uk`, `subscribe` to `info@harni.uk`. The owner mail is sent first with the visitor as Reply-To; then a copy is sent to the visitor's address.
 
 ## Success body
 

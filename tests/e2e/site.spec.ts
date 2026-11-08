@@ -102,7 +102,7 @@ test("static book and contact content remain available without JavaScript", asyn
     ).toBeVisible();
     await page.goto("/join/");
     await expect(
-      page.locator('noscript a[href="mailto:subscribe@harni.uk"]'),
+      page.locator('noscript a[href="mailto:info@harni.uk"]'),
     ).toBeVisible();
   } finally {
     await context.close();

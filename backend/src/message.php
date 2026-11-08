@@ -46,7 +46,7 @@ function prepareMessage(array $input): array
     }
     $now = time();
     $reference = 'HM-' . gmdate('Ymd', $now) . '-' . strtoupper(bin2hex(random_bytes(6)));
-    $to = $kind === 'contact' ? 'info@harni.uk' : 'subscribe@harni.uk';
+    $to = 'info@harni.uk'; // One mailbox for contact and sign-ups; the subject tells them apart.
     $when = formatWhen($now);
     $footer = [
         'Sent by harni.uk for Harni Muharami, an author based in London. Contact: ' . $to . '.',
@@ -117,7 +117,7 @@ function prepareMessage(array $input): array
                 ['heading' => 'What to do', 'lines' => [
                     'Add this address to your mailing list, using this email as the consent record.',
                     'The subscriber has been sent a copy of their sign-up, with how to unsubscribe.',
-                    'Honour any unsubscribe request (an email to subscribe@harni.uk) before the next mailing, and keep the address on a do-not-email list so it is not added again by mistake.',
+                    'Honour any unsubscribe request (an email to info@harni.uk) before the next mailing, and keep the address on a do-not-email list so it is not added again by mistake.',
                     'Only send what they signed up for: news about new books.',
                 ]],
             ],
@@ -135,9 +135,9 @@ function prepareMessage(array $input): array
                     'Every email will show who it is from and how to leave.',
                 ]],
                 ['heading' => 'How to unsubscribe', 'lines' => [
-                    'Reply to this email with the word Unsubscribe, or email subscribe@harni.uk, at any time.',
+                    'Reply to this email with the word Unsubscribe, or email info@harni.uk, at any time.',
                     'I will remove you before the next mailing and keep only a note that you asked not to be emailed.',
-                    'If you did not sign up, someone may have typed your address by mistake. Email subscribe@harni.uk and I will remove it.',
+                    'If you did not sign up, someone may have typed your address by mistake. Email info@harni.uk and I will remove it.',
                 ]],
             ],
             'footer' => $footer,
