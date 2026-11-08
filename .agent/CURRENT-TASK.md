@@ -10,9 +10,13 @@ Done: plan 02-03 (docs plus one source comment). KNOWN-ISSUES rows 5, 6, 11, 19,
 
 Done: plan 02-04 (docs only). API-SPEC filled from the PHP source (one operation; differences from the plan notes recorded in `docs/AUDIT.md`: no application log line in the exception handler, browser aborts after 20 s). Five specs (AUTH, PWA, SYNC, OFFLINE, UPDATE-STRATEGY) marked N/A with reason, date and owner. Real mail, client IP behind Cloudflare and host PHP stay NOT TESTED. No code changed.
 
+Done: plan 02-05 (docs only). The one changelog entry missing from the root `CHANGELOG.md` was merged in; `docs/07-operations/EMAIL.md` has a "Specification summary" covering the six `EMAIL-SPEC.md` fields (bounce and complaint monitoring UNKNOWN, next check in Phase 5). Comparison recorded in `docs/AUDIT.md`. Nothing deleted.
+
+Next (owner): Approve deleting the two superseded duplicates (git rm, local commit, PR); until then each carries a notice: `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md`.
+
 Next (owner): confirm whether `~/apps/harni/current` is a symlink on the host (one directory listing of `~/apps/harni/`); the answer goes in `backend/README.md` (UNKNOWN until then). Note: merging Phase 2 will trigger one Deploy run, because `package.json`, `.node-version`, `tests/` and a source comment change. The site output is identical; the run is expected and harmless.
 
-Next: plans 02-05 and 02-06 in order (02-05 is next). Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
+Next: plan 02-06. Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
 
 ## Previous task: Phase 1 release alignment, DONE, 8 November 2026
 
