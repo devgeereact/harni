@@ -2,6 +2,17 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Post-merge live check (PRs 5 to 8)
+
+| Check | Result | Evidence |
+|---|---|---|
+| Deploy runs for PR 6, 7, 8 | DONE, all success with smoke checks | GitHub Actions runs 42523532301, 42523654707, 42523810825 |
+| `/`, `/play/` | 200 | curl after the last deploy |
+| `/assets/` | 403 | curl |
+| `GET /api/message.php` | 405 | curl |
+| Unknown path | 404 | curl on `/nonexistent-xyz/` |
+| Removed `/thanks/` | **Still served (200)** | Old `thanks/index.html` remains on the host: the release uploads without deleting. Unlinked, not in the sitemap. Needs owner approval to remove the file or to add pruning to the release |
+
 ## 8 Nov 2026 · Phase 4 workspace hygiene (part 1), branch `gsd/phase-4-workspace-hygiene`
 
 | Check | Result | Evidence |

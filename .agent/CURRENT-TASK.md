@@ -1,12 +1,10 @@
-## Latest task: Phase 4 workspace and repo hygiene, DONE, 8 November 2026
+## Latest task: Phases 1 to 4 merged and deployed, 8 November 2026
 
-Mode: BUILD. Branch `gsd/phase-4-workspace-hygiene` (on top of Phases 1 closeout, 2 and 3). Owner approved the move, the deletion list, the local branch deletions and the pushes ("go ahead approved"). Deploy happens only when the PRs are merged, in order.
+PRs 5 to 8 merged into `main` in order (merge commits; `main` at 4b3828d). The three code-bearing merges (PR 6, 7, 8) each ran Deploy: all green with smoke checks. Live checks after the last one: `/` 200, `/play/` 200, `/assets/` 403, `GET /api/message.php` 405.
 
-Done: `.idea/` untracked and ignored; `docs/IMG_3620.jpeg` moved to `media-source/IMG_3620.jpeg` with `scripts/build-media.mjs` and docs re-pointed (both guards seen failing first); deleted `dist`, `.generated`, `test-results`, `graphify-out`, `scripts/__pycache__` and the root and `docs/` `.DS_Store`; deleted local branches `golive/2026-11` and `gsd/phase-1-release-alignment` (both merged). Kept: `work/`, `node_modules/`, remote `origin/chore/add-gsap-lenis`.
+Found: `https://harni.uk/thanks/` still returns 200 with the old "Thank you for joining" page. The route is gone from the build, but the release rsyncs without delete, so the old `thanks/index.html` stays on the host. It is unlinked and not in the sitemap. Fixing it means removing one file on the server (owner approval) or teaching the release to prune removed pages.
 
-Checks: from the clean tree `npm run build`, `npm run check` (83 unit tests) and `npm run verify` PASS; `build-media.mjs` ran from the new path into a scratch folder (13 files). Browser suite not re-run in Phase 4 (no page output changed).
-
-Open (owner): merge the PRs in order (Phase 1 closeout, 2, 3, 4); decide `origin/chore/add-gsap-lenis` (unmerged commit `e139600`, adds unused `gsap` and `lenis`); delete the two superseded docs (`docs/08-change-management/CHANGELOG.md`, `docs/07-operations/EMAIL-SPEC.md`). Then Phase 5 (owner-gated) and Phase 6.
+Open (owner): approve removing the stale `/thanks/index.html` on the host (or a release change); decide `origin/chore/add-gsap-lenis` (unmerged `e139600`); delete the two superseded docs; Phase 5 (Cloudflare headers, mail test, host checks) and Phase 6 (legal, devices).
 
 ## Previous task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
 
