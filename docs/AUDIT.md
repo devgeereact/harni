@@ -2,6 +2,25 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 3 dead code and CSS cleanup, branch `gsd/phase-3-dead-code-cleanup`
+
+Local only. Nothing pushed or deployed. Built on the unpushed Phase 2 branch.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Guards written first (`tests/unit/dead-code.test.ts`) | RED then GREEN | RED: 6 of 6 failed, each for the stated reason (4 unused exports, `joinLine`, 30 CSS classes, `/thanks/` still routed, endpoint literal, generated-flag comment). GREEN after the removals below |
+| Dead code removed | DONE | `src/lib/parallax.ts` (file, `git rm`, recoverable), `emailButton`, `RUNNER_HEIGHT`, `metresFromUnits`, `site.joinLine`, plus the imports they left unused. `npm run typecheck` PASS |
+| `MailForm.tsx` endpoint | DONE | Posts to `site.formEndpoint`; guard fails on a repeated `/api/message.php` literal |
+| `/thanks/` removed (owner decision, ADR-032) | DONE | Route, `pages.thanks`, build case. Sitemap unchanged (it was already excluded): 25 URLs. Routes now 26 (25 generated) |
+| `generated:false` comment | DONE | Says it applies to `/play/` only, which the page loop skips and the game document builds |
+| 30 unused CSS classes | DONE | 47 rules removed with a postcss script, orphan comments removed, one `:not(.nav-link--cta)` rewritten to `.nav-link` (same effect: no element had the class). Built CSS 45.58 kB to 44.28 kB |
+| 11 classes with a hook name but no rule | KEPT, decision | `band--book`, `band__inner`, `consent__inner`, `consent__text`, `contact-section`, `events-section-head`, `eyebrow--paper`, `foot-mail`, `hero__text`, `legal__sections` are structural hooks with no rule; adding a rule would change the look and removing them changes markup for no gain. `contents` is the Tailwind `display: contents` utility. No change |
+| Before and after screenshots | PASS | 26 routes at 390 and 1440 px, full page, reduced motion, lazy images loaded: 52 of 52 byte-identical. Two earlier runs showed `reviews-390` differing only by a lazy-loaded cover; fixed by scrolling the page first, then re-run on both builds |
+| Bookstore wording in style comments | DONE | Guard first (RED), then comment-only edits in `site.css` and `game.css`; built CSS unchanged. Closes the rest of inconsistency 6 |
+| Gates | PASS | `npm run check`, `npm test` 81 pass, `npm run verify`, `npm run test:mail`, `npm run test:browser` 167 pass (was 173: the removed `/thanks/` route no longer has its page checks) |
+| Docs | DONE | KNOWN-ISSUES row 13 closed, PRODUCT-SPEC FR-009, ARCHITECTURE and README route counts, SECURITY-HEADERS manual list, ACCESSIBILITY, ADR-032 |
+| Not done | | The deploy (one release, smoke-checked) needs the owner's approval to push and merge |
+
 ## 8 Nov 2026 · Phase 2 docs and standards alignment, branch `gsd/phase-2-docs-alignment`
 
 Local only. Nothing pushed or deployed. Each plan appends a row.
@@ -74,8 +93,8 @@ Command: `grep -rniE "bookstore" .` excluding `node_modules`, `dist`, `.git`, `g
 | 3 | Backend README and DEPLOYMENT described `releases/<id>`, a symlink and `cpanel-deploy` | Closed, one fact UNKNOWN | Docs now match `release.json` (rsync `backend/src` into `~/apps/harni/current/src`). Whether `current` is a symlink on the host stays UNKNOWN until the owner confirms |
 | 4 | No pnpm, Biome, `check` script, `.node-version`; `.env.example` names unused; `.idea/` tracked; `docs/IMG_3620.jpeg` | Partly closed | Closed: `.node-version`, `check` script, `.env.example` names, npm kept (ADR-030). Open and owned by Phase 4: tracked `.idea/` and `docs/IMG_3620.jpeg` |
 | 5 | Stale docs: README status, `routes.ts`, KNOWN-ISSUES rows, DATA-MODEL, blank specs, duplicates | Closed (deletions need owner approval) | README (02-06), `routes.ts` and KNOWN-ISSUES and DATA-MODEL (02-03), API-SPEC and five N/A specs (02-04), duplicates compared and merged (02-05). Deleting the two superseded files is pending the owner |
-| 6 | "Bookstore" wording though nothing is sold | Closed except CSS comments | Classification table above. CSS comments in `site.css` and `game.css` belong to Phase 3 |
-| 7 | `MailForm.tsx` hardcodes the endpoint; `generated:false` comment on `/play/`; `npm run pages` rewrites tracked `sitemap.xml` and `llms.txt` | Phase 3 | Not touched. `npm run verify` this time left both tracked generated files unchanged (`git status --short` clean), so there was nothing to restore |
+| 6 | "Bookstore" wording though nothing is sold | Closed (CSS comments fixed in Phase 3) | Classification table above. The `site.css` and `game.css` comments were reworded in Phase 3 behind a guard test |
+| 7 | `MailForm.tsx` hardcodes the endpoint; `generated:false` comment on `/play/`; `npm run pages` rewrites tracked `sitemap.xml` and `llms.txt` | Closed in Phase 3 (the `npm run pages` rewrite part was checked in Phase 2) | `MailForm.tsx` uses `site.formEndpoint`, the comment is fixed. Earlier note: `npm run verify` this time left both tracked generated files unchanged (`git status --short` clean), so there was nothing to restore |
 | 8 | PHP: local 8.5.12, CI 8.4, docs 8.1+, host unknown | Phase 5 | The docs correctly state 8.1+ as the minimum and CI uses 8.4. The host PHP version is an owner fact |
 
 ### Phase 2 done-when evidence (plan 02-06)

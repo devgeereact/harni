@@ -1,3 +1,11 @@
+## 2026-11-08, Phase 3 dead code and CSS cleanup (local branch `gsd/phase-3-dead-code-cleanup`, not pushed, not deployed)
+
+- Removed unused code: `src/lib/parallax.ts`, `emailButton`, `RUNNER_HEIGHT`, `metresFromUnits` and `site.joinLine`. `MailForm.tsx` now posts to `site.formEndpoint`.
+- Removed the unused `/thanks/` page (route, page function, build case; ADR-032). The sitemap is unchanged. Routes: 26.
+- Removed 30 unused CSS classes (47 rules, built CSS 45.58 kB to 44.28 kB). Full-page screenshots of all 26 routes at 390 and 1440 px are identical before and after.
+- New guard tests (`tests/unit/dead-code.test.ts` and one in `project-standards.test.ts`) keep unused exports, site facts and CSS classes from coming back. Style comments say "site", not "bookstore".
+- `docs/KNOWN-ISSUES.md` row 13 closed; route counts in README, ARCHITECTURE and `.agent/PROJECT.yml` corrected. No visitor-visible change.
+
 ## 2026-11-08, Phase 2 docs and standards alignment (local branch `gsd/phase-2-docs-alignment`, not pushed, not deployed)
 
 - Plan 02-01: `.node-version` (24.21.0) and `npm run check` (typecheck, unit tests, PHP lint). New drift-guard test `tests/unit/project-standards.test.ts` keeps the Node pin equal across `mise.toml`, `.node-version`, both workflows, `engines` and `scripts/lib/runtime.ts`, and keeps `check` equal to the PHP lint in `release.json`. ADR-030 records npm kept, pnpm and Biome deferred.
