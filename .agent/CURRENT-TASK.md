@@ -1,4 +1,12 @@
-## Latest task: Phase 1 release alignment, DONE, 8 November 2026
+## Latest task: Phase 2 docs and standards alignment, IN PROGRESS, 8 November 2026
+
+Mode: BUILD, local only. Branch `gsd/phase-2-docs-alignment` (from the unpushed `gsd/phase-1-closeout`). Plans 02-01 to 02-06 are written and checked in `.planning/phases/02-docs-and-standards-alignment/`. Nothing pushed, merged, deployed or deleted.
+
+Done: plan 02-01. `.node-version` and `npm run check` added test-first (6 of 6 RED, then 6 of 6 GREEN); `npm test` 71 pass; ADR-030 recorded (npm kept, pnpm and Biome deferred).
+
+Next: plans 02-02 to 02-06 in order. Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
+
+## Previous task: Phase 1 release alignment, DONE, 8 November 2026
 
 Mode: BUILD. PR #4 merged into `main` (merge commit d60e544) with the owner's explicit approval; the Deploy run succeeded (run 42457618070: 1 backend file changed, 27 site files changed, 4 new, 3 smoke checks passed). `main` equals `origin/main`; the merged tree is identical to the reviewed branch tip.
 

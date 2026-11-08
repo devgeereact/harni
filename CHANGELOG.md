@@ -1,4 +1,8 @@
-## 2026-11-01, go-live prep (branch `golive/2026-11`, not deployed)
+## 2026-11-08, Phase 2 docs and standards alignment (local branch `gsd/phase-2-docs-alignment`, not pushed, not deployed)
+
+- Plan 02-01: `.node-version` (24.21.0) and `npm run check` (typecheck, unit tests, PHP lint). New drift-guard test `tests/unit/project-standards.test.ts` keeps the Node pin equal across `mise.toml`, `.node-version`, both workflows, `engines` and `scripts/lib/runtime.ts`, and keeps `check` equal to the PHP lint in `release.json`. ADR-030 records npm kept, pnpm and Biome deferred.
+
+## 2026-11-01, go-live prep (branch `golive/2026-11`; deployed 2026-11-08 through PR #4)
 
 - Structured data: `Book` and `BreadcrumbList` on all 13 book pages, `WebSite` on Home, About is now a `ProfilePage` whose `Person` has the stable id `https://harni.uk/about/#person` (`src/content/schema.ts`, `tests/unit/schema.test.ts`). No ISBN, price or review data is emitted: none is supplied or shown.
 - Security checklist pass (`docs/AUDIT.md`): directory listing turned off for `/assets/`, `/images/` and `/media/` (`.htaccess` per folder, build test and release guard); the mail form refuses quoted and IP-literal email addresses; vite 7.3.7 (fixes a High dev-server advisory), react 19.3.1, parse5 8.1.0, axe-core 4.14; unused `@fontsource-variable/fraunces` removed; GitHub Actions pinned to commit SHAs and the deploy checkout no longer keeps credentials; `/play/` brand link name now matches its visible text.

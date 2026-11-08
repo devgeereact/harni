@@ -15,7 +15,7 @@ mise exec -- npm run dev
 
 Open http://127.0.0.1:5152. Setup uses the committed npm lockfile and installs dependencies for the current OS, including Sharp and Chromium. Never transfer `node_modules`, `dist`, browser caches or machine-specific tools between systems. Transfer tracked source through Git, retain the lockfile, and run setup on the destination. Keep private configuration on its own machine. This worktree needs its original Git repository; for another computer use a standalone clone or export of reviewed source, rather than copying its `.git` pointer.
 
-Node 24.21.0 is pinned in `mise.toml`. Do not substitute another package manager. PHP 8.1+ is optional for browsing and required to exercise the mail endpoint. Supply an installed PHP through PATH or `HARNI_PHP_BIN`; setup does not alter the global toolchain. The launcher forces mail sending off, starts PHP on loopback if available, reports port conflicts and stops its own children on Ctrl+C. Without PHP, frontend browsing works but form delivery does not.
+Node 24.21.0 is pinned in `mise.toml` and `.node-version` (a unit test keeps them and the CI workflows equal). Do not substitute another package manager: npm stays and pnpm is deferred (ADR-030). PHP 8.1+ is optional for browsing and required to exercise the mail endpoint. Supply an installed PHP through PATH or `HARNI_PHP_BIN`; setup does not alter the global toolchain. The launcher forces mail sending off, starts PHP on loopback if available, reports port conflicts and stops its own children on Ctrl+C. Without PHP, frontend browsing works but form delivery does not.
 
 ## Intentional trusted-LAN preview
 
@@ -33,6 +33,7 @@ Open `http://192.168.1.50:5152` from your trusted LAN. The address must actually
 
 ```sh
 mise exec -- npm run doctor
+mise exec -- npm run check        # typecheck, unit tests and PHP lint in one gate (no browser tests)
 mise exec -- npm run typecheck
 mise exec -- npm test
 mise exec -- npm run build
@@ -42,7 +43,7 @@ mise exec -- npm run test:mail
 python3 backend/tests/mail-http.py
 ```
 
-The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. There is no separate lint configuration. Strict TypeScript, unit checks and browser checks cover the implemented changes.
+The HTTP mail test uses an isolated local capture transport and temporary state. Do not run live email tests without separate authority. The optional `doctor -- --mail` check requires PHP. Biome and a separate lint configuration are deferred (ADR-030). Strict TypeScript, unit checks and browser checks cover the implemented changes.
 
 `npm run media` regenerates the existing shore image derivatives using project-local Sharp, without `sips`, Homebrew, `cwebp` or `avifenc`. Alternative public source/output paths: `npm run media -- --input '/path/source photo.jpg' --output '/path/derived assets'`. Only generated shore files at the chosen output are replaced. Existing images were retained during this migration; the encoder was tested using synthetic temporary fixtures.
 

@@ -2,6 +2,14 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 2 docs and standards alignment, branch `gsd/phase-2-docs-alignment`
+
+Local only. Nothing pushed or deployed. Each plan appends a row.
+
+| Plan | Check | Result | Evidence |
+|---|---|---|---|
+| 02-01 | Drift guard for the Node pin and the `check` script, written first | RED then GREEN | RED: 6 of 6 failed (`.node-version` ENOENT, no `check` script). GREEN: 6 of 6 pass after `.node-version` and `scripts.check`. `npm run check` exit 0. `npm test`: 71 pass (65 existing + 6 new). `npm run typecheck` exit 0 |
+
 ## 1 Nov 2026 · Security checklist pass (owner's 19-item list), branch `golive/2026-11`
 
 The owner's list was checked item by item against this site. It is a static author site with one PHP mail endpoint. It has no accounts, logins, admin area, database or stored passwords. Items that assume those are N/A with evidence; adding auth with nothing to protect would only add attack surface.
