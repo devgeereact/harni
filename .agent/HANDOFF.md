@@ -1,5 +1,8 @@
 # Handoff
 
+## 2026-11-08: Phase 1 local readiness
+Branch `gsd/phase-1-release-alignment`, local only, not pushed. verify, 65 unit, mail tests and 173 browser tests PASS; merge into `origin/main` is clean. Waiting for the owner to approve push, PR and merge (merging deploys). Plan: `.planning/ROADMAP.md`; open questions: `.planning/QUESTIONS.md`. Details: `.agent/CURRENT-TASK.md`.
+
 ## 17 October 2026: GEE OS cPanel restructure and launch build pass
 
 Branch `rebrand/gee-os-cpanel-20261017`, pushed to origin. Start with `git pull --ff-only`, then read `.agent/CURRENT-TASK.md`: the launch build pass (release gates in order) and the cPanel restructure (backend layout, review fixes, evidence). Backend and host steps: `backend/README.md` and `docs/07-operations/DEPLOYMENT.md`. Release decision: NO-GO until the owner, legal, Cloudflare, host and deploy gates in CURRENT-TASK are closed. Deploys, Cloudflare and host changes each need explicit owner approval in that session. Not merged to `main`.
