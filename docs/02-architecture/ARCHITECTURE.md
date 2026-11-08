@@ -13,7 +13,7 @@ Status: built on localhost, not deployed. See ADR-011 to ADR-016 ADR-023 (real c
 - Availability: static files. Recovery is a redeploy from `dist/`.
 - Privacy: enquiries and sign-ups sit in the two mailboxes, and the visitor receives a copy of each. There is no confirmation step. Statistics load only after consent. See `docs/05-security/DATA-PRIVACY.md`.
 - Cost: ASSUMPTION up to 10 pounds a month. There are no per-sale fees on harni.uk because it takes no payments (ADR-023).
-- Deployment: build locally and ship with `cpanel-deploy`. Nothing is deployed until the owner says (ADR-016).
+- Deployment: built locally or in the Deploy workflow, shipped with `scripts/release.mjs` (rsync over SSH, snapshot, smoke, automatic restore), see `docs/07-operations/DEPLOYMENT.md` and ADR-031.
 
 ## Decision
 

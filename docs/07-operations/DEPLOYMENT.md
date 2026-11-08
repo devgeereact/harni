@@ -21,6 +21,10 @@ Current method, checked against `release.json`, `.github/workflows/deploy.yml` a
 - The GitHub Actions Deploy workflow runs `node scripts/release.mjs --go` on every push to `main` that is not ignored (see below). The SSH key and known hosts are the GitHub Secrets `CPANEL_SSH_KEY` and `CPANEL_KNOWN_HOSTS` (names only; the host details are not written in this repository's documents). The key file is written with mode 600 and removed in an `always()` step. Runs queue (concurrency group `deploy`, no cancelling). See "Deploy method exception" below.
 - From the Mac: `npm run release` is a dry run and `npm run release -- --go` ships. The script's own messages and comments say `pnpm release`; this repository uses npm, so read them as the npm commands (ADR-030).
 
+## Deploy method exception
+
+The Deploy workflow shipping on every push to `main` is an owner-approved exception to the house rule "no GitHub Actions minutes for deploys" (ADR-031, 2026-11-08). Reasons: the repository is public so minutes are free, the SSH key is in GitHub Secrets, `main` is protected (pull request, three required checks, no force-push, applies to admins), and `release.mjs` snapshots and restores automatically. Revisit if the repository becomes private, minutes start costing money, or branch protection is removed.
+
 ## What does not deploy
 
 The workflow ignores a push to `main` when every changed file matches `paths-ignore`: `docs/**`, `**/*.md` (Markdown anywhere) and `.agent/**`. So a docs-only, Markdown-only or `.agent`-only push does not deploy.

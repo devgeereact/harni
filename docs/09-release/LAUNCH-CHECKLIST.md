@@ -97,8 +97,8 @@ Deploy is NOT authorised. All of these are open. Details in `docs/05-security/LE
 Deploy is still NOT authorised. Every step below that touches the host or Cloudflare needs explicit owner approval in that session. Steps in full: `docs/07-operations/DEPLOYMENT.md`, `backend/README.md` and `docs/07-operations/SECURITY-HEADERS.md`.
 
 - [ ] Back up the live `~/harni.uk/api/` folder.
-- [ ] Private folder installed outside the web root: copy `backend/src/` to `~/apps/harni/releases/<YYYYMMDD-HHMM>/src/` and point the `~/apps/harni/current` symlink at that release.
-- [ ] Dry run of `cpanel-deploy dist harni.uk --keep .well-known --keep cgi-bin` read, after copying `dist/api/.htaccess` to `~/harni.uk/api/` by hand (the script never uploads it); root `.htaccess` untouched.
+- [ ] Private folder installed outside the web root: `scripts/release.mjs` rsyncs `backend/src/` into `~/apps/harni/current/src/` (whether `current` is a symlink on the host is UNKNOWN, see `backend/README.md`).
+- [ ] Dry run `npm run release` read (shipped with `scripts/release.mjs`, see DEPLOYMENT.md and ADR-031); the built `api/.htaccess` travels with `dist/` through the `allow` entry; root `.htaccess` untouched.
 - [ ] After `--go`: `curl -s -i https://harni.uk/api/message.php` returns 405 with a JSON body and `Allow: POST`; `/api/.htaccess` and any other `/api/*.php` return 403.
 - [ ] Security headers added on Cloudflare as Report-Only first, browser consoles checked on Home, Contact, Join and `/play/`, then enforced.
 - [ ] NEL switched off on Cloudflare and `NEL` / `Report-To` gone from `curl -sI https://harni.uk/`; Privacy and Cookies pages updated to match.
