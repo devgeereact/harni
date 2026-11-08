@@ -12,39 +12,6 @@
   background: linear-gradient(to bottom, color-mix(in oklab, var(--ink) 72%, transparent), transparent);
 }
 
-.wordmark {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-}
-
-.wordmark__mark {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  color: var(--gold);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-variation-settings: 'WONK' 1;
-  line-height: 1;
-}
-
-.wordmark__text {
-  font-size: var(--step--1);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.wordmark__dot,
-.site-foot__mark span {
-  color: var(--gold);
-}
-
 .site-head nav {
   display: flex;
   align-items: center;
@@ -64,14 +31,8 @@
   color: var(--fg);
 }
 
-.nav-link--cta {
-  padding-bottom: 2px;
-  color: var(--fg);
-  border-bottom: 1px solid var(--rule);
-}
-
 @media (max-width: 34rem) {
-  .nav-link:not(.nav-link--cta) {
+  .nav-link {
     display: none;
   }
 }
@@ -86,30 +47,6 @@
   padding: var(--space-2xl) max(1.25rem, calc((100vw - var(--shell)) / 2)) var(--space-xl);
   isolation: isolate;
   overflow: clip;
-}
-
-.hero__media {
-  position: absolute;
-  inset: -8% 0 -8% 0;
-  z-index: -2;
-  will-change: transform;
-}
-
-/* The picture box must be given the height explicitly, or the image inside
-   falls back to its intrinsic ratio and leaves the hero half painted. */
-.hero__media picture {
-  display: block;
-  height: 100%;
-}
-
-.hero__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 58% 44%;
-  /* The photograph is already close to the palette; it only needs holding
-     back a little so the type stays clear of the horizon glare. */
-  filter: saturate(0.9) contrast(1.04) brightness(0.86);
 }
 
 .hero::after {
@@ -155,12 +92,6 @@
   display: block;
 }
 
-.hero__title .line--accent {
-  color: var(--gold);
-  font-style: italic;
-  font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
-}
-
 /* The headline masks upward rather than fading, which reads as deliberate
    rather than as a stock fade-in. */
 .hero__title .line.is-armed > span {
@@ -176,44 +107,6 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__title .line.is-armed > span {
     transform: none;
-  }
-}
-
-.hero__lede {
-  max-width: var(--measure);
-  color: var(--fg-muted);
-  font-size: var(--step-1);
-  line-height: 1.5;
-  text-wrap: pretty;
-}
-
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin-top: var(--space-m);
-}
-
-.hero__scroll {
-  position: absolute;
-  right: max(1.25rem, calc((100vw - var(--shell)) / 2));
-  bottom: var(--space-xl);
-  color: var(--fg-muted);
-  font-size: var(--step--1);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-}
-
-.hero__scroll span {
-  display: block;
-  padding-bottom: 3.5rem;
-  background: linear-gradient(to bottom, var(--gold), transparent) right bottom / 1px 3rem no-repeat;
-}
-
-@media (max-width: 48rem) {
-  .hero__scroll {
-    display: none;
   }
 }
 
@@ -240,32 +133,8 @@
   font-size: var(--step--1);
 }
 
-.site-foot__mark {
-  color: var(--fg);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 /* Footer and header links on the Pier Run page get a tap target of at least 44px high. */
-.site-foot__note a,
-.site-foot__contact a {
-  display: inline-block;
-  padding-block: 0.6rem;
-}
 
 .nav-link {
   padding-block: 0.5rem;
 }
-
-/* Pier Run supporting information and optional storage controls. */
-.game-settings { max-width: 60rem; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem; }
-.game-settings label { display: flex; align-items: center; gap: .6rem; }
-.game-settings input { width: 1.25rem; height: 1.25rem; accent-color: var(--gold); }
-.game-settings p { flex-basis: 100%; text-align: center; color: var(--fg-muted); }
-.play-guide { max-width: 70rem; margin: auto; padding: 2rem 1.25rem 5rem; }
-.play-guide > p { max-width: 48rem; margin-block: 1rem; }
-.play-guide__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; margin-block: 2rem; }
-.play-guide__grid article { padding: 1.5rem; border: 1px solid var(--rule); border-radius: 1rem; }
-.play-guide__grid p { margin-top: .75rem; color: var(--fg-muted); }
-.play-social { margin-block: 1rem; }

@@ -105,17 +105,6 @@ a:hover {
   transform: none;
 }
 
-/* Film grain. Purely decorative, and cheap: one tiled SVG, no repaint. */
-.grain {
-  position: fixed;
-  inset: -50%;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.32;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.5'/></svg>");
-}
-
 .eyebrow {
   margin-bottom: var(--space-xs);
   color: var(--gold);
@@ -123,17 +112,6 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-}
-
-.section-title {
-  max-width: 18ch;
-  font-family: var(--font-display);
-  font-size: var(--step-3);
-  font-variation-settings: 'SOFT' 20, 'WONK' 1, 'opsz' 40;
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
 }
 
 /* --- Buttons ----------------------------------------------------------- */
@@ -172,22 +150,6 @@ a:hover {
 
 .btn:active {
   transform: translateY(0);
-}
-
-.btn--primary {
-  --btn-bg: var(--gold);
-  --btn-fg: var(--ink);
-  --btn-edge: var(--gold);
-}
-
-.btn--primary:hover {
-  --btn-bg: var(--gold-bright);
-  --btn-edge: var(--gold-bright);
-}
-
-.btn--ghost:hover {
-  --btn-edge: var(--gold);
-  --btn-bg: color-mix(in oklab, var(--gold) 12%, transparent);
 }
 
 kbd {
