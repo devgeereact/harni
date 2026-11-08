@@ -75,7 +75,7 @@ if (
   };
   try {
     const names = await buildMedia(
-      argument("--input", join(root, "docs/IMG_3620.jpeg")),
+      argument("--input", join(root, "media-source/IMG_3620.jpeg")),
       argument("--output", join(root, "public/media")),
     );
     console.log(`PASS: generated ${names.length} JPEG/WebP/AVIF media assets.`);

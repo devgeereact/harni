@@ -22,7 +22,7 @@
   cookie banner. None of them have a use yet.
 - Constraints: the cPanel host has no Node, so the build runs locally and ships a
   static `dist/`. Deploys are built locally or in the Deploy workflow and shipped with `scripts/release.mjs` (rsync over SSH, snapshot, smoke, automatic restore), see DEPLOYMENT.md and ADR-031.
-- Existing assets to preserve: `docs/IMG_3620.jpeg` is the supplied source
+- Existing assets to preserve: `media-source/IMG_3620.jpeg` is the supplied source
   photograph: a figure in a pale coat on the seafront at dusk, photographing the
   low sun over the ruined West Pier at Brighton. Every image in `public/media/` is
   derived from it by `scripts/build-media.mjs`. It replaced an earlier hotel-lobby

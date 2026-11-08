@@ -1,8 +1,9 @@
 ## 2026-11-08, Phase 4 workspace hygiene, part 1 (local branch `gsd/phase-4-workspace-hygiene`, not pushed, not deployed)
 
 - `.idea/` is now ignored and no longer tracked (`git rm --cached`; the files stay on disk). A guard in `tests/unit/project-standards.test.ts` keeps it that way.
-- `docs/00-foundation/PROJECT-CONTEXT.md` names `scripts/build-media.mjs` (the `.sh` script no longer exists).
-- Not done, waiting for the owner: moving `docs/IMG_3620.jpeg`, deleting regenerable output, deleting merged branches. `origin/chore/add-gsap-lenis` is NOT merged (one commit, `e139600`, adds `gsap` and `lenis`; nothing in `src/` or `scripts/` uses them). No visitor-visible change.
+- `docs/00-foundation/PROJECT-CONTEXT.md` names `scripts/build-media.mjs`, the real script (`build-media.sh` is only a wrapper around it).
+- The source photograph moved from `docs/IMG_3620.jpeg` to `media-source/IMG_3620.jpeg`; `scripts/build-media.mjs` defaults to the new path and a guard test checks it. Regenerable output (`dist`, `.generated`, `test-results`, `graphify-out`, `__pycache__`, `.DS_Store`) and the merged local branches `golive/2026-11` and `gsd/phase-1-release-alignment` were removed on the owner's approval.
+- `origin/chore/add-gsap-lenis` is NOT merged (one commit, `e139600`, adds `gsap` and `lenis`; nothing in `src/` or `scripts/` uses them). It was kept; deleting it needs a separate decision. No visitor-visible change.
 
 ## 2026-11-08, Phase 3 dead code and CSS cleanup (local branch `gsd/phase-3-dead-code-cleanup`, not pushed, not deployed)
 
