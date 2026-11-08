@@ -1,3 +1,7 @@
+## Latest task: home hero preload warnings, second fix, 8 November 2026
+
+The first fix (sizes in px and vw) did not clear the owner's four console warnings. Side covers are now lazy so React emits no preload for them; test first; check 86, verify, browser 167 pass. Reload after the deploy and check the console: NOT CONFIRMED until then.
+
 ## Latest task: 404, host facts, preload fix, 8 November 2026
 
 Done: `ErrorDocument 404 /404.html` added to the host root `.htaccess` (backup kept, ADR-034, live check passes); preload fix deployed (PR 15); client IP: the host `.htaccess` says Cloudflare IP restoration is on (not proven by request); web PHP likely 8.4 (CloudLinux default). Remaining for the owner: inbox check, Firefox console check, reload the home page to confirm the preload warnings are gone, Phase 6.
