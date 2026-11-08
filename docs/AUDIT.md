@@ -2,6 +2,21 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 5 start: host cleanup and Cloudflare read-only
+
+| Check | Result | Evidence |
+|---|---|---|
+| Stale `/thanks/` on host | DONE, removed on owner approval | Backed up to `~/backups/harni/removed-pages/`; curl: `/thanks/` 404, `/` 200, `/books/` 200, sitemap 200, API GET 405 |
+| `origin/chore/add-gsap-lenis` | Deleted on owner approval | Only commit `e139600` (unused `gsap`, `lenis`) |
+| Cloudflare HSTS | Off | `GET /zones/{id}/settings/security_header` |
+| Cloudflare response-header rules | None | rulesets entrypoint for `http_response_headers_transform` returns 404 (no ruleset) |
+| Always Use HTTPS / SSL mode / NEL | on / strict / on | settings API |
+| Minimum TLS version | 1.0 | settings API; raising to 1.2 proposed |
+| DNS names | apex, `www`, `autoconfig`, `autodiscover` proxied; MX, SRV, TXT not proxied | DNS records API |
+| CSP script hash | Still matches | Recomputed SHA-256 equals the one in `SECURITY-HEADERS.md`; 25 built pages carry the one inline script |
+
+No Cloudflare setting was changed.
+
 ## 8 Nov 2026 · Post-merge live check (PRs 5 to 8)
 
 | Check | Result | Evidence |

@@ -1,3 +1,11 @@
+## Latest task: Phase 5 started (read-only), 8 November 2026
+
+Owner delegated the open items ("go with your best recommendation"). Done: stale `/thanks/` removed from the host (backup `~/backups/harni/removed-pages/thanks-index-2026-11-08.html`, then removed `thanks/index.html` and the empty folder; live `/thanks/` now 404, `/`, `/books/`, sitemap 200, API 405). `origin/chore/add-gsap-lenis` deleted; its only commit was `e139600` (adds unused `gsap` and `lenis`; re-add with npm if ever needed).
+
+Cloudflare, read only (zone `harni.uk`, Free plan): HSTS off; Always Use HTTPS on; SSL strict; minimum TLS 1.0; NEL on; no response-header transform rules exist. DNS: apex, `www`, `autoconfig` and `autodiscover` are proxied (HTTPS), so `includeSubDomains` is a later decision. The CSP script hash in `SECURITY-HEADERS.md` still matches the build (25 pages carry that one inline script).
+
+Waiting for "approved:" per change: (1) HSTS one year, no subdomains, no preload; (2) one response-header rule with Referrer-Policy, Permissions-Policy, X-Content-Type-Options, X-Frame-Options, CSP Report-Only, and removal of `x-turbo-charged-by`; (3) NEL off (ADR-029); (4) minimum TLS 1.2. Mail test needs the host variables (owner).
+
 ## Latest task: Phases 1 to 4 merged and deployed, 8 November 2026
 
 PRs 5 to 8 merged into `main` in order (merge commits; `main` at 4b3828d). The three code-bearing merges (PR 6, 7, 8) each ran Deploy: all green with smoke checks. Live checks after the last one: `/` 200, `/play/` 200, `/assets/` 403, `GET /api/message.php` 405.
