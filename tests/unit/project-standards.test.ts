@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { requireRuntime } from "../../scripts/lib/runtime.ts";
 
@@ -71,4 +71,45 @@ test("project standards: check and release.json run the same PHP lint", () => {
   const lint = checks.filter((c) => c.includes("php -l"));
   assert.equal(lint.length, 1);
   assert.ok(String(scripts().check).includes(lint[0] ?? "\u0000"));
+});
+
+const hostEnvNames = ["HARNI_MAIL_ENABLED", "HARNI_MAIL_RATE_KEY", "HARNI_MAIL_STATE_DIR"];
+
+function envExampleNames(): string[] {
+  const names: string[] = [];
+  for (const [index, line] of text(".env.example").split("\n").entries()) {
+    const trimmed = line.trim();
+    if (trimmed === "" || trimmed.startsWith("#")) continue;
+    const match = /^([A-Z][A-Z0-9_]*)=$/.exec(trimmed);
+    assert.ok(match, `.env.example line ${index + 1} is not an empty NAME= line`);
+    names.push(match[1] ?? "");
+  }
+  return names;
+}
+
+test("project standards: .env.example lists only the real host variable names, no values", () => {
+  assert.deepEqual([...envExampleNames()].sort(), hostEnvNames);
+});
+
+test("project standards: every .env.example name is read by the backend", () => {
+  const backendDir = `${root}backend/src/`;
+  const php = readdirSync(backendDir)
+    .filter((file) => file.endsWith(".php"))
+    .map((file) => readFileSync(backendDir + file, "utf8"))
+    .join("\n");
+  const names = envExampleNames();
+  assert.ok(names.length > 0, ".env.example lists no names");
+  for (const name of names) {
+    assert.ok(php.includes(`getenv('${name}')`), `${name} is not read by a getenv call in backend/src`);
+  }
+  const example = text(".env.example");
+  for (const stale of ["APP_ENV", "PUBLIC_APP_URL"]) {
+    assert.ok(!example.includes(stale), `${stale} is listed but nothing reads it`);
+  }
+});
+
+test("project standards: the site is not described as a bookstore", () => {
+  const description = String(json("package.json").description ?? "");
+  assert.doesNotMatch(description, /bookstore/i, "package.json description");
+  assert.doesNotMatch(text("README.md"), /bookstore/i, "README.md");
 });
