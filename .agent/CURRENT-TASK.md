@@ -8,9 +8,11 @@ Done: plan 02-02 (docs only). `backend/README.md` and `docs/07-operations/DEPLOY
 
 Done: plan 02-03 (docs plus one source comment). KNOWN-ISSUES rows 5, 6, 11, 19, 25, 26 corrected and row 13 annotated (open until Phase 3 removes `/thanks/`); `routes.ts` header comment no longer hard-codes a page count (diff checked as comment-only); DATA-MODEL Event and ReviewQuote match the data files. Typecheck and 71 unit tests pass. Lighthouse not re-run; no live page fetched.
 
+Done: plan 02-04 (docs only). API-SPEC filled from the PHP source (one operation; differences from the plan notes recorded in `docs/AUDIT.md`: no application log line in the exception handler, browser aborts after 20 s). Five specs (AUTH, PWA, SYNC, OFFLINE, UPDATE-STRATEGY) marked N/A with reason, date and owner. Real mail, client IP behind Cloudflare and host PHP stay NOT TESTED. No code changed.
+
 Next (owner): confirm whether `~/apps/harni/current` is a symlink on the host (one directory listing of `~/apps/harni/`); the answer goes in `backend/README.md` (UNKNOWN until then). Note: merging Phase 2 will trigger one Deploy run, because `package.json`, `.node-version`, `tests/` and a source comment change. The site output is identical; the run is expected and harmless.
 
-Next: plans 02-04 to 02-06 in order (02-04 is next). Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
+Next: plans 02-05 and 02-06 in order (02-05 is next). Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
 
 ## Previous task: Phase 1 release alignment, DONE, 8 November 2026
 
