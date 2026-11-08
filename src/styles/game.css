@@ -1,12 +1,12 @@
-/* Pier Run: a bright seaside scene inside the bookstore's white page.
-   The page chrome (header, footer, type, buttons, cards, HUD, score settings) uses the bookstore tokens of
+/* Pier Run: a bright seaside scene inside the site's white page.
+   The page chrome (header, footer, type, buttons, cards, HUD, score settings) uses the site tokens of
    site.css ("Rausch on white", ADR-020, ADR-023). The canvas scene keeps its own daylight palette
    (src/game/palette.ts) because the obstacles, pickups and hero are tuned for contrast against it.
    Contrast (WCAG 2 formula): body #3F3F3F on the four zone grounds 7.08 to 8.77; ink on ground 10.69 or more;
    muted on canvas 5.41, on soft 5.05; white on action 4.89; ink on flag yellow 12.44. */
 .unwind { min-height: 100svh; display: flex; flex-direction: column; }
 
-/* Header: the bookstore header bar (white, hairline, 72px), without the sticky behaviour so the game keeps the viewport. */
+/* Header: the site header bar (white, hairline, 72px), without the sticky behaviour so the game keeps the viewport. */
 .unwind-head, .unwind-foot { width: 100%; padding-inline: max(1.25rem, calc((100% - 80rem) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .unwind-head { min-height: 4.5rem; padding-block: .5rem; background: var(--canvas); border-bottom: 1px solid var(--hairline); }
 .unwind-back { position: relative; display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--muted); font-size: 1rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: color .2s var(--ease); }
@@ -16,7 +16,7 @@
 
 .unwind-main { width: min(100% - 2.5rem, 70rem); margin: auto; padding-block: 1.5rem 1.5rem; }
 .unwind-title { margin-bottom: 1rem; text-align: left; }
-/* Same h1 as the bookstore pages (site.css): Inter 700, -0.02em. */
+/* Same h1 as the other pages (site.css): Inter 700, -0.02em. */
 .unwind-title h1 { font-size: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; }
 .unwind-title__dot { color: var(--action); }
 .unwind-title p { margin-top: .35rem; color: var(--muted); }
@@ -38,14 +38,14 @@
 .hud__heart svg { display: block; width: 1.25rem; height: 1.25rem; fill: var(--strong); stroke: var(--hairline-strong); stroke-width: 1.5; stroke-linejoin: round; transition: fill .2s var(--ease); }
 .hud__heart.is-full svg { fill: var(--rausch); stroke: var(--action); }
 .hud__row--chips { min-height: 1.75rem; }
-/* Chips are pills, as on the bookstore pages. */
+/* Chips are pills, as on the other pages. */
 .hud__chip { padding: .2rem .7rem; border: 1px solid var(--hairline-strong); border-radius: 999px; background: #f6e3a1; color: var(--ink); font-size: .8125rem; font-weight: 600; }
 .hud__chip[hidden] { display: none; }
 .hud__chip--combo { background: var(--canvas); border-color: var(--action); color: var(--action); }
 
 .game__overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 3.5rem 1rem 3rem; background: rgb(255 255 255 / 20%); touch-action: manipulation; }
 .game__overlay[hidden] { display: none; }
-/* Start and result card: the bookstore panel (white, hairline, 14px, single shadow). */
+/* Start and result card: the site panel (white, hairline, 14px, single shadow). */
 .game__card { position: relative; width: min(100%, 22rem); padding: 1.4rem 1.5rem; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--canvas); box-shadow: var(--lift); text-align: center; }
 .game__ticket-label { margin: 0 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--hairline); color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .game__card-title { margin: 0; font-size: clamp(1.15rem, 2vw, 1.5rem); font-weight: 600; line-height: 1.25; letter-spacing: -.01em; }
@@ -80,7 +80,7 @@
 .unwind-settings__body p { width: 100%; margin: 0; }
 .unwind-settings__body button, .unwind-settings__body a { min-height: 44px; display: inline-flex; align-items: center; }
 
-/* Footer: the bookstore footer's base row (soft band, hairline, muted 13px links). */
+/* Footer: the site footer's base row (soft band, hairline, muted 13px links). */
 .unwind-foot { margin-top: 1.5rem; padding-block: 1.25rem 1.5rem; border-top: 1px solid var(--hairline); background: var(--soft); font-size: .8125rem; color: var(--muted); }
 .unwind-foot nav { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 .unwind-foot a { color: var(--muted); min-height: 32px; display: inline-flex; align-items: center; text-decoration: none; }
