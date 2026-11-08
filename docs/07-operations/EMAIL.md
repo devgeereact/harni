@@ -2,6 +2,19 @@
 
 Status: implemented locally, sending disabled by default. Updated 1 October 2026 (ADR-025): both recipients now get detailed copies. Updated 17 October 2026 (ADR-029): the contact visitor copy is a short receipt without sender-written text. Verified locally with synthetic inputs and a capture transport only. Host PHP support, real inbox delivery, spam placement and SPF/DKIM/DMARC are NOT TESTED. This adds a small PHP backend to the formerly static-only site; the cPanel host has no Node requirement. PHP 8.1+ and a working local mail transfer agent are prerequisites, not verified host facts.
 
+## Specification summary
+
+One line per field of the former `EMAIL-SPEC.md` template (merged here on 8 November 2026). Details stay in the sections named; nothing is repeated.
+
+- Applicability: applicable and implemented. Sending is disabled on the host until the owner-gated Phase 5 readiness check ("Before enabling on the host").
+- Verified sender and reply addresses: `info@harni.uk` (contact) and `subscribe@harni.uk` (sign-ups). Mailbox existence is NOT TESTED.
+- Transactional messages and triggers: the owner message and the visitor receipt or copy for each form, triggered by a valid POST to `/api/message.php` (see "What each recipient receives").
+- Consent and unsubscribe rules: single-step checkbox consent, notice version and wording recorded, `List-Unsubscribe` header on the subscriber copy, manual list upkeep (see "Routing and visitor experience").
+- Delivery, bounce and complaint monitoring: UNKNOWN. None exists, and `docs/07-operations/MONITORING.md` is itself UNKNOWN. Next check: owner decision in Phase 5. The weekly bounce-folder look, uptime monitor and monthly test send proposed in the project questions are proposals only and are not built.
+- Failure and retry behaviour: no automatic retry and no queue. The form reports acceptance or failure plainly and keeps the input (see "Routing and visitor experience"). Rollback is to disable `HARNI_MAIL_ENABLED` (see "Rollback").
+
+Never invent identity, contact or legal details.
+
 ## Routing and visitor experience
 
 - POST `/api/message.php` with JSON. Contact requires name, email, message and an unchecked-by-default Privacy Notice acknowledgement/Website Terms acceptance; subject is optional. The server requires explicit boolean acceptance and records the wording/version in the enquiry. This is separate from marketing consent. Subscription requires email and explicit consent.
