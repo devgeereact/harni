@@ -5,7 +5,7 @@ export const site = {
   name: 'Harni Muharami',
   origin: 'https://harni.uk',
   email: 'info@harni.uk',
-  subscriptionEmail: 'subscribe@harni.uk',
+  subscriptionEmail: 'info@harni.uk',
   formEndpoint: '/api/message.php',
   instagram: { handle: '@lulu_harni', url: 'https://www.instagram.com/lulu_harni/' },
   tiktok: { handle: '@harni_m', url: 'https://www.tiktok.com/@harni_m' },
@@ -26,7 +26,7 @@ export const site = {
   /** Checks only the owner can make. The generator lists them under `npm run pages -- --list`. */
   ownerChecks: [
     'CHECK: employer policy on the personal-capacity wording across the site',
-    'CHECK: info@harni.uk and subscribe@harni.uk receive mail and support authenticated sending',
+    'CHECK: info@harni.uk receives mail and supports authenticated sending',
     'CHECK: Instagram @lulu_harni and TikTok @harni_m are live and public',
   ],
 } as const;

@@ -1,3 +1,7 @@
+## 2026-11-08, sign-ups go to info@harni.uk (ADR-033)
+
+- The owner has no `subscribe@harni.uk` mailbox, so with sending now on, a sign-up would have been accepted by the server and then bounced. Sign-up notifications, the subscriber's copy, `List-Unsubscribe` and the no-JavaScript link on Join now use `info@harni.uk`. Tests changed first (PHP, HTTP capture, Playwright). Current docs updated; dated history left as written.
+
 ## 2026-11-08, mail settings file and Cloudflare headers
 
 - Cloudflare (owner approved): HSTS one year (no subdomains, no preload); one response-header rule on `harni.uk` and `www` setting Referrer-Policy, Permissions-Policy, X-Content-Type-Options, X-Frame-Options and `Content-Security-Policy-Report-Only`, and removing `x-turbo-charged-by` and `x-powered-by`; NEL off (ADR-029); minimum TLS 1.2. The CSP is report-only until Firefox and Safari are checked. A Chromium pass over every page found no violations from the site's own pages.

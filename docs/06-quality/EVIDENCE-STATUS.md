@@ -96,7 +96,7 @@ All local. Nothing deployed. Statuses use PASS, PARTIAL, NOT TESTED or BLOCKED.
 |---|---|---|---|
 | PHP mail unit checks | PASS | `php backend/tests/mail.test.php` | 27 PASS, synthetic input and fake transport, no email sent |
 | Mail over HTTP, both forms | PASS | `python3 backend/tests/mail-http.py` (temporary loopback PHP server, capture executable) | 4 captured messages: owner and visitor copy for contact and for sign-up. No real email sent |
-| Real inbox delivery and spam placement | NOT TESTED | None | No real email was sent. Host mail transport, mailboxes `info@harni.uk` and `subscribe@harni.uk` unverified |
+| Real inbox delivery and spam placement | NOT TESTED | None | No real email was sent. Host mail transport, mailboxes `info@harni.uk` unverified |
 | SPF, DKIM, DMARC and host PHP support | NOT TESTED | None | Needs the live host and DNS |
 | HTML email rendering in real clients | NOT TESTED | None | Only the captured source was inspected |
 | Unit tests, all | PASS | `npm test` | 41 pass, including 10 new in `tests/unit/content.test.ts` for Events and Reviews data |

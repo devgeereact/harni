@@ -75,7 +75,7 @@ Decided from the code and the owner's instructions, so the pages and the code ag
 - Liability limited only as UK law allows. Death or personal injury by negligence, fraud and consumer rights are preserved. England and Wales law, with the consumer local-court carve-out.
 
 **Site behaviour that the pages describe**
-- Contact goes to `info@harni.uk`; subscriptions go to `subscribe@harni.uk`. Visitors get a detailed copy of what they sent. No CC list exposes other recipients.
+- Contact goes to `info@harni.uk`; subscriptions go to `info@harni.uk`. Visitors get a detailed copy of what they sent. No CC list exposes other recipients.
 - The handler keeps no message database. Correspondence stays in mail systems.
 - Pier Run saves nothing unless the player ticks "Remember my best score on this device" (single key `harni.pier-run.best`), with a Delete saved score control.
 - Reviews and Events: no quote is published without written permission, and no event is listed until confirmed. Both lists are currently empty. No Amazon review is copied and no star rating is shown.
@@ -88,7 +88,7 @@ Owner facts tracked internally (the two public Privacy placeholders were removed
 1. A postal address for correspondence. UK e-commerce rules ask website operators to give one.
 2. The ICO data protection fee registration number, or the reason the owner is exempt.
 
-Other open items from the same command (the `/contact/` [NEEDS] duplicated the last two and was removed on 10 October 2026): three site-wide checks (employer policy on the personal-capacity wording, `info@harni.uk` and `subscribe@harni.uk` receiving and authenticated sending, and Instagram `@lulu_harni` and TikTok `@harni_m` being live).
+Other open items from the same command (the `/contact/` [NEEDS] duplicated the last two and was removed on 10 October 2026): three site-wide checks (employer policy on the personal-capacity wording, `info@harni.uk` receiving and authenticated sending, and Instagram `@lulu_harni` and TikTok `@harni_m` being live).
 
 ## Release gates
 
@@ -99,7 +99,7 @@ All must be recorded with evidence before any deploy. Deploy is NOT authorised.
 - [ ] ICO fee check: confirm whether the fee applies and, if so, that it is paid.
 - [ ] Host PHP and mail test: confirm PHP execution and mail transport on the host, then send one contact and one subscription test to owner-controlled addresses (see `docs/07-operations/EMAIL.md`).
 - [ ] SPF, DKIM and DMARC are published for `harni.uk` and aligned with the sending host.
-- [ ] Mailboxes `info@harni.uk` and `subscribe@harni.uk` exist and receive mail.
+- [ ] Mailboxes `info@harni.uk` exist and receive mail.
 - [ ] Cookie and log inspection on the live Cloudflare and host: confirm what cookies, logs and Network Error Logging headers are actually set, and that the Privacy and Cookies pages match. The code audit does not prove the live infrastructure sets no cookies.
 - [ ] Retention schedule is adopted in practice (12-month enquiry deletion, sign-up deletion, do-not-email record) and the operator can process unsubscribe requests before the next mailing.
 - [ ] Employer policy on the personal-capacity wording is checked.

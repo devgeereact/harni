@@ -1,3 +1,9 @@
+## Latest task: sign-ups moved to info@harni.uk (ADR-033), 8 November 2026
+
+Owner: "subscribe@harni.uk is not live, I use only info@harni.uk". With sending on, sign-ups would have bounced. Changed (tests first): `backend/src/message.php`, `src/content/site.ts`, PHP, HTTP-capture and Playwright tests, current docs. Checks: `npm run check` 83 pass; PHP 37 checks; `test:mail` PASS; `npm run verify` PASS; browser suite 167 pass. Merging deploys this.
+
+Next (owner): inbox check for the two contact tests; Firefox and Safari CSP pass; `ErrorDocument` line. After this deploys I can send one sign-up test (it lands in `info@harni.uk`).
+
 ## Latest task: Phase 5 headers applied, mail sending enabled and tested, 8 November 2026
 
 Done (owner: "go with your recommendations"): Cloudflare HSTS, header rule (CSP report-only), NEL off, minimum TLS 1.2, all verified by curl. PR 11 deployed `loadMailSettings`; on the host `~/apps/harni/shared/mail.conf` (mode 600, key generated on the host, never shown) and `shared/mail-state` (mode 700) now exist. Two real contact tests from the site to `info@harni.uk`: the second returned HTTP 200 `ok:true copyAccepted:true` (reference HM-20261108-947B17F128B4); the first (response not captured) reached the rate check too.

@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory(prefix='harni-mail-http-') as folder:
             print('PASS: HTTP '+kind+' accepted by local capture transport, both copies created')
         captured=(root/'messages.txt').read_text()
         assert captured.count('---MAIL---')==4
-        assert 'To: info@harni.uk' in captured and 'To: subscribe@harni.uk' in captured
+        assert captured.count('\nTo: info@harni.uk')==2, captured.count('\nTo: info@harni.uk')
         assert 'To: contact@example.org' in captured and 'To: subscribe@example.org' in captured
         print('PASS: exactly four captured messages; correct owner and visitor destinations; no real mail sent')
     finally:
