@@ -1,4 +1,17 @@
-## Latest task: Phase 2 docs and standards alignment, DONE (local branch, not pushed), 8 November 2026
+## Latest task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
+
+Mode: BUILD, local only. Branch `gsd/phase-3-dead-code-cleanup` (on top of the unpushed `gsd/phase-2-docs-alignment`). Nothing pushed, merged or deployed. Test-first: `tests/unit/dead-code.test.ts` (6 guards, 6 of 6 RED) and a bookstore-in-CSS guard (RED) were committed before each fix.
+
+Done: dead code removed (`parallax.ts` file, `emailButton`, `RUNNER_HEIGHT`, `metresFromUnits`, `site.joinLine`); `MailForm.tsx` uses `site.formEndpoint`; `/thanks/` removed (ADR-032); `generated` flag comment fixed; 30 unused CSS classes removed; 11 hook classes with no rule kept on purpose (listed in `docs/AUDIT.md`); docs updated (KNOWN-ISSUES row 13 closed, PRODUCT-SPEC FR-009, README, ARCHITECTURE, SECURITY-HEADERS, ACCESSIBILITY, `.agent/PROJECT.yml`).
+
+Checks, 8 November 2026: `npm run check` PASS; `npm test` 81 pass; `npm run verify` PASS; `npm run test:mail` PASS; `npm run test:browser` 167 pass; screenshots of 26 routes at 390 and 1440 px, 52 of 52 identical before and after (scratch in ignored `work/`).
+
+Next (owner), in order:
+1. Approve pushing the three local branches as PRs in order: `gsd/phase-1-closeout` (docs only), `gsd/phase-2-docs-alignment`, `gsd/phase-3-dead-code-cleanup`. Merging Phase 3 triggers one Deploy run with smoke checks; the site looks identical.
+2. Approve deleting the two superseded duplicate docs and the merged branches (`golive/2026-11`, `gsd/phase-1-release-alignment`, remote `chore/add-gsap-lenis`).
+3. Then Phase 4 (workspace and repo hygiene). Owner items (legal, mailboxes, devices) stay with the owner.
+
+## Previous task: Phase 2 docs and standards alignment, DONE (local branch, not pushed), 8 November 2026
 
 Mode: BUILD, local only. Branch `gsd/phase-2-docs-alignment` (from the unpushed `gsd/phase-1-closeout`). Plans 02-01 to 02-06 are done and committed locally. Nothing pushed, merged, deployed or deleted.
 

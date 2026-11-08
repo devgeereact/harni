@@ -1,5 +1,4 @@
 import { isHazard } from './entities.ts';
-import { PLAYER } from './config.ts';
 import { CORAL, CORAL_DEEP, INK, MINT, SKIN, SKY_BLUE, SUN, WHITE } from './palette.ts';
 import type { Entity } from './types.ts';
 
@@ -559,5 +558,3 @@ export const drawEntity = (c: Ctx, e: Entity, x: number, groundY: number, look: 
   }
   c.restore();
 };
-
-export const RUNNER_HEIGHT = PLAYER.standHeight;

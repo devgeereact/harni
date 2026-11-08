@@ -10,7 +10,7 @@ export interface Route {
   readonly file: string;
   /** Unique key for Vite's multi-page `input` map. */
   readonly key: string;
-  /** False for pages that are written by hand (Pier Run). */
+  /** False for /play/ only: the page loop in scripts/build-pages.ts skips it and builds it from the game document. */
   readonly generated: boolean;
   /** False keeps the page out of sitemap.xml and adds noindex (BR-007). */
   readonly indexable: boolean;
@@ -46,7 +46,6 @@ export const routes: readonly Route[] = [
   route('/about/', 0.6),
   route('/contact/', 0.5),
   route('/join/', 0.6),
-  route('/thanks/', 0.1, { indexable: false }),
   route('/events/', 0.4),
   route('/reviews/', 0.4),
   route('/play/', 0.3, { generated: false }),

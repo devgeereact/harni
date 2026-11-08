@@ -15,7 +15,6 @@ export const site = {
   shortBio:
     'Harni Muharami is an NHS nurse and clinical educator in London. She leads a health training hub and holds an MSc in Management and Leadership in Health. She is currently doing a PhD.',
   joinPromise: "I'll email you when a new book comes out.",
-  joinLine: "Join the list and I'll email you when a new book comes out.",
   consentLine: 'I agree to receive emails from Harni Muharami. I can unsubscribe at any time.',
   adviceNote: 'This book gives general guidance. It is not medical or legal advice, and it is not NHS guidance.',
   // Sign-up is single step: the ticked box is the consent (BR-016). The list is managed by hand in the subscription mailbox.

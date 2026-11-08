@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { propsFor, type ElementNode } from "../../app/tree";
+import { site } from "../../content/site";
 
 interface FormState {
   pending: boolean;
@@ -60,7 +61,7 @@ export function MailForm({
     const timeout = setTimeout(() => abort.abort(), 20000);
     setState({ pending: true, status: "Sending your request…" });
     try {
-      const response = await fetch("/api/message.php", {
+      const response = await fetch(site.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

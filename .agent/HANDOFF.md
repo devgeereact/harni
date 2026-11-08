@@ -1,5 +1,8 @@
 # Handoff
 
+## 2026-11-08: Phase 3 dead code and CSS cleanup done locally
+Branch `gsd/phase-3-dead-code-cleanup`, not pushed or deployed. Dead code, `/thanks/` and 30 unused CSS classes removed; screenshots of 26 routes identical; 81 unit, 167 browser and mail tests pass. Open: owner approval to push the three local branches (Phase 1 closeout, 2, 3) and to delete duplicate docs and merged branches; then Phase 4. Details: `.agent/CURRENT-TASK.md`.
+
 ## 2026-11-08: Phase 1 release alignment done
 PR #4 merged into `main` (d60e544) and deployed; Deploy run green; live checks pass (JSON-LD present, no directory listing, API 405). `main` is protected. Open: push of this closeout branch, branch deletions (both need owner approval), then Phase 2. Details: `.agent/CURRENT-TASK.md`.
 

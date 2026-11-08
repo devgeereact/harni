@@ -113,3 +113,9 @@ test("project standards: the site is not described as a bookstore", () => {
   assert.doesNotMatch(description, /bookstore/i, "package.json description");
   assert.doesNotMatch(text("README.md"), /bookstore/i, "README.md");
 });
+
+test("style comments do not call the site a bookstore", () => {
+  for (const file of readdirSync(root + "src/styles")) {
+    assert.doesNotMatch(text(`src/styles/${file}`), /bookstore/i, `${file} still says bookstore`);
+  }
+});

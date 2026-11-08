@@ -1,4 +1,4 @@
-/* Bookstore pages: "Rausch on white" (docs/03-design/DESIGN-SYSTEM.md, ADR-020).
+/* Site pages: "Rausch on white" (docs/03-design/DESIGN-SYSTEM.md, ADR-020).
    Built from the Airbnb design guideline fetched with `npx getdesign@latest add airbnb`:
    a pure white canvas, near-black ink, one coral-red accent, soft 8px to 14px corners, one
    shadow tier, quiet type at modest weights and a light footer. Contrast was checked by script
@@ -195,28 +195,11 @@ html:not(.js) .chips {
   line-height: 1.55;
 }
 
-.lede-paper {
-  font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
-  font-weight: 500;
-  line-height: 1.4;
-  text-wrap: balance;
-}
-
 .small {
   max-width: 36rem;
   margin-top: 0.75rem;
   color: var(--muted);
   font-size: 0.875rem;
-}
-
-.big {
-  font-size: clamp(1.3rem, 1.15rem + 0.7vw, 1.75rem);
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.big a {
-  color: var(--ink);
 }
 
 .byline {
@@ -1029,12 +1012,6 @@ html:not(.js) .chips {
   object-fit: cover;
 }
 
-.author-photo--about {
-  width: 100%;
-  max-width: 18rem;
-  border-radius: var(--radius);
-}
-
 .about-grid,
 .contact-grid {
   display: grid;
@@ -1283,17 +1260,6 @@ html:not(.js) .chips {
 
 .social .icon {
   flex: none;
-}
-
-.social--panel a {
-  width: 100%;
-  border-bottom: 1px solid var(--hairline);
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.social--panel a:hover {
-  color: var(--action);
 }
 
 /* --- Join card and forms ------------------------------------------------- */
@@ -1931,8 +1897,7 @@ html:not(.js) [data-contact-form] .form__status {
 
 /* Supporting content keeps the same type, colour and spacing system as the catalogue. */
 .form-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.editorial-grid, .review-list { display: grid; gap: 1.5rem; margin-top: 2rem; }
-.editorial-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.review-list { display: grid; gap: 1.5rem; margin-top: 2rem; }
 .review-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
 .review-item { padding: 1.5rem; border: 1px solid var(--hairline); border-radius: 1rem; }
 .review-item p { margin-block: 1rem; }
@@ -1981,15 +1946,6 @@ button:disabled { opacity: .65; cursor: wait; }
 }
 
 /* --- Events and Reviews (ADR-024) ---------------------------------------------------------- */
-.events-layout { display: grid; gap: 2.5rem; }
-@media (min-width: 56rem) { .events-layout { grid-template-columns: minmax(0, 1fr) 22rem; gap: 4rem; align-items: start; } }
-.events-h { margin-top: 2.5rem; font-size: clamp(1.25rem, 1.1rem + .6vw, 1.6rem); }
-.events-layout > div > .eyebrow + .events-h { margin-top: 0; }
-.events-empty { display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 1rem; padding: 1.5rem; border: 1px dashed var(--hairline-strong); border-radius: var(--radius); background: var(--soft); }
-.events-empty__icon { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--canvas); border: 1px solid var(--hairline); color: var(--muted); }
-.events-empty h3 { margin: 0 0 .35rem; }
-.events-empty p { margin: 0 0 .5rem; color: var(--body); }
-.events-empty .actions { margin-top: 1rem; }
 .event-list { display: grid; gap: 1rem; margin-top: 1rem; }
 .event-card { padding: 1.25rem 1.5rem; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--canvas); }
 .event-card__date { margin: 0 0 .25rem; color: var(--action); font-weight: 600; }

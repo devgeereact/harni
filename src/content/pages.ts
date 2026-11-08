@@ -383,15 +383,6 @@ ${band('Newsletter', 'Join the list', `\n    <p class="lede">${esc(site.joinProm
 </section>`,
 });
 
-export const thanks = (): PageDef => ({
-  title: 'Thank you for joining | Harni Muharami',
-  description: 'Thank you for joining Harni Muharami’s mailing list.',
-  noindex: true,
-  body: `${band('Book updates', 'Thank you for joining my mailing list!')}
-<section class="section"><div class="shell prose"><p>I'll email you when a new book comes out.</p>
-<p class="actions">${button('Browse the books', '/books/')}${button('Home', '/', 'outline')}</p></div></section>`,
-});
-
 const iconCalendar =
   '<svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>';
 

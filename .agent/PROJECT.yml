@@ -6,7 +6,7 @@ project:
   url: "https://harni.uk"
 stack_profile: cpanel
 stack:
-  frontend: vite-7 react-19 typescript-5.9 tailwind-4, static multi-page build (27 routes)
+  frontend: vite-7 react-19 typescript-5.9 tailwind-4, static multi-page build (26 routes)
   hosting: cpanel static document root behind cloudflare, built locally or in the Deploy workflow, shipped with scripts/release.mjs (rsync over ssh, snapshot, smoke, automatic restore), see DEPLOYMENT.md and ADR-031
   api: php-8.1+ mail endpoint, public entry backend/public/api/message.php, private code backend/src
   database: none

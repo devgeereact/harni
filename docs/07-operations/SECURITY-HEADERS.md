@@ -107,7 +107,7 @@ Maintenance:
 3. No `report-uri` or `report-to` is set: a reporting service would be a new third party, and NEL is
    being switched off for the same reason (ADR-029). Read the reports in the browser console instead.
 4. Open Home, Books, one book page, About, Contact, Join, Events, Reviews, the four legal pages,
-   `/play/` (start a run, turn sound on, save a score) and `/thanks/` in Chrome, Firefox and Safari
+   `/play/` (start a run, turn sound on, save a score) in Chrome, Firefox and Safari
    with the console open. Submit both forms (sending is off, so the 503 JSON is the expected answer).
    Any "[Report Only] Refused to ..." line is a finding to fix before enforcing.
 5. With a clean console, rename the header to `Content-Security-Policy` with the same value.

@@ -65,7 +65,7 @@ harni/
 └── dist/         Ignored production output, recreated by build
 ```
 
-All 27 generated HTML pages live inside `.generated/pages/`. `npm run dev` and `npm run build` regenerate them automatically. `npm run pages` regenerates them explicitly after editing public content. Do not edit generated HTML. `dist/` retains the route folders needed for static hosting, such as `/books/safe-by-design/`; these are build output, rather than extra source folders.
+All 26 generated HTML pages live inside `.generated/pages/`. `npm run dev` and `npm run build` regenerate them automatically. `npm run pages` regenerates them explicitly after editing public content. Do not edit generated HTML. `dist/` retains the route folders needed for static hosting, such as `/books/safe-by-design/`; these are build output, rather than extra source folders.
 
 
 - `src/app/`: React document rendering and hydration.

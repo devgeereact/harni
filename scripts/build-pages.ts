@@ -43,8 +43,6 @@ const pageFor = (path: string): PageDef => {
       return pages.contact();
     case '/join/':
       return pages.join();
-    case '/thanks/':
-      return pages.thanks();
     case '/events/':
       return pages.events();
     case '/reviews/':
