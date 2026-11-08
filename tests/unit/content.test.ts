@@ -75,3 +75,10 @@ test("home hero covers state their size in px or vw, not rem, so the preload and
   assert.equal(sizes.length, 3);
   for (const value of sizes) assert.doesNotMatch(value, /rem|em\b/, `sizes="${value}"`);
 });
+
+test("home hero: the two side covers are lazy, so React adds no preload for them", async () => {
+  const { home } = await import("../../src/content/pages.ts");
+  const imgs = [...home().body.matchAll(/<span class="cover cover--fan cover--fan-([lrc])[^"]*"><img[^>]*>/g)];
+  const lazy = imgs.filter((m) => /loading="lazy"/.test(m[0])).map((m) => m[1]).sort();
+  assert.deepEqual(lazy, ["l", "r"]);
+});

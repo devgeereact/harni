@@ -1,3 +1,7 @@
+## 2026-11-08, home hero preload warnings, second fix
+
+- The px and vw `sizes` change did not clear the warnings in the owner's Chrome (screenshot with four warnings after the deploy). The two decorative side covers are now `loading="lazy"`, so React adds no preload link for them; only the centre cover is preloaded. They are in the first screen, so they still load at once (checked: all three covers requested on load at 1440 px at 2x and 390 px at 3x). Test first. Not confirmed on the owner's browser.
+
 ## 2026-11-08, home hero cover preload warnings
 
 - Owner saw two Chrome console warnings on the home page (side covers preloaded but not used). Not reproduced in Chromium at nine window sizes and densities. Most likely cause: the hero covers gave `sizes` in `rem` at a width (12rem, 384 px at 2x) one step under the 400 px file, so the preload and the image can choose different files when the browser's font size differs. The hero covers now give `sizes` in px and vw, and only the centre cover asks for high priority. Two tests (seen failing first). Not confirmed on the owner's browser: reload and check the console.

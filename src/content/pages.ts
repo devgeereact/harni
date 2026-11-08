@@ -66,7 +66,7 @@ export const home = (): PageDef => {
   const right = bySlug('your-next-step-in-nursing');
   const fan =
     left && centre && right
-      ? `${cover(left, { extra: 'cover--fan cover--fan-l', eager: true, priority: false, sizes: '(max-width: 575px) 28vw, 168px' })}${cover(right, { extra: 'cover--fan cover--fan-r', eager: true, priority: false, sizes: '(max-width: 575px) 28vw, 168px' })}${cover(centre, { extra: 'cover--fan cover--fan-c', eager: true, sizes: '(max-width: 575px) 38vw, 216px' })}`
+      ? `${cover(left, { extra: 'cover--fan cover--fan-l', priority: false, sizes: '(max-width: 575px) 28vw, 168px' })}${cover(right, { extra: 'cover--fan cover--fan-r', priority: false, sizes: '(max-width: 575px) 28vw, 168px' })}${cover(centre, { extra: 'cover--fan cover--fan-c', eager: true, sizes: '(max-width: 575px) 38vw, 216px' })}`
       : '';
   return {
     title: 'Harni Muharami | Books for NHS nurses and healthcare staff',
