@@ -1,3 +1,11 @@
+## Latest task: Phase 5 headers applied, mail sending enabled and tested, 8 November 2026
+
+Done (owner: "go with your recommendations"): Cloudflare HSTS, header rule (CSP report-only), NEL off, minimum TLS 1.2, all verified by curl. PR 11 deployed `loadMailSettings`; on the host `~/apps/harni/shared/mail.conf` (mode 600, key generated on the host, never shown) and `shared/mail-state` (mode 700) now exist. Two real contact tests from the site to `info@harni.uk`: the second returned HTTP 200 `ok:true copyAccepted:true` (reference HM-20261108-947B17F128B4); the first (response not captured) reached the rate check too.
+
+NOT TESTED: that the messages reached the mailbox. Owner: look in `info@harni.uk` for two "Mail test 8 Nov 2026" messages and two receipts (same address). Sign-up test (`subscribe@harni.uk`) not sent: that mailbox is not confirmed live. SPF, DKIM and DMARC records exist in DNS. `mail-rate.json` is mode 644 inside the 700 folder (fine, no raw identifiers inside).
+
+Open (owner): inbox check; confirm `subscribe@harni.uk` then I send the sign-up test; Firefox and Safari CSP pass, then I flip the header to enforcing; `ErrorDocument 404 /404.html` in the root `.htaccess` (host serves a generic 404 now); real client IP behind Cloudflare (rate limit by IP is still NOT TESTED); web PHP version; Phase 6.
+
 ## Latest task: Phase 5 started (read-only), 8 November 2026
 
 Owner delegated the open items ("go with your best recommendation"). Done: stale `/thanks/` removed from the host (backup `~/backups/harni/removed-pages/thanks-index-2026-11-08.html`, then removed `thanks/index.html` and the empty folder; live `/thanks/` now 404, `/`, `/books/`, sitemap 200, API 405). `origin/chore/add-gsap-lenis` deleted; its only commit was `e139600` (adds unused `gsap` and `lenis`; re-add with npm if ever needed).
