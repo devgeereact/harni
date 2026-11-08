@@ -1,4 +1,4 @@
-import { METRES_PER_UNIT, ZONE_METRES } from './config.ts';
+import { ZONE_METRES } from './config.ts';
 
 export type ZoneKey = 'beach' | 'pier' | 'promenade' | 'funfair';
 
@@ -20,4 +20,3 @@ export const zoneIndexAt = (metres: number): number => Math.floor(Math.max(0, me
 
 export const zoneFor = (index: number): Zone => ZONE_LIST[((index % ZONE_LIST.length) + ZONE_LIST.length) % ZONE_LIST.length] ?? BEACH;
 
-export const metresFromUnits = (units: number): number => units * METRES_PER_UNIT;

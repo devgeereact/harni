@@ -49,9 +49,6 @@ export const band = (eyebrow: string, heading: string, extra = ''): string => `
 export const emailLink = (): string =>
   `<!--email_off--><a href="mailto:${site.email}">${site.email}</a><!--/email_off-->`;
 
-export const emailButton = (): string =>
-  `<!--email_off--><a class="btn" href="mailto:${site.email}">Email ${site.email}${arrow}</a><!--/email_off-->`;
-
 export const needs = (text: string): string => `<p class="placeholder">[NEEDS: ${esc(text)}]</p>`;
 
 export const statusLabel = (book: Book): string => (book.status === 'live' ? 'Available' : 'Coming soon');
