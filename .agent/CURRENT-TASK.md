@@ -1,19 +1,18 @@
-## Latest task: Phase 1 release alignment, local readiness, 8 November 2026
+## Latest task: Phase 1 release alignment, DONE, 8 November 2026
 
-Mode: BUILD. Branch `gsd/phase-1-release-alignment` (from `golive/2026-11`, 2 feature commits ahead of `origin/main`) is pushed. PR #4 is open and CLEAN; `main` is now protected. Nothing is merged or deployed.
+Mode: BUILD. PR #4 merged into `main` (merge commit d60e544) with the owner's explicit approval; the Deploy run succeeded (run 42457618070: 1 backend file changed, 27 site files changed, 4 new, 3 smoke checks passed). `main` equals `origin/main`; the merged tree is identical to the reviewed branch tip.
 
-Done (no code changed, so no new logic and no new tests were needed):
-- Local: `npm run verify` PASS. 65 unit PASS. `npm run test:mail` PASS. `npm run test:browser` 173 PASS. Dry-run merge into `origin/main`: conflict-free.
-- Owner approved on 2026-11-08: push the branch, open PR #4 (https://github.com/devgeereact/harni/pull/4), protect `main`. Owner said NOT yet to merge.
-- CI on the branch and on the PR: Portability PASS (web ubuntu, web macOS, php-local-capture). Deploy did not run (it runs only on `main`).
-- `main` protection: PR required (0 approvals), required checks `web (ubuntu-latest)`, `web (macos-latest)`, `php-local-capture`, no force-push, no deletion, applies to admins. Emergency change: edit the protection in GitHub settings first.
-- Lesson: never write the literal text `[skip ci]` in a commit body unless you want CI skipped; GitHub reads it anywhere in the message.
-- Roadmap, requirements and the decision register are in `.planning/` (local, not committed).
+Evidence, 8 November 2026:
+- Before merge: `npm run verify` PASS, 65 unit PASS, `npm run test:mail` PASS, 173 browser PASS, Portability CI PASS on the PR (Ubuntu, macOS, PHP mail capture).
+- Live after deploy (GET only): a book page carries Book and BreadcrumbList JSON-LD; `/assets/`, `/images/`, `/media/` answer 403 with no "Index of"; `GET /api/message.php` = 405; `/`, `/books/`, `/play/`, `/llms.txt`, `/sitemap.xml` = 200; a missing page = 404.
+- `main` is protected on GitHub: PR required (0 approvals), required checks `web (ubuntu-latest)`, `web (macos-latest)`, `php-local-capture`, no force-push or deletion, applies to admins. Emergency change: edit the protection in GitHub settings first.
+- Lesson: never write the literal text `[skip ci]` in a commit body unless CI should be skipped; GitHub reads it anywhere in the message. A default squash message would copy it in, so the merge used a custom message.
+- Still NOT TESTED: mail sending on the host, real devices, screen reader. Live still has no HSTS or CSP, and Cloudflare NEL is on (Phase 5).
 
-Next, needs the owner's explicit "approved: merge" (merging DEPLOYS harni.uk; Deploy restores the old files if its smoke checks fail):
-1. Squash- or merge-commit PR #4 into `main`; watch the Deploy run.
-2. GET-check live: JSON-LD on a book page, no "Index of" on `/assets/`, `/images/`, `/media/`, `GET /api/message.php` = 405, `main` = `origin/main`.
-3. Delete `golive/2026-11` and `gsd/phase-1-release-alignment` only after the merge, with approval.
+Next:
+1. Owner: approve pushing branch `gsd/phase-1-closeout` (these notes) as a docs-only PR (docs and `.agent/` pushes do not deploy).
+2. Owner: approve deleting merged branches `golive/2026-11` and `gsd/phase-1-release-alignment` (local and remote).
+3. Phase 2 (docs and standards alignment), planned in `.planning/ROADMAP.md`; open questions in `.planning/QUESTIONS.md`.
 
 ## Previous task: go-live prep, 1 November 2026
 
