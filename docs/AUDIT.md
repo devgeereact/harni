@@ -2,6 +2,17 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Post-merge live check (PRs 5 to 8)
+
+| Check | Result | Evidence |
+|---|---|---|
+| Deploy runs for PR 6, 7, 8 | DONE, all success with smoke checks | GitHub Actions runs 42523532301, 42523654707, 42523810825 |
+| `/`, `/play/` | 200 | curl after the last deploy |
+| `/assets/` | 403 | curl |
+| `GET /api/message.php` | 405 | curl |
+| Unknown path | 404 | curl on `/nonexistent-xyz/` |
+| Removed `/thanks/` | **Still served (200)** | Old `thanks/index.html` remains on the host: the release uploads without deleting. Unlinked, not in the sitemap. Needs owner approval to remove the file or to add pruning to the release |
+
 ## 8 Nov 2026 · Phase 4 workspace hygiene (part 1), branch `gsd/phase-4-workspace-hygiene`
 
 | Check | Result | Evidence |
@@ -73,7 +84,7 @@ Local only. Nothing pushed or deployed. Each plan appends a row.
 | `CHANGELOG.md` (root) vs `docs/08-change-management/CHANGELOG.md` | 232 vs 4 | The duplicate holds one entry, "7 October 2026: TypeScript game document" (game HTML source converted to a typed React document component; 50 unit and 59 browser tests PASS). The root file had no entry with that title; no second missing entry was found | The entry was added once to the root file as "2026-10-07, TypeScript game document", between the other 2026-10-07 sections, with the same facts and report path. No existing root entry was edited or reordered | Root `CHANGELOG.md` |
 | `docs/07-operations/EMAIL.md` vs `docs/07-operations/EMAIL-SPEC.md` | 56 vs 10 | `EMAIL-SPEC.md` is a template of six fields (Applicability `UNDECIDED`, five `UNKNOWN`). `EMAIL.md` already held the facts for five of them (addresses, triggers, consent and unsubscribe, retry behaviour, rollback). It did not answer delivery, bounce and complaint monitoring, and had no single place listing the six fields | A "Specification summary" section in `EMAIL.md`, one line per field pointing at the existing sections. Applicability is "applicable, implemented, sending disabled". Monitoring is UNKNOWN: none exists, `MONITORING.md` is itself UNKNOWN, next check is the owner's Phase 5 decision. Mailbox existence stays NOT TESTED. No other line of `EMAIL.md` changed | `docs/07-operations/EMAIL.md` |
 
-Deletion proposed, NOT done: `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md`, owner approval needed. Both still exist and start with a superseded notice. Proposed route after approval: `git rm` of the two files in a local commit, then a pull request.
+Deleted on owner approval (8 Nov 2026, recoverable from git history): `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md`.
 
 ### "Bookstore" classification (plan 02-06)
 

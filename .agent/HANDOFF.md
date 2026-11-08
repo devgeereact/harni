@@ -1,5 +1,8 @@
 # Handoff
 
+## 2026-11-08: Phases 1 to 4 merged and deployed
+PRs 5 to 8 merged; three Deploy runs green. Stale `/thanks/` page still served from the host (release does not delete removed files): needs owner approval to remove. Next: Phase 5 (owner-gated). Details: `.agent/CURRENT-TASK.md`.
+
 ## 2026-11-08: Phase 4 workspace hygiene done
 Branch `gsd/phase-4-workspace-hygiene`. `.idea/` untracked, source photo moved to `media-source/`, regenerable output and two merged local branches deleted (owner approved). `origin/chore/add-gsap-lenis` kept: unmerged commit `e139600`. Open: merge the four PRs in order. Details: `.agent/CURRENT-TASK.md`.
 
