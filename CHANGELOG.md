@@ -1,3 +1,8 @@
+## 2026-11-08, mail settings file and Cloudflare headers
+
+- Cloudflare (owner approved): HSTS one year (no subdomains, no preload); one response-header rule on `harni.uk` and `www` setting Referrer-Policy, Permissions-Policy, X-Content-Type-Options, X-Frame-Options and `Content-Security-Policy-Report-Only`, and removing `x-turbo-charged-by` and `x-powered-by`; NEL off (ADR-029); minimum TLS 1.2. The CSP is report-only until Firefox and Safari are checked. A Chromium pass over every page found no violations from the site's own pages.
+- `backend/src/endpoint.php`: `loadMailSettings` reads `HARNI_MAIL_ENABLED`, `HARNI_MAIL_STATE_DIR` and `HARNI_MAIL_RATE_KEY` from `~/apps/harni/shared/mail.conf` when the host sets no environment (the host had no way to set them). Seen failing first; only the three names are read and a real environment value wins.
+
 ## 2026-11-08, Phases 1 to 4 merged and deployed
 
 - PRs 5 to 8 merged in order; the three code-bearing merges deployed with green smoke checks. The superseded `docs/08-change-management/CHANGELOG.md` and `docs/07-operations/EMAIL-SPEC.md` were deleted on the owner's approval (their content lives in this file and in `docs/07-operations/EMAIL.md`).

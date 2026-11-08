@@ -32,13 +32,12 @@ What `release.json` writes on the host (see `docs/07-operations/DEPLOYMENT.md`):
 ~/harni.uk/{assets,images,media}/.htaccess   from dist/ (each blocks folder listings)
 ~/apps/harni/current/src/           from backend/src/ (Markdown files excluded)
 ~/apps/harni/shared/mail-state/     HARNI_MAIL_STATE_DIR, mode 700
+~/apps/harni/shared/mail.conf       the three mail settings as KEY=value lines, mode 600, never in Git
 ```
 
 The release never uploads a site-root `.htaccess` (the build refuses to make one) and never deletes
-anything on the server. Whether `~/apps/harni/current` is a symlink or a plain directory on the host
-is UNKNOWN. The release rsyncs into `current/src` either way and, if `current` is a symlink, the
-files land in the folder it points to. Next check: the owner runs a directory listing of
-`~/apps/harni/` on the host and the answer is recorded here.
+anything on the server. On the host `~/apps/harni/current` is a symlink to `~/apps/harni/releases/20261022-1224` (read
+8 Nov 2026). The release rsyncs into `current/src`, so the files land in that folder.
 
 `message.php` finds the private folder from its own place: two levels above `~/harni.uk/api/`
 is the home folder, then `apps/harni/current`. There is no pointer file on the server. This
@@ -49,7 +48,7 @@ If the release folder is missing, `message.php` answers 503 with the usual
 "temporarily unavailable" message and logs `backend not installed`. Nothing leaks. Only PHP's
 development server (`php -S`) uses the repository layout instead.
 
-Configuration stays in server environment variables, unchanged by the restructure:
+Configuration comes from server environment variables when the host sets them, otherwise from the private file `~/apps/harni/shared/mail.conf` (read by `loadMailSettings` in `src/endpoint.php`; only the three names below are read and a real environment value always wins):
 `HARNI_MAIL_ENABLED`, `HARNI_MAIL_STATE_DIR`, `HARNI_MAIL_RATE_KEY` (see
 `docs/07-operations/EMAIL.md`). Sending stays off until the owner verifies the host mail setup.
 

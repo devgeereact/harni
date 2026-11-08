@@ -24,4 +24,6 @@ if (!is_file($privateDir . '/src/bootstrap.php')) {
 }
 
 require $privateDir . '/src/bootstrap.php';
-handleMessageRequest();
+// Mail settings live in ~/apps/harni/shared/mail.conf (mode 600, outside the web root). Real
+// environment variables, if the host sets any, take precedence.
+handleMessageRequest($base . '/apps/harni/shared/mail.conf');
