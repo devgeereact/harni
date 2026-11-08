@@ -106,8 +106,7 @@ deploy script itself was not re-read for this file.
   direct request to the origin returns 403 (the origin lock), pages and fonts load, Pier Run runs
   on `/play/`, and the console is clean. These were the checks used on 2026-09-05.
 - Rollback trigger and procedure (superseded): was UNKNOWN. Now see "Rollback" at the top of this file.
-- Custom 404: `404.html` is built, but how the host serves it depends on the `.htaccess` the repo
-  does not own. UNKNOWN. Next check: ask the owner whether an `ErrorDocument` line can be added.
+- Custom 404: the host root `.htaccess` has `ErrorDocument 404 /404.html` (added 2026-11-08, ADR-034). Unknown paths return status 404 with the built page. The line is outside the Cloudflare origin-lock block and the release never rewrites that file. Backup: `~/backups/harni/htaccess-root-2026-11-08.bak`.
 - Production access and approval (at that time): explicit owner approval before any push or deploy. The dry run
   is the default. `--go` writes. Never pass `--with-htaccess`.
 

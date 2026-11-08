@@ -2,6 +2,15 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Host facts and 404
+
+| Check | Result | Evidence |
+|---|---|---|
+| Branded 404 | DONE | Root `.htaccess` backed up, `ErrorDocument 404 /404.html` appended; curl `/nonexistent-xyz/` returns 404 with title "Page not found"; `/`, `/books/`, `/play/` 200, API 405 |
+| Real client IP | PARTLY: configured, not proven by a request | The root `.htaccess` comment (28 Aug 2026) states Cloudflare IP restoration is ON, so `REMOTE_ADDR` is the visitor's IP. Not tested with two different visitors |
+| Web PHP version | LIKELY 8.4 | CloudLinux selector default `php = 8.4`, CLI 8.4.27, no handler override in any `.htaccess` read. Not read from a live web request |
+| Hero cover preload warnings (owner screenshot) | Fix deployed, NOT CONFIRMED | Could not reproduce in Chromium at 9 sizes and densities; `sizes` changed from rem to px and vw; owner to reload and check the console |
+
 ## 8 Nov 2026 · CSP enforced
 
 | Check | Result | Evidence |
