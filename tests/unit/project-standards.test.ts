@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { requireRuntime } from "../../scripts/lib/runtime.ts";
@@ -118,4 +119,10 @@ test("style comments do not call the site a bookstore", () => {
   for (const file of readdirSync(root + "src/styles")) {
     assert.doesNotMatch(text(`src/styles/${file}`), /bookstore/i, `${file} still says bookstore`);
   }
+});
+
+test("editor settings are ignored and not tracked", () => {
+  assert.match(text(".gitignore"), /^\.idea\/$/m, ".gitignore does not list .idea/");
+  const tracked = execFileSync("git", ["ls-files", ".idea"], { cwd: root, encoding: "utf8" });
+  assert.equal(tracked.trim(), "", `tracked editor files:\n${tracked}`);
 });

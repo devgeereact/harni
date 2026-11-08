@@ -25,7 +25,7 @@
 - Existing assets to preserve: `docs/IMG_3620.jpeg` is the supplied source
   photograph: a figure in a pale coat on the seafront at dusk, photographing the
   low sun over the ruined West Pier at Brighton. Every image in `public/media/` is
-  derived from it by `scripts/build-media.sh`. It replaced an earlier hotel-lobby
+  derived from it by `scripts/build-media.mjs`. It replaced an earlier hotel-lobby
   photograph mid-build, and the palette and the mini game were re-themed to match.
 
 ## Fact register

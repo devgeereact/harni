@@ -1,4 +1,18 @@
-## Latest task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
+## Latest task: Phase 4 workspace hygiene, part 1 DONE, rest waits for owner approval (local branch, not pushed), 8 November 2026
+
+Mode: BUILD, local only. Branch `gsd/phase-4-workspace-hygiene` (on top of the unpushed Phase 3 branch). Nothing pushed, merged, deployed or deleted.
+
+Done: `.idea/` untracked (`git rm --cached`, files stay on disk) and ignored; guard test seen failing first, then passing; `PROJECT-CONTEXT.md` names `build-media.mjs`. `npm run check` PASS (82 unit tests).
+
+Found: `origin/chore/add-gsap-lenis` is NOT merged. It holds one commit (`e139600`, adds `gsap` and `lenis`; nothing in `src/` or `scripts/` uses them). The roadmap and this file assumed it was merged. Decide before deleting.
+
+Waiting for "approved:" (each separate):
+1. Move `docs/IMG_3620.jpeg` (a file I did not create) to a media-source folder and re-point `scripts/build-media.mjs` line 78 and `PROJECT-CONTEXT.md`. Proposed target: `media-source/IMG_3620.jpeg`.
+2. Delete this exact regenerable list: `dist/`, `.generated/`, `test-results/` (35 MB), `graphify-out/`, `scripts/__pycache__/`, `.DS_Store` (root and `docs/`; the one in `.git/` is left). `work/` (208 MB, holds my screenshot scratch) and `node_modules/` are NOT on the list.
+3. Delete local branches `golive/2026-11` and `gsd/phase-1-release-alignment` (both merged into `main`); remote `chore/add-gsap-lenis` only if you accept losing `e139600`.
+4. Push the four local branches as PRs in order (Phase 1 closeout, 2, 3, 4).
+
+## Previous task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
 
 Mode: BUILD, local only. Branch `gsd/phase-3-dead-code-cleanup` (on top of the unpushed `gsd/phase-2-docs-alignment`). Nothing pushed, merged or deployed. Test-first: `tests/unit/dead-code.test.ts` (6 guards, 6 of 6 RED) and a bookstore-in-CSS guard (RED) were committed before each fix.
 
