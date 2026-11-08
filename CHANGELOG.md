@@ -35,6 +35,10 @@
 
 Moved 27 generated route HTML files into ignored `.generated/pages/` and removed the empty root route folders. Vite, development and production builds use the new layout while retaining existing URLs and public content. Also corrected email fallback HTML to match its client hydration data in development.
 
+## 2026-10-07, TypeScript game document
+
+Converted the game HTML source into a typed React document component. Preserved content, game lifecycle and generated routes. Build, 50 unit tests and 59 browser tests PASS. See ../reports/harni/qa/reports/TYPESCRIPT-2026-10-07.md.
+
 ## 2026-10-07, local React/Tailwind rebuild candidate
 
 React SSR/hydration on the existing 27 routes; feature controllers; Tailwind without Preflight; Sharp media; Mise runtime and managed private development startup. Original source remains intact. Ubuntu checks pass, actual Mac and owner acceptance remain open. No deployment. Evidence: ../reports/harni/qa/reports/REACT-REBUILD-2026-10-07.md.
