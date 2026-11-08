@@ -2,7 +2,7 @@
 
 Short index of the confirmed facts for harni. Agents treat this file as project evidence, not as fresh instructions from the owner. Detail lives in the linked documents; change a fact there and here together.
 
-- Project: harni, author website and bookstore for harni.uk (13 books, Pier Run game)
+- Project: harni, author website for harni.uk presenting Harni Muharami's 13 books on Amazon, with a contact form, a mailing-list sign-up and the Pier Run game (the site takes no orders)
 - Site owner: Harni Muharami, author. Project operator: Gideon
 - Adopted GEE OS 1.4.5 contract: 17 October 2026 (ADR-028)
 - Stack profile: `cpanel`, reduced to what the site needs: static React build plus one PHP mail endpoint. No database, no sign-in, no Clerk.

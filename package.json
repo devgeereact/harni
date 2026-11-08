@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Author site and bookstore for harni.uk",
+  "description": "Author website for harni.uk: Harni Muharami's books, contact form, mailing-list sign-up and Pier Run game",
   "scripts": {
     "pages": "node --import tsx scripts/build-pages.ts",
     "dev": "node scripts/dev.mjs",

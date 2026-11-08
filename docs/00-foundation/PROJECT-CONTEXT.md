@@ -39,7 +39,7 @@
 | Visible copy is placeholder voice, not final | FACT | Written for this scaffold | Owner replaces before launch |
 | Port 5152 is allocated to this project | DECISION | `~/.claude/CLAUDE.md` § Dev-server ports, block 15 | — |
 | The owner is Harni Muharami, an NHS nurse and clinical educator in London | FACT | Owner bio, 2026-10-01 | None |
-| The bookstore contact address is `info@harni.uk`; the live page uses `hello@harni.uk` | ASSUMPTION | Owner message, 2026-10-01 | Confirm which mailbox receives mail |
+| The site contact address is `info@harni.uk`; the live page uses `hello@harni.uk` | ASSUMPTION | Owner message, 2026-10-01 | Confirm which mailbox receives mail |
 | Instagram `@lulu_harni` and TikTok `@harni_m` are live and public | ASSUMPTION | Owner messages, 2026-10-01 | Confirm both |
 | Print is made and shipped by Amazon KDP. Each book is sold in one channel, Amazon. All 13 books are live on Amazon.co.uk as Kindle and paperback | FACT | ADR-012, ADR-023; Amazon listings read 2026-10-01 | Re-check at deploy |
 | The launch ten titles of ADR-015 are superseded. The catalogue is the 13 books on the owner's Amazon author page, listed in `docs/01-product/CATALOGUE.md` | FACT | ADR-023; Amazon author page and 13 listings read 2026-10-01 | Re-read Amazon before any deploy |
