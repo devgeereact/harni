@@ -1,4 +1,14 @@
-## Latest task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
+## Latest task: Phase 4 workspace and repo hygiene, DONE, 8 November 2026
+
+Mode: BUILD. Branch `gsd/phase-4-workspace-hygiene` (on top of Phases 1 closeout, 2 and 3). Owner approved the move, the deletion list, the local branch deletions and the pushes ("go ahead approved"). Deploy happens only when the PRs are merged, in order.
+
+Done: `.idea/` untracked and ignored; `docs/IMG_3620.jpeg` moved to `media-source/IMG_3620.jpeg` with `scripts/build-media.mjs` and docs re-pointed (both guards seen failing first); deleted `dist`, `.generated`, `test-results`, `graphify-out`, `scripts/__pycache__` and the root and `docs/` `.DS_Store`; deleted local branches `golive/2026-11` and `gsd/phase-1-release-alignment` (both merged). Kept: `work/`, `node_modules/`, remote `origin/chore/add-gsap-lenis`.
+
+Checks: from the clean tree `npm run build`, `npm run check` (83 unit tests) and `npm run verify` PASS; `build-media.mjs` ran from the new path into a scratch folder (13 files). Browser suite not re-run in Phase 4 (no page output changed).
+
+Open (owner): merge the PRs in order (Phase 1 closeout, 2, 3, 4); decide `origin/chore/add-gsap-lenis` (unmerged commit `e139600`, adds unused `gsap` and `lenis`); delete the two superseded docs (`docs/08-change-management/CHANGELOG.md`, `docs/07-operations/EMAIL-SPEC.md`). Then Phase 5 (owner-gated) and Phase 6.
+
+## Previous task: Phase 3 dead code and CSS cleanup, DONE (local branch, not pushed), 8 November 2026
 
 Mode: BUILD, local only. Branch `gsd/phase-3-dead-code-cleanup` (on top of the unpushed `gsd/phase-2-docs-alignment`). Nothing pushed, merged or deployed. Test-first: `tests/unit/dead-code.test.ts` (6 guards, 6 of 6 RED) and a bookstore-in-CSS guard (RED) were committed before each fix.
 

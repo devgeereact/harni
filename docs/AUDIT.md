@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 8 Nov 2026 · Phase 4 workspace hygiene (part 1), branch `gsd/phase-4-workspace-hygiene`
+
+| Check | Result | Evidence |
+|---|---|---|
+| Was `.idea/` tracked? | Yes, 4 files (951 bytes) | `git ls-files .idea` |
+| Is it untracked and ignored now? | DONE | New guard test seen failing, then passing; files remain on disk |
+| Is `chore/add-gsap-lenis` merged, as the roadmap assumed? | **No** | `git log origin/main..origin/chore/add-gsap-lenis` shows `e139600` (2026-10-22, adds `gsap` and `lenis` to `package.json` and the lockfile). Neither name appears in `src/` or `scripts/`. Deleting the branch discards that commit from the remote; it needs an owner decision |
+| `golive/2026-11` merged? | Yes | `git branch --merged main` lists it; `origin/main..golive/2026-11` is empty |
+| Regenerable output | Deleted on owner approval (list below) | `dist` 5.3 MB, `.generated` 964 KB, `test-results` 35 MB, `graphify-out` 2.6 MB, `scripts/__pycache__`, `.DS_Store` (root, `docs/`, `.git/`). All are gitignored; `graphify-out` is in `.git/info/exclude` |
+| `docs/IMG_3620.jpeg` | Moved to `media-source/IMG_3620.jpeg` on owner approval | `scripts/build-media.mjs` default `--input` and `PROJECT-CONTEXT.md` updated; guard test seen failing first; the script ran against the new path into a scratch folder. History lines in CHANGELOG left as written |
+
+Open for the owner: the fate of `origin/chore/add-gsap-lenis` (kept).
+
 ## 8 Nov 2026 · Phase 3 dead code and CSS cleanup, branch `gsd/phase-3-dead-code-cleanup`
 
 Local only. Nothing pushed or deployed. Built on the unpushed Phase 2 branch.
@@ -91,7 +104,7 @@ Command: `grep -rniE "bookstore" .` excluding `node_modules`, `dist`, `.git`, `g
 | 1 | Live behind `golive/2026-11` (no JSON-LD, directory listings, no HSTS/CSP, NEL on) | Closed in Phase 1 (HSTS, CSP and NEL move to Phase 5) | PR 4 merged and deployed 2026-11-08; live GET checks showed JSON-LD, 403 on `/assets/`, `/images/`, `/media/`. HSTS, CSP and NEL are owned by Phase 5 |
 | 2 | Actions deploy vs house rule; `release.mjs` comments say `pnpm` | Closed | ADR-031 records the Actions deploy as an approved exception. The `pnpm` comments in the kit-owned `scripts/release.mjs` were intentionally NOT edited (locked decision); docs say `npm run release` |
 | 3 | Backend README and DEPLOYMENT described `releases/<id>`, a symlink and `cpanel-deploy` | Closed, one fact UNKNOWN | Docs now match `release.json` (rsync `backend/src` into `~/apps/harni/current/src`). Whether `current` is a symlink on the host stays UNKNOWN until the owner confirms |
-| 4 | No pnpm, Biome, `check` script, `.node-version`; `.env.example` names unused; `.idea/` tracked; `docs/IMG_3620.jpeg` | Partly closed | Closed: `.node-version`, `check` script, `.env.example` names, npm kept (ADR-030). Open and owned by Phase 4: tracked `.idea/` and `docs/IMG_3620.jpeg` |
+| 4 | No pnpm, Biome, `check` script, `.node-version`; `.env.example` names unused; `.idea/` tracked; `docs/IMG_3620.jpeg` | Partly closed | Closed: `.node-version`, `check` script, `.env.example` names, npm kept (ADR-030). `.idea/` untracked in Phase 4. `docs/IMG_3620.jpeg` moved to `media-source/` in Phase 4 |
 | 5 | Stale docs: README status, `routes.ts`, KNOWN-ISSUES rows, DATA-MODEL, blank specs, duplicates | Closed (deletions need owner approval) | README (02-06), `routes.ts` and KNOWN-ISSUES and DATA-MODEL (02-03), API-SPEC and five N/A specs (02-04), duplicates compared and merged (02-05). Deleting the two superseded files is pending the owner |
 | 6 | "Bookstore" wording though nothing is sold | Closed (CSS comments fixed in Phase 3) | Classification table above. The `site.css` and `game.css` comments were reworded in Phase 3 behind a guard test |
 | 7 | `MailForm.tsx` hardcodes the endpoint; `generated:false` comment on `/play/`; `npm run pages` rewrites tracked `sitemap.xml` and `llms.txt` | Closed in Phase 3 (the `npm run pages` rewrite part was checked in Phase 2) | `MailForm.tsx` uses `site.formEndpoint`, the comment is fixed. Earlier note: `npm run verify` this time left both tracked generated files unchanged (`git status --short` clean), so there was nothing to restore |

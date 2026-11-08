@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readdirSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { requireRuntime } from "../../scripts/lib/runtime.ts";
 
@@ -118,4 +119,19 @@ test("style comments do not call the site a bookstore", () => {
   for (const file of readdirSync(root + "src/styles")) {
     assert.doesNotMatch(text(`src/styles/${file}`), /bookstore/i, `${file} still says bookstore`);
   }
+});
+
+test("editor settings are ignored and not tracked", () => {
+  assert.match(text(".gitignore"), /^\.idea\/$/m, ".gitignore does not list .idea/");
+  const tracked = execFileSync("git", ["ls-files", ".idea"], { cwd: root, encoding: "utf8" });
+  assert.equal(tracked.trim(), "", `tracked editor files:\n${tracked}`);
+});
+
+test("the media script's default source photograph exists in a media-source folder", () => {
+  const match = /argument\("--input", join\(root, "([^"]+)"\)\)/.exec(text("scripts/build-media.mjs"));
+  assert.ok(match, "build-media.mjs has no default --input");
+  const path = match[1] ?? "";
+  assert.match(path, /^media-source\//, `default source is ${path}, not under media-source/`);
+  assert.ok(existsSync(root + path), `${path} is missing`);
+  assert.equal(existsSync(root + "docs/IMG_3620.jpeg"), false, "photo left behind in docs/");
 });

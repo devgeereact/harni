@@ -21,3 +21,6 @@ work/
 
 # Python bytecode from scripts/*.py
 __pycache__/
+
+# JetBrains editor settings are personal, not project files.
+.idea/
