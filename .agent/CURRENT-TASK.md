@@ -6,9 +6,11 @@ Done: plan 02-01. `.node-version` and `npm run check` added test-first (6 of 6 R
 
 Done: plan 02-02 (docs only). `backend/README.md` and `docs/07-operations/DEPLOYMENT.md` match `release.json`; rollback procedure written (manual rollback and Actions path NOT TESTED, they need SSH); "what does not deploy" taken from `deploy.yml`; ADR-031 records the Actions deploy as an approved exception; current-method `cpanel-deploy` mentions swept. No code changed.
 
+Done: plan 02-03 (docs plus one source comment). KNOWN-ISSUES rows 5, 6, 11, 19, 25, 26 corrected and row 13 annotated (open until Phase 3 removes `/thanks/`); `routes.ts` header comment no longer hard-codes a page count (diff checked as comment-only); DATA-MODEL Event and ReviewQuote match the data files. Typecheck and 71 unit tests pass. Lighthouse not re-run; no live page fetched.
+
 Next (owner): confirm whether `~/apps/harni/current` is a symlink on the host (one directory listing of `~/apps/harni/`); the answer goes in `backend/README.md` (UNKNOWN until then). Note: merging Phase 2 will trigger one Deploy run, because `package.json`, `.node-version`, `tests/` and a source comment change. The site output is identical; the run is expected and harmless.
 
-Next: plans 02-03 to 02-06 in order. Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
+Next: plans 02-04 to 02-06 in order (02-04 is next). Then, each needing the owner's explicit approval: push the Phase 1 closeout and Phase 2 branches as PRs; delete merged branches. Owner items (legal facts, mailboxes, devices, host PHP) stay with the owner.
 
 ## Previous task: Phase 1 release alignment, DONE, 8 November 2026
 
