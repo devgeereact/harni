@@ -302,8 +302,11 @@ export const mountGame = (root: HTMLElement): (() => void) | null => {
   hud.setPauseButton(world.status);
   resizeCanvas();
   wake();
+  // Listeners are attached: a tap on Start run now does something. Tests wait for this mark.
+  root.setAttribute('data-game-ready', 'true');
 
   return (): void => {
+    root.removeAttribute('data-game-ready');
     if (frame !== 0) window.cancelAnimationFrame(frame);
     observer.disconnect();
     resizeObserver.disconnect();
