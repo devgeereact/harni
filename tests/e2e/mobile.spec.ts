@@ -17,6 +17,7 @@ test("Pier Run shows touch help and starts from a tap on a phone", async ({ page
   await page.goto("/play/");
   await expect(page.locator("#harni-root")).toHaveAttribute("data-hydrated", "true");
   await expect(page.locator(".game__hint-touch")).toBeVisible();
+  await expect(page.locator("[data-game][data-game-ready=\"true\"]")).toBeAttached();
   await page.locator("[data-game-action]").tap();
   await expect(page.locator("[data-pause-game]")).toBeEnabled();
 });

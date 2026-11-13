@@ -78,6 +78,7 @@ test("Pier Run keeps the score in memory until the visitor opts in, and removal 
   const status = page.locator("[data-storage-status]");
   await page.locator(".unwind-settings summary").click();
   await expect(box).not.toBeChecked();
+  await expect(page.locator("[data-game][data-game-ready=\"true\"]")).toBeAttached();
   await page.locator("[data-game-action]").click();
   await page.locator("[data-pause-game]").click();
   expect((await browserState(page)).local).toEqual([]);

@@ -190,6 +190,7 @@ test("Pier Run starts and pauses through its React-owned lifecycle island", asyn
     "data-hydrated",
     "true",
   );
+  await expect(page.locator("[data-game][data-game-ready=\"true\"]")).toBeAttached();
   await page.locator("[data-game-action]").click();
   await expect(page.locator("[data-pause-game]")).toBeEnabled();
   await page.locator("[data-pause-game]").click();
