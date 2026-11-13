@@ -24,3 +24,6 @@ __pycache__/
 
 # JetBrains editor settings are personal, not project files.
 .idea/
+
+# GSD planning scratch (local only)
+.planning/
